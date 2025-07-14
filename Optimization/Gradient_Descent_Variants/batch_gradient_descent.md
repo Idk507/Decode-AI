@@ -9,6 +9,7 @@ Batch Gradient Descent is a fundamental optimization algorithm used in **machine
 ### **1.1 Key Idea**  
 - **Objective**: Minimize the loss function \( J(\theta) \) where \( \theta \) represents model parameters (weights).  
 - **Approach**: Compute the gradient of the loss w.r.t. all training examples and update weights in the opposite direction.  
+<img width="1100" height="684" alt="image" src="https://github.com/user-attachments/assets/13c63369-0c36-4f92-9bb4-f8748ecc3d69" />
 
 ### **1.2 Algorithm Steps**  
 1. **Compute Loss** (for entire training set):  
