@@ -8,6 +8,8 @@
 It is a **variant** of **Gradient Descent**, but instead of using the **entire dataset**, it uses **a single sample (or a small batch)** to update model parameters — making it **faster** and **more scalable**, especially for **large datasets**.
 
 ---
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/bf420ea3-cfc5-476b-835b-a82fb0c2964f" />
+
 
 ## 📉 2. **Why Gradient Descent?**
 
