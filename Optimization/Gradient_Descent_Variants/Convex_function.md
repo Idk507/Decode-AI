@@ -1,4 +1,3 @@
-Sure, Dhanush! Let’s break down **convex vs non-convex problems**, **convex optimization**, and related concepts in a **very detailed but easy-to-understand way**, with intuitive explanations, visuals, and math where needed.
 
 ---
 
@@ -199,6 +198,28 @@ plt.show()
 * Deep learning = non-convex → uses SGD/Adam to navigate the loss surface
 
 ---
+
+
+### 🧠 What is the Hessian test?
+
+It's a mathematical tool used to **check whether a critical point of a function is a maximum, minimum, or saddle point**. It's especially handy in **multivariable calculus** or **optimization problems**—like when you're tuning a machine learning model or evaluating a loss function.
+
+### 📐 Key concept: The Hessian matrix
+- Think of it as a fancy grid that contains all the **second-order partial derivatives** of a function.
+- It tells us how the surface of the function bends near a point—like whether the graph curves up (like a bowl), down (like an upside-down bowl), or is flat/split (like a saddle).
+
+### ✅ How the test works (in plain terms):
+1. **Compute the Hessian matrix** at the critical point.
+2. **Analyze its eigenvalues** or use the **determinants** of the matrix's leading minors (if it's a 2D function).
+   - All **positive** eigenvalues → **local minimum**.
+   - All **negative** eigenvalues → **local maximum**.
+   - Mixed signs → **saddle point** (not a max or min).
+
+### 🚀 Why it matters in data science:
+- When you're optimizing a cost function, the Hessian test helps you understand whether a solution is stable (minimum), unstable (maximum), or something tricky (saddle).
+- It's also useful in Newton's method for faster convergence in optimization.
+
+
 
 
 ---
