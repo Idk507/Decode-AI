@@ -1,4 +1,3 @@
-Absolutely! Let's dive into a **detailed and intuitive explanation** of **Optimization Challenges** in machine learning and deep learning, focusing on:
 
 1. 🌀 Vanishing / Exploding Gradients
 2. ⚖️ Saddle Points & Local Minima
