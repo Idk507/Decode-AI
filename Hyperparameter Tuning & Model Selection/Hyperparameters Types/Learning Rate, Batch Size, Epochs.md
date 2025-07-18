@@ -1,4 +1,4 @@
-I'll explain **Learning Rate**, **Batch Size**, and **Epochs** in detail, covering their definitions, sub-topics, mathematical concepts, implementation considerations, and provide a practical example. These concepts are fundamental in training machine learning models, particularly in deep learning with neural networks.
+
 
 ---
 
