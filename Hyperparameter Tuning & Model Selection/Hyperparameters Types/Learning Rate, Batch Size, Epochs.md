@@ -214,6 +214,7 @@ Final Accuracy: 0.9450
 
 ### **Chart: Loss Over Epochs**
 To visualize the training progress, we can plot the average loss per epoch. Below is a Chart.js configuration to create a line chart of the loss over 50 epochs (assuming we collect losses during training).
+<img width="842" height="492" alt="chart" src="https://github.com/user-attachments/assets/1cafd475-d4e0-44ca-bfba-98e7f876785a" />
 
 ```chartjs
 {
