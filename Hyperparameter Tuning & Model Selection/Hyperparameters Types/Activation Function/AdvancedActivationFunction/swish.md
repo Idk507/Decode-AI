@@ -1,48 +1,77 @@
-## 1. Swish Activation Function
 
-### Mathematical Definition
-The Swish activation function, proposed by Google Brain, is defined as:
+---
 
-\[
+# Swish Activation Function
+
+## Mathematical Definition
+
+The **Swish** activation function, proposed by Google Brain, is defined as:
+
+$$
 \text{Swish}(x) = x \cdot \sigma(\beta x)
-\]
+$$
 
 Where:
-- \(\sigma(z) = \frac{1}{1 + e^{-z}}\) is the sigmoid function.
-- \(\beta\) is a learnable parameter or fixed constant (often set to 1).
-- When \(\beta = 1\), Swish simplifies to \(x \cdot \sigma(x)\).
 
-### Mathematical Properties
-- **Range**: \((-\infty, \infty)\), as the sigmoid \(\sigma(\beta x) \in (0, 1)\) scales \(x\), which can be positive or negative.
-- **Derivative**:
-  \[
-  \frac{d}{dx} \text{Swish}(x) = \sigma(\beta x) + \beta x \cdot \sigma(\beta x) \cdot (1 - \sigma(\beta x))
-  \]
-  This uses the derivative of the sigmoid function: \(\sigma'(z) = \sigma(z) \cdot (1 - \sigma(z))\).
-- **Behavior**:
-  - For large positive \(x\), \(\sigma(\beta x) \to 1\), so \(\text{Swish}(x) \approx x\).
-  - For large negative \(x\), \(\sigma(\beta x) \to 0\), so \(\text{Swish}(x) \approx 0\), but allows small negative outputs.
-  - At \(x = 0\), \(\text{Swish}(0) = 0 \cdot \sigma(0) = 0 \cdot 0.5 = 0\).
-- **Smoothness**: Swish is smooth and differentiable everywhere, unlike ReLU.
-- **Non-Monotonic**: Unlike ReLU or sigmoid, Swish is not strictly increasing, as it allows negative outputs for negative inputs.
+* $\sigma(z) = \frac{1}{1 + e^{-z}}$ is the **sigmoid function**.
+* $\beta$ is a **learnable parameter** or fixed constant (often set to 1).
+* When $\beta = 1$, Swish simplifies to:
 
-### Use Case
-- **Deep Networks**: Outperforms ReLU in some deep architectures, such as convolutional neural networks (CNNs) and deep feedforward networks.
-- Example: Used in Google’s Inception models and other large-scale image classification tasks.
+$$
+\text{Swish}(x) = x \cdot \sigma(x)
+$$
 
-### Advantages
-- **Improved Performance**: Empirically outperforms ReLU in many deep learning tasks due to its smooth, non-linear behavior.
-- **Smooth Gradients**: Avoids the non-differentiability of ReLU at \(x = 0\).
-- **Learnable \(\beta\)**: When \(\beta\) is trainable, Swish adapts to the data, potentially improving performance.
-- **Negative Outputs**: Allows small negative activations, reducing the dying neuron problem.
+---
 
-### Problems
-- **Computationally Expensive**: Involves the sigmoid function, which requires computing exponentials.
-- **Hyperparameter \(\beta\)**: When \(\beta\) is fixed, it may not be optimal for all tasks; when learnable, it adds parameters.
-- **Not Zero-Centered**: Outputs are not symmetric around 0, which can affect gradient flow.
+## Mathematical Properties
 
-### Implementation in Python
-Let’s implement Swish with a fixed \(\beta = 1\) and its derivative, then visualize it.
+* **Range**: $(-\infty, \infty)$, as $\sigma(\beta x) \in (0, 1)$ and $x$ can be positive or negative.
+
+* **Derivative**:
+
+$$
+\frac{d}{dx} \text{Swish}(x) = \sigma(\beta x) + \beta x \cdot \sigma(\beta x) \cdot (1 - \sigma(\beta x))
+$$
+
+(using $\sigma'(z) = \sigma(z) \cdot (1 - \sigma(z))$).
+
+* **Behavior**:
+
+  * For large positive $x$, $\sigma(\beta x) \to 1$, so $\text{Swish}(x) \approx x$.
+  * For large negative $x$, $\sigma(\beta x) \to 0$, so $\text{Swish}(x) \approx 0$, but allows small negative outputs.
+  * At $x = 0$, $\text{Swish}(0) = 0$.
+
+* **Smoothness**: Smooth and differentiable everywhere, unlike ReLU.
+
+* **Non-Monotonic**: Allows small negative outputs; not strictly increasing.
+
+---
+
+## Use Cases
+
+* **Deep Neural Networks**: Performs better than ReLU in some architectures like CNNs and deep feedforward networks.
+* Example: Used in Google's Inception models and large-scale image classification tasks.
+
+---
+
+## Advantages
+
+* **Improved Performance**: Outperforms ReLU in many tasks due to smooth non-linearity.
+* **Smooth Gradients**: Avoids non-differentiability issues present in ReLU.
+* **Learnable $\beta$**: Allows adaptability during training.
+* **Negative Outputs**: Reduces the dying neuron problem.
+
+---
+
+## Drawbacks
+
+* **Computationally Expensive**: Requires computing exponentials (sigmoid).
+* **Hyperparameter $\beta$**: Adds complexity if trainable.
+* **Not Zero-Centered**: Can affect gradient flow during optimization.
+
+---
+
+## Python Implementation
 
 ```python
 import numpy as np
@@ -74,9 +103,17 @@ plt.grid(True)
 plt.show()
 ```
 
-**Explanation of Code**:
-- **Swish Function**: Computes \(x \cdot \sigma(\beta x)\) with \(\beta = 1\).
-- **Derivative**: Uses the product rule to compute \(\sigma(\beta x) + \beta x \cdot \sigma(\beta x) \cdot (1 - \sigma(\beta x))\).
-- **Visualization**: The plot shows Swish resembling ReLU for positive inputs but allowing small negative outputs, with a smooth derivative that avoids vanishing gradients for moderate inputs.
+---
+
+## Explanation of Code
+
+* **Swish Function**: Computes $x \cdot \sigma(\beta x)$ with $\beta = 1$.
+* **Derivative**: Derived using the product rule and derivative of sigmoid.
+* **Visualization**:
+
+  * Swish resembles ReLU for large positive inputs.
+  * Allows small negative outputs.
+  * Smooth derivative helps prevent vanishing gradients.
 
 ---
+
