@@ -27,9 +27,7 @@ Where:
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Range**               | $(0, 1)$, with $\sum_{i=1}^n \text{Softmax}(x_i) = 1$.                                                                                                                                                          |
 | **Derivative**          | Captured by a **Jacobian matrix**:                                                                                                                                                                              |
-|                         | 
-
-$$
+|                         | $$
 \frac{\partial \, \text{Softmax}(x_i)}{\partial x_j} =
 \begin{cases}
 \text{Softmax}(x_i) \cdot \left(1 - \text{Softmax}(x_i)\right) & \text{if } i = j \\
