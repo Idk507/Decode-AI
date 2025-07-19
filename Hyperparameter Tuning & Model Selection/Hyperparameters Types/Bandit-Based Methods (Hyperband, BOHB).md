@@ -1,4 +1,4 @@
-Sure! Let’s explore **Bandit-Based Methods**, specifically **Hyperband** and **BOHB (Bayesian Optimization + Hyperband)**, in detail with mathematical concepts and implementation guidance.
+
 
 ---
 
