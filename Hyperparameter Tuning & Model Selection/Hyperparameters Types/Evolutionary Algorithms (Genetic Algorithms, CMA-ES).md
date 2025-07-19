@@ -30,25 +30,22 @@ Two widely used evolutionary algorithms are:
 
 * **Population:**
 
-  $$
-  P = \{\theta_1, \theta_2, \dots, \theta_N\}
-  $$
+  $P = \{\theta_1, \theta_2, \dots, \theta_N\}$ 
+
 
   Each $\theta_i$ is a vector of parameters.
 
 * **Fitness Function:**
 
-  $$
-  f(\theta_i) = \text{performance of model using } \theta_i
-  $$
+ $ f(\theta_i) = \text{performance of model using } \theta_i $ 
 
 * **Selection Methods:**
 
   * **Roulette Wheel Selection:**
 
-    $$
-    P(\theta_i) = \frac{f(\theta_i)}{\sum f(\theta_j)}
-    $$
+   
+   $ P(\theta_i) = \frac{f(\theta_i)}{\sum f(\theta_j)} $
+    
   * **Tournament Selection**
 
 * **Crossover:**
@@ -57,9 +54,9 @@ Two widely used evolutionary algorithms are:
 * **Mutation:**
   Introduce random variations:
 
-  $$
-  \theta_i' = \theta_i + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2)
-  $$
+  
+  $ \theta_i' = \theta_i + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2) $
+  
 
 ---
 
@@ -177,9 +174,8 @@ print('Best Individual:', best)
 1. Initialize $\mu$, $\sigma$, $C$.
 2. Sample candidate solutions:
 
-   $$
-   \theta_i \sim \mathcal{N}(\mu, \sigma^2 C)
-   $$
+   
+   $ \theta_i \sim \mathcal{N}(\mu, \sigma^2 C) $
 3. Evaluate candidates.
 4. Update:
 
