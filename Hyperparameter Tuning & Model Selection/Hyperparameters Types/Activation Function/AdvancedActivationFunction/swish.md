@@ -19,7 +19,7 @@ Where:
 
 
 $$
-$\text{Swish}(x) = x \cdot \sigma(x)$
+\text{Swish}(x) = x \cdot \sigma(x)
 $$
 
 ---
@@ -34,7 +34,9 @@ $$
 \frac{d}{dx} \text{Swish}(x) = \sigma(\beta x) + \beta x \cdot \sigma(\beta x) \cdot (1 - \sigma(\beta x))
 $$
 
-(using $\sigma'(z) = \sigma(z) \cdot (1 - \sigma(z))$).
+$$
+(using \sigma'(z) = \sigma(z) \cdot (1 - \sigma(z))).
+$$
 
 * **Behavior**:
 
