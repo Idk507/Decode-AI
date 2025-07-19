@@ -1,6 +1,6 @@
-Here’s your content formatted neatly as a **README.md** section:
 
-````markdown
+
+
 ## 3. Random Search
 
 ### 📖 Definition
