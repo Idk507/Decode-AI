@@ -167,9 +167,7 @@ BOHB combines **Bayesian Optimization (BO)** with **Hyperband** to model the hyp
 2. **Acquisition Function:**
    Selects the next configuration using:
 
-   $$
-   x_{next} = \arg\max_x \ \alpha(x)
-   $$
+   $ x_{next} = \arg\max_x \ \alpha(x)$
 
    Where \$\alpha(x)\$ could be Expected Improvement (EI), Upper Confidence Bound (UCB), etc.
 
