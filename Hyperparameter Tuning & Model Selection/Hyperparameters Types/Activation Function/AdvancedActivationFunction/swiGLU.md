@@ -52,9 +52,8 @@ Because:
 4. **Activation**: Apply Swish to $b$: $b' = b \cdot \sigma(b)$
 5. **Gating**: Multiply $a$ and $b'$ element-wise:
 
-   $$
-   \text{Output} = a \odot b'
-   $$
+   
+   $\text{Output} = a \odot b'$
 
 ---
 
