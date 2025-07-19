@@ -17,9 +17,8 @@
 - **Sampling**:  
   For a fixed budget of $n$ evaluations, randomly sample:
 
-  $$
-  \theta_1, \theta_2, \dots, \theta_n \sim \Theta
-  $$
+  
+  $\theta_1, \theta_2, \dots, \theta_n \sim \Theta$
 
   Example sampling:
 
@@ -34,9 +33,8 @@
 - **Optimization Step**:  
   Select the best configuration:
 
-  $$
-  \theta^* = \arg\max_{\theta_i} f(\theta_i)
-  $$
+ 
+ $\theta^* = \arg\max_{\theta_i} f(\theta_i)$
 
 ---
 
