@@ -17,8 +17,9 @@ Where:
 * $\beta$ is a **learnable parameter** or fixed constant (often set to 1).
 * When $\beta = 1$, Swish simplifies to:
 
+
 $$
-\text{Swish}(x) = x \cdot \sigma(x)
+$\text{Swish}(x) = x \cdot \sigma(x)$
 $$
 
 ---
