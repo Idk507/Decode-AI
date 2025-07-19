@@ -1,8 +1,7 @@
 
-
 ---
 
-## ** Random Search**
+## **3. Random Search**
 
 ### **Definition**
 
