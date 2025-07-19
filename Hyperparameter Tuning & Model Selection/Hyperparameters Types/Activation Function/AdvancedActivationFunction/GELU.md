@@ -14,7 +14,7 @@ $$
 
 Where:
 
-* $\Phi(x) = P(Z \leq x)$ is the **cumulative distribution function (CDF)** of the standard normal distribution ($Z \sim \mathcal{N}(0, 1)$).
+* $\Phi(x) = P(Z \leq x)$ is the **cumulative distribution function (CDF)** of the standard normal distribution $(Z \sim \mathcal{N}(0, 1))$.
 
 ### Approximations:
 
