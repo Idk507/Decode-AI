@@ -1,4 +1,3 @@
-Here’s your **Softmax Activation Function** explanation formatted properly for clarity and structure:
 
 ---
 
@@ -26,12 +25,9 @@ Where:
 
 | Property                | Description                                                                                                                                                                                                     |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Range**               | $(0, 1), with \sum_{i=1}^n \text{Softmax}(x_i) = 1$.                                                                                                                                                          |
+| **Range**               | $(0, 1)$, with $\sum_{i=1}^n \text{Softmax}(x_i) = 1$.                                                                                                                                                          |
 | **Derivative**          | Captured by a **Jacobian matrix**:                                                                                                                                                                              |
-|                         | $\displaystyle \frac{\partial \text{Softmax}(x_i)}{\partial x_j}$ = $\begin{cases} $
-$ \text{Softmax}(x_i)(1 - \text{Softmax}(x_i)) & \text{if } i = j $
-$ -\text{Softmax}(x_i) \cdot \text{Softmax}(x_j) & \text{if } i \neq j $ 
-\end{cases} |
+|                         | $\displaystyle \frac{\partial \text{Softmax}(x_i)}{\partial x_j} = \begin{cases} \text{Softmax}(x_i)(1 - \text{Softmax}(x_i)) & i = j \\ -\text{Softmax}(x_i) \cdot \text{Softmax}(x_j) & i \neq j \end{cases}$ |
 | **Behavior**            | - Large positive $x_i$: output near 1.<br> - Large negative $x_i$: output near 0.<br> - Equal inputs: uniform distribution.                                                                                     |
 | **Numerical Stability** | To avoid overflow, subtract $\max(\mathbf{x})$:<br>$\displaystyle \text{Softmax}(x_i) = \frac{e^{x_i - \max(\mathbf{x})}}{\sum_j e^{x_j - \max(\mathbf{x})}}$                                                   |
 
@@ -128,4 +124,3 @@ plt.show()
 
 ---
 
-Let me know if you'd like this in LaTeX, Markdown, or as a ready-to-download document.
