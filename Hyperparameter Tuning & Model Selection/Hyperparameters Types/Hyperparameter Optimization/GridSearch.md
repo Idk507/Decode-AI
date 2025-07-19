@@ -18,27 +18,24 @@ Grid Search is an exhaustive search method that evaluates every possible combina
 
   Then,
 
-  $$
-  \Theta = \{(\alpha, n) \mid \alpha \in \{0.01, 0.1, 1.0\},\ n \in \{50, 100, 200\}\}
-  $$
+  
+  $ \Theta = \{(\alpha, n) \mid \alpha \in \{0.01, 0.1, 1.0\},\ n \in \{50, 100, 200\}\} $
 
   with $3 \times 3 = 9$ possible combinations.
 
 * **Objective Function**:
   For each $\theta \in \Theta$, evaluate $f(\theta)$, typically the average performance (e.g., accuracy) across $k$-fold cross-validation:
 
-  $$
-  f(\theta) = \frac{1}{k} \sum_{i=1}^k \text{Score}(\theta, D_{\text{val}_i})
-  $$
+  $ f(\theta) = \frac{1}{k} \sum_{i=1}^k \text{Score}(\theta, D_{\text{val}_i}) $
 
   where $D_{\text{val}_i}$ is the validation set for the $i$-th fold.
 
 * **Optimization**:
   Find:
 
-  $$
+  $
   \theta^* = \arg\max_{\theta \in \Theta} f(\theta)
-  $$
+  $
 
   (or $\arg\min$ for loss functions).
 
@@ -63,9 +60,9 @@ Grid Search is an exhaustive search method that evaluates every possible combina
   The number of combinations grows exponentially with the number of hyperparameters and their possible values (curse of dimensionality).
   For $n$ hyperparameters with $m$ values each:
 
-  $$
+  $
   \text{Total evaluations} = m^n
-  $$
+  $
 
 * **Inefficient**: Tests many unpromising combinations, wasting resources.
 
