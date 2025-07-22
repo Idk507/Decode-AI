@@ -160,10 +160,7 @@ To illustrate why L1 regularization leads to sparsity, let’s derive the soft-t
 
 Thus, the solution is:
 
-<img width="687" height="172" alt="image" src="https://github.com/user-attachments/assets/7ac0dd05-aa99-484b-8433-cde7ef8610f2" />
-
-
-This is equivalent to \( \theta = \text{sign}(y) \max(|y| - \lambda, 0) \), the soft-thresholding operator. It shows that if the unregularized solution \( y \) is small (\( |y| \leq \lambda \)), the parameter is set to zero, inducing sparsity.
+<img width="961" height="228" alt="image" src="https://github.com/user-attachments/assets/728a412e-46ff-425a-bcdf-43f49c8cbfba" />
 
 ---
 
