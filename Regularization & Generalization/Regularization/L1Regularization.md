@@ -8,11 +8,13 @@ L2 regularization adds a penalty to the loss function based on the **L2 norm** (
 
 In a supervised learning problem, the goal is to minimize a loss function$\( L(\theta)$\), where$\($\theta$\) represents the model parameters (e.g., weights in a linear regression model). With L2 regularization, the objective function becomes:
 
+$$
 \[
 J(\theta) = L(\theta) +$\lambda$\sum_{i=1}^p$\theta_i^2
 \]
+$$ 
 
-- **$\( L(\theta)$\)**: The original loss function (e.g., mean squared error for regression).
+- ** $\( L(\theta)\)$ **: The original loss function (e.g., mean squared error for regression).
 - **\($\lambda$\sum_{i=1}^p$\theta_i^2$\)**: The L2 penalty, where$\($\lambda$\) is the regularization strength (a hyperparameter) and$\($\theta_i^2$\) is the square of the$\( i$\)-th parameter.
 - **\( p$\)**: The number of parameters in the model.
 - **\($\sum_{i=1}^p$\theta_i^2$\)**: The square of the L2 norm (\($\|\theta\|_2^2$\)) of the parameter vector.
