@@ -31,7 +31,7 @@ Introduced by Glorot and Bengio in their 2010 paper, *"Understanding the difficu
 - This is achieved by initializing weights such that the variance of the output of a layer matches the variance of its input, assuming linear transformations initially.
 
 #### Mathematical Formulation
-For a layer with \( n_{\text{in}} \) input units and \( n_{\text{out}} \) output units, the weights \( W \) are initialized from a distribution with:
+For a layer with $\( n_{\text{in}} \) input units and \( n_{\text{out}} \) output units, the weights \( W \) are initialized from a distribution with:$
 - **Mean**: 0
 - **Variance**: Adjusted to account for the number of input and output connections.
 
