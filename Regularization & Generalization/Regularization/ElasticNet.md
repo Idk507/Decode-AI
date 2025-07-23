@@ -25,13 +25,13 @@ Elastic Net combines the advantages of L1 and L2 regularization to address their
 
 #### **Key Benefits**:
 1. **Feature Selection with Stability**: Elastic Net can select relevant features (like Lasso) while distributing weights across correlated features (like Ridge), avoiding the instability of Lasso in high-correlation scenarios.
-2. **Handling High-Dimensional Data**: When \( p > n \) (more features than samples), Elastic Net performs well by combining sparsity and regularization.
-3. **Bias-Variance Tradeoff**: By tuning \( \lambda_1 \) and \( \lambda_2 \) (or \( \lambda \) and \( \alpha \)), Elastic Net balances model complexity and generalization.
+2. **Handling High-Dimensional Data**: When $\( p > n \)$ (more features than samples), Elastic Net performs well by combining sparsity and regularization.
+3. **Bias-Variance Tradeoff**: By tuning $\( \lambda_1 \) and \( \lambda_2 \) (or \( \lambda \) and \( \alpha \))$, Elastic Net balances model complexity and generalization.
 4. **Robustness**: The L2 penalty ensures the optimization problem is well-conditioned, even when features are highly correlated or the design matrix is ill-conditioned.
 
 #### **Geometric Intuition**:
-- The L1 penalty $ (\( \sum |\theta_j| \leq t_1 \)) $ forms a diamond-shaped constraint region with sharp corners, promoting sparsity.
-- The L2 penalty $ (\( \sum \theta_j^2 \leq t_2 \)) $ forms a spherical constraint region, encouraging smaller, non-zero weights.
+- The L1 penalty $(\( \sum |\theta_j| \leq t_1 \))$ forms a diamond-shaped constraint region with sharp corners, promoting sparsity.
+- The L2 penalty $(\( \sum \theta_j^2 \leq t_2 \))$ forms a spherical constraint region, encouraging smaller, non-zero weights.
 - Elastic Net’s penalty is a convex combination of these constraints, creating a region with rounded edges and some sharp corners. This allows solutions to be sparse (due to L1) but also stable and distributed across correlated features (due to L2).
 
 ---
@@ -46,11 +46,11 @@ In matrix form, the Elastic Net objective function is:
 
 ### **4. How Elastic Net Regression Works: Optimization**
 
-The Elastic Net objective function is not fully differentiable due to the L1 term (\( |\theta_j| \)), but the L2 term is smooth, making optimization feasible with specialized methods. Below are the primary optimization techniques:
+The Elastic Net objective function is not fully differentiable due to the L1 term $(\( |\theta_j| \))$, but the L2 term is smooth, making optimization feasible with specialized methods. Below are the primary optimization techniques:
 
 #### **4.1 Coordinate Descent**
 
-Coordinate descent is the most common method for solving Elastic Net regression, as it efficiently handles the combination of L1 and L2 penalties. The algorithm optimizes one parameter \( \theta_j \) at a time, keeping others fixed. For the \( j \)-th parameter, the objective is:
+Coordinate descent is the most common method for solving Elastic Net regression, as it efficiently handles the combination of L1 and L2 penalties. The algorithm optimizes one parameter $\( \theta_j \)$ at a time, keeping others fixed. For the $\( j \)-th$ parameter, the objective is:
 
 <img width="939" height="532" alt="image" src="https://github.com/user-attachments/assets/65d0e5a3-1834-4f16-b038-aa2743ab9518" />
 
@@ -87,25 +87,25 @@ For large-scale problems, **Alternating Direction Method of Multipliers (ADMM)**
 ### **5. Why Elastic Net Works: Bias-Variance Tradeoff**
 
 Elastic Net controls the **bias-variance tradeoff**:
-- **High \( \lambda_1, \lambda_2 \)**: Increases bias by shrinking parameters (and setting some to zero via L1), reducing model complexity and variance, which prevents overfitting.
-- **Low \( \lambda_1, \lambda_2 \)**: Reduces bias but increases variance, as the model fits the training data more closely.
+- $High \( \lambda_1, \lambda_2 \)$: Increases bias by shrinking parameters (and setting some to zero via L1), reducing model complexity and variance, which prevents overfitting.
+- $Low \( \lambda_1, \lambda_2 \)$: Reduces bias but increases variance, as the model fits the training data more closely.
 
-By tuning \( \lambda_1 \) and \( \lambda_2 \) (or \( \lambda \) and \( \alpha \)), Elastic Net balances sparsity, stability, and fit to the data. Cross-validation is used to select optimal hyperparameters.
+By tuning $\( \lambda_1 \) and \( \lambda_2 \) (or \( \lambda \) and \( \alpha \))$, Elastic Net balances sparsity, stability, and fit to the data. Cross-validation is used to select optimal hyperparameters.
 
 ---
 
 ### **6. Where Elastic Net Regression Works**
 
 Elastic Net is particularly effective in the following scenarios:
-1. **High-Dimensional Data with Correlated Features**: When \( p > n \) and features are correlated, Elastic Net outperforms Lasso by distributing weights across correlated features (due to L2) while still selecting a sparse subset (due to L1).
+1. **High-Dimensional Data with Correlated Features**: When $\( p > n \)$ and features are correlated, Elastic Net outperforms Lasso by distributing weights across correlated features (due to L2) while still selecting a sparse subset (due to L1).
 2. **Sparse but Stable Models**: When a sparse model is desired but stability is also important, Elastic Net strikes a balance.
 3. **Genomics and Bioinformatics**: In datasets with thousands of features (e.g., gene expression data), where only a subset is relevant but features are correlated, Elastic Net is widely used.
 4. **Text and Image Processing**: In natural language processing or computer vision, where features (e.g., words or pixels) are high-dimensional and correlated, Elastic Net performs well.
 5. **Finance**: For predicting stock prices or risk models with correlated predictors, Elastic Net provides robust and interpretable models.
 
 #### **Limitations**:
-- **Hyperparameter Tuning**: Elastic Net requires tuning two hyperparameters (\( \lambda_1, \lambda_2 \) or \( \lambda, \alpha \)), which can be computationally expensive.
-- **Interpretability**: While sparser than Ridge, Elastic Net is less interpretable than Lasso when \( \alpha \) is far from 1, as more features may have non-zero weights.
+- **Hyperparameter Tuning**: Elastic Net requires tuning two hyperparameters $(\( \lambda_1, \lambda_2 \) or \( \lambda, \alpha \))$, which can be computationally expensive.
+- **Interpretability**: While sparser than Ridge, Elastic Net is less interpretable than Lasso when $\( \alpha \)$ is far from 1, as more features may have non-zero weights.
 - **Computational Complexity**: Optimization is more complex than Ridge due to the L1 term, though coordinate descent mitigates this.
 
 ---
@@ -126,12 +126,12 @@ Elastic Net is particularly effective in the following scenarios:
 
 1. **Implementation**:
    - Libraries like scikit-learn provide `ElasticNet` for regression, using coordinate descent.
-   - Example: `sklearn.linear_model.ElasticNet` allows tuning of \( \lambda \) (via `alpha`) and \( \alpha \) (via `l1_ratio`).
+   - Example: `sklearn.linear_model.ElasticNet` allows tuning of $\( \lambda \) (via `alpha`)$ and $\( \alpha \) (via `l1_ratio`)$.
    - In deep learning, Elastic Net-style penalties are less common but can be implemented as custom loss functions.
 
 2. **Hyperparameter Tuning**:
-   - Use cross-validation to select \( \lambda \) and \( \alpha \). Scikit-learn’s `ElasticNetCV` automates this process.
-   - A grid search over \( \lambda \) and \( \alpha \) (or \( \lambda_1, \lambda_2 \)) is common.
+   - Use cross-validation to select $\( \lambda \) and \( \alpha \)$. Scikit-learn’s `ElasticNetCV` automates this process.
+   - A grid search over $\( \lambda \) and \( \alpha \) (or \( \lambda_1, \lambda_2 \))$ is common.
 
 3. **Standardization**:
    - Features must be standardized (zero mean, unit variance) before applying Elastic Net, as both L1 and L2 penalties are sensitive to feature scales.
@@ -158,7 +158,7 @@ Combining these, the solution is:
 
 ### **10. Example**
 
-Suppose we have a dataset with three features $\( x_1, x_2, x_3 \), where \( x_1 \) and \( x_2 \)$ are highly correlated, and we fit an Elastic Net model with $\( \alpha = 0.5, \lambda = 0.1 \)$ . After optimization, we might obtain weights like \( \theta_1 = 0.2, \theta_2 = 0.3, \theta_3 = 0 \). The model selects \( x_3 \) out (sparsity from L1) while distributing weights across the correlated \( x_1 \) and \( x_2 \) (stability from L2), resulting in a robust and interpretable model.
+Suppose we have a dataset with three features $\( x_1, x_2, x_3 \), where \( x_1 \) and \( x_2 \)$ are highly correlated, and we fit an Elastic Net model with $\( \alpha = 0.5, \lambda = 0.1 \)$ . After optimization, we might obtain weights like $\( \theta_1 = 0.2, \theta_2 = 0.3, \theta_3 = 0 \)$. The model selects $\( x_3 \) out (sparsity from L1)$ while distributing weights across the correlated $\( x_1 \) and \( x_2 \) (stability from L2)$, resulting in a robust and interpretable model.
 
 ---
 
