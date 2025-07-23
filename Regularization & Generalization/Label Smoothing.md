@@ -44,12 +44,8 @@ where:
 <img width="819" height="548" alt="image" src="https://github.com/user-attachments/assets/5b3cfe71-59f8-4912-9d53-84b55e19e619" />
 
 #### Backward Pass
-The gradient of the smoothed loss w.r.t. the logits $\( z_{i,k} \)$ is:
-$$
-\[
-\frac{\partial L_{\text{smooth}}}{\partial z_{i,k}} = P_{i,k} - Y_{i,k}^{\text{smooth}}
-\]
-$$
+<img width="736" height="120" alt="image" src="https://github.com/user-attachments/assets/4ac903dd-e52a-4976-bc28-4736d3b474f0" />
+
 
 This is similar to standard cross-entropy but uses the smoothed labels, ensuring gradients are non-zero for all classes.
 
