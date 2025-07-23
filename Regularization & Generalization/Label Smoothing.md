@@ -183,4 +183,4 @@ Some frameworks (e.g., TensorFlow) have built-in support for Label Smoothing. In
 ### 11. **Conclusion**
 Label Smoothing is a simple yet effective regularization technique that improves model generalization and calibration by softening hard labels during training. It prevents overconfident predictions, reduces overfitting, and is particularly useful in classification tasks with deep neural networks. The provided code demonstrates a custom implementation in PyTorch, which can be easily integrated into training pipelines. By carefully tuning the smoothing parameter and combining with other regularizers, Label Smoothing can significantly enhance model performance.
 
-If you need further details, specific applications (e.g., in transformers), or additional code examples, let me know!
+
