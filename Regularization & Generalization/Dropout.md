@@ -17,9 +17,9 @@ Dropout is a regularization technique introduced by Srivastava et al. in their 2
 
 #### How Dropout Works
 1. **During Training**:
-   - For each training iteration (forward and backward pass), a random subset of neurons in a layer is "dropped" (set to zero) with a probability \( p \), called the **dropout rate**. Typically, \( p \) is set between 0.2 and 0.5 (e.g., 20%–50% of neurons are dropped).
+   - For each training iteration (forward and backward pass), a random subset of neurons in a layer is "dropped" (set to zero) with a probability $\( p \), called the **dropout rate**. Typically, \( p \) is set between 0.2 and 0.5 (e.g., 20%–50% of neurons are dropped)$.
    - The outputs of the dropped neurons are set to zero, and their connections to the next layer are ignored for that iteration.
-   - The remaining neurons are scaled by \( \frac{1}{1-p} \) during training to maintain the expected output magnitude (this is called **inverted dropout**).
+   - The remaining neurons are scaled by $\( \frac{1}{1-p} \)$ during training to maintain the expected output magnitude (this is called **inverted dropout**).
 
 2. **During Inference (Testing)**:
    - No neurons are dropped; the full network is used.
