@@ -26,11 +26,11 @@ Dropout is a regularization technique introduced by Srivastava et al. in their 2
    - To account for the scaling done during training, the weights of the neurons are scaled by \( 1-p \) (or the scaling is handled during training via inverted dropout, so no adjustment is needed at test time).
 
 #### Mathematical Representation
-Consider a layer with input \( x \), weights \( W \), and output \( y = Wx + b \). With dropout:
-- A binary mask \( r \sim \text{Bernoulli}(1-p) \) is applied to the neurons.
-- The output becomes \( y = (W \cdot (r \odot x)) + b \), where \( \odot \) denotes element-wise multiplication.
-- During training, the mask \( r \) randomly sets some neuron outputs to zero.
-- During inference, the output is \( y = (1-p)Wx + b \) (if not using inverted dropout).
+Consider a layer with input $\( x \), weights \( W \), and output \( y = Wx + b \)$. With dropout:
+- A binary mask $\( r \sim \text{Bernoulli}(1-p) \)$ is applied to the neurons.
+- The output becomes $\( y = (W \cdot (r \odot x)) + b \), where \( \odot \)$ denotes element-wise multiplication.
+- During training, the mask $\( r \)$ randomly sets some neuron outputs to zero.
+- During inference, the output is $\( y = (1-p)Wx + b \)$ (if not using inverted dropout).
 
 #### Why Dropout Works
 - **Prevents Co-adaptation**: By randomly dropping neurons, the network cannot rely on specific neurons being present, forcing it to learn redundant representations.
@@ -65,12 +65,12 @@ DropConnect, introduced by Wan et al. in their 2013 paper, *"Regularization of N
 
 #### How DropConnect Works
 1. **During Training**:
-   - Instead of dropping entire neurons, DropConnect randomly sets a subset of **weights** in the weight matrix \( W \) to zero with probability \( p \).
-   - For a layer with input \( x \), weights \( W \), and bias \( b \), the output is computed as \( y = (M \odot W)x + b \), where \( M \sim \text{Bernoulli}(1-p) \) is a binary mask applied element-wise to the weight matrix.
-   - Similar to dropout, the remaining weights are scaled by \( \frac{1}{1-p} \) during training.
+   - Instead of dropping entire neurons, DropConnect randomly sets a subset of **weights** in the weight matrix $\( W \) to zero with probability \( p \)$.
+   - For a layer with input $\( x \), weights \( W \), and bias \( b \)$, the output is computed as $\( y = (M \odot W)x + b \), where \( M \sim \text{Bernoulli}(1-p) \)$ is a binary mask applied element-wise to the weight matrix.
+   - Similar to dropout, the remaining weights are scaled by $\( \frac{1}{1-p} \)$ during training.
 
 2. **During Inference**:
-   - No weights are dropped; the full weight matrix is used, scaled by \( 1-p \) (or handled via inverted dropout).
+   - No weights are dropped; the full weight matrix is used, scaled by $\( 1-p \) (or handled via inverted dropout)$.
 
 #### Key Differences from Dropout
 - **Granularity**: Dropout drops entire neurons (all weights connected to a neuron), while DropConnect drops individual weights, leading to finer-grained randomization.
