@@ -211,7 +211,8 @@ model = MyModel()
 
 ### 11. **Practical Considerations**
 - **Activation Function**: Match the initialization to the activation function (Xavier for tanh/sigmoid, He for ReLU).
-- **Layer Size**: Ensure $\( n_{\text{in}} \) and \( n_{\text{out}} \) are correctly computed, especially for convolutional layers (e.g., \( n_{\text{in}} = \text{kernel_size}^2 \times \text{in_channels} \))$.
+-<img width="946" height="68" alt="image" src="https://github.com/user-attachments/assets/edb01d94-ea2f-4304-8f61-155bfa1dfdf9" />
+
 - **Bias Initialization**: Biases are typically set to 0, but small constants (e.g., 0.01) can be used for specific cases.
 - **Framework Support**: Use built-in functions (e.g., `torch.nn.init`) for convenience and correctness.
 - **Experimentation**: Test different initializations if convergence is slow or unstable, especially in custom architectures.
@@ -221,4 +222,4 @@ model = MyModel()
 ### 12. **Conclusion**
 Xavier/Glorot and He Initialization are principled methods for initializing neural network weights to ensure stable training and fast convergence. Xavier is suited for symmetric activations like tanh, while He is tailored for ReLU-based networks, particularly deep CNNs. By maintaining appropriate variance in activations and gradients, these methods prevent vanishing/exploding gradients and improve model performance. The provided code examples demonstrate both custom and PyTorch-based implementations. Choosing the right initialization depends on the activation function and architecture, and combining with other techniques like normalization or regularization can further enhance training.
 
-If you need further details, specific applications (e.g., initialization in transformers), or additional code, let me know!
+
