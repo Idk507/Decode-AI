@@ -12,19 +12,8 @@ Step Decay reduces the learning rate by a fixed factor (e.g., divide by 10) at s
 - **When to use**: When you know roughly how many epochs you’ll train and want predictable drops in the learning rate.
 
 #### **Math**
-The learning rate at time $\( t \) (or epoch)$ is:
+<img width="721" height="457" alt="image" src="https://github.com/user-attachments/assets/aa43a7ee-451e-41a1-9c1a-e692aca84400" />
 
-$\[ \eta_t = \eta_0 \cdot \gamma^{\lfloor \frac{t}{\text{step_size}} \rfloor} \]$
-
-- $\( \eta_0 \): Initial learning rate.$
-- $\( \gamma \): Decay factor (e.g., 0.1 to reduce by 10x).$
-- $\( \text{step_size} \): Number of epochs after which to reduce the learning rate.$
-- $\( \lfloor \cdot \rfloor \): Floor function (rounds down to the nearest integer).$
-
-**Example**: If $\( \eta_0 = 0.1 \), \( \gamma = 0.1 \), and \( \text{step_size} = 10 \):$
-- $Epoch 0–9: \( \eta = 0.1 \)$
-- $Epoch 10–19: \( \eta = 0.01 \)$
-- $Epoch 20–29: \( \eta = 0.001 \)$
 
 #### **Pros and Cons**
 - **Pros**: Simple, predictable, works well for many tasks.
@@ -43,21 +32,7 @@ Cosine Annealing reduces the learning rate smoothly following a cosine curve ove
 - **When to use**: For tasks like image classification or NLP, especially with large models like Transformers, or when you want to explore the loss landscape smoothly.
 
 #### **Math**
-The learning rate at time \( t \) is:
-
-\[ \eta_t = \eta_{\text{min}} + \frac{1}{2}(\eta_{\text{max}} - \eta_{\text{min}})\left(1 + \cos\left(\frac{t}{T_{\text{max}}}\pi\right)\right) \]
-
-- \( \eta_{\text{max}} \): Maximum learning rate (initial value).
-- \( \eta_{\text{min}} \): Minimum learning rate (often 0 or very small).
-- \( T_{\text{max}} \): Total steps or epochs for one cycle.
-- \( t \): Current step or epoch.
-
-The learning rate starts at \( \eta_{\text{max}} \), decreases to \( \eta_{\text{min}} \) over \( T_{\text{max}} \) steps, following a cosine curve.
-
-**Example**: If \( \eta_{\text{max}} = 0.1 \), \( \eta_{\text{min}} = 0 \), and \( T_{\text{max}} = 10 \):
-- At \( t = 0 \): \( \eta = 0.1 \)
-- At \( t = 5 \): \( \eta \approx 0.05 \)
-- At \( t = 10 \): \( \eta = 0 \)
+<img width="900" height="511" alt="image" src="https://github.com/user-attachments/assets/33ca4c99-0b14-4f94-a195-5eea17389588" />
 
 #### **Pros and Cons**
 - **Pros**: Smooth decay, works well for deep networks, supports warm restarts for cycling.
@@ -76,23 +51,8 @@ Cyclic Learning Rates oscillate the learning rate between a minimum and maximum 
 - **When to use**: For complex models or datasets where the loss landscape is rugged, or when you want to train faster with less hyperparameter tuning.
 
 #### **Math**
-The most common CLR is the **triangular policy**:
-- The learning rate cycles between \( \eta_{\text{min}} \) and \( \eta_{\text{max}} \) over a cycle length (e.g., \( 2 \cdot \text{step_size} \)).
-- For a triangular cycle:
-  - First half (\( t \leq \text{step_size} \)): Increase from \( \eta_{\text{min}} \) to \( \eta_{\text{max}} \).
-  - Second half (\( \text{step_size} < t \leq 2 \cdot \text{step_size} \)): Decrease from \( \eta_{\text{max}} \) to \( \eta_{\text{min}} \).
+<img width="960" height="650" alt="image" src="https://github.com/user-attachments/assets/54d0f49b-391f-4782-8356-fe347f21352e" />
 
-Formula for the triangular policy:
-
-\[ \eta_t = \eta_{\text{min}} + (\eta_{\text{max}} - \eta_{\text{min}}) \cdot \max\left(0, 1 - \left|\frac{t \mod (2 \cdot \text{step_size})}{\text{step_size}} - 1\right|\right) \]
-
-- \( \text{step_size} \): Half the cycle length.
-- \( t \mod (2 \cdot \text{step_size}) \): Ensures the cycle repeats.
-
-**Example**: If \( \eta_{\text{min}} = 0.001 \), \( \eta_{\text{max}} = 0.1 \), and \( \text{step_size} = 1000 \):
-- Steps 0–1000: \( \eta \) increases from 0.001 to 0.1.
-- Steps 1000–2000: \( \eta \) decreases from 0.1 to 0.001.
-- Repeats every 2000 steps.
 
 #### **Pros and Cons**
 - **Pros**: Reduces need for learning rate tuning, helps escape local minima, speeds up training.
@@ -220,57 +180,8 @@ print("Training finished!")
 
 To help understand how the learning rates change, here’s a chart comparing the three schedulers over 20 epochs (assuming ~938 batches per epoch for Cyclic LR).
 
-```chartjs
-{
-  "type": "line",
-  "data": {
-    "labels": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-    "datasets": [
-      {
-        "label": "Step Decay",
-        "data": [0.1, 0.1, 0.1, 0.1, 0.1, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001, 0.001, 0.001, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001],
-        "borderColor": "#1f77b4",
-        "fill": false
-      },
-      {
-        "label": "Cosine Annealing",
-        "data": [0.1, 0.0981, 0.0924, 0.0833, 0.0713, 0.0566, 0.0399, 0.0223, 0.0085, 0.0019, 0.001, 0.0019, 0.0085, 0.0223, 0.0399, 0.0566, 0.0713, 0.0833, 0.0924, 0.0981],
-        "borderColor": "#ff7f0e",
-        "fill": false
-      },
-      {
-        "label": "Cyclic LR (Triangular)",
-        "data": [0.001, 0.021, 0.041, 0.061, 0.081, 0.1, 0.081, 0.061, 0.041, 0.021, 0.001, 0.021, 0.041, 0.061, 0.081, 0.1, 0.081, 0.061, 0.041, 0.021],
-        "borderColor": "#2ca02c",
-        "fill": false
-      }
-    ]
-  },
-  "options": {
-    "title": {
-      "display": true,
-      "text": "Learning Rate Schedules"
-    },
-    "scales": {
-      "x": {
-        "title": {
-          "display": true,
-          "text": "Epoch"
-        }
-      },
-      "y": {
-        "title": {
-          "display": true,
-          "text": "Learning Rate"
-        },
-        "type": "linear",
-        "min": 0,
-        "max": 0.12
-      }
-    }
-  }
-}
-```
+<img width="1006" height="563" alt="image" src="https://github.com/user-attachments/assets/1d023514-ced2-4236-9c51-ca61df84076f" />
+
 
 **Chart Explanation**:
 - **Step Decay** (blue): Drops from 0.1 to 0.01 at epoch 5, to 0.001 at epoch 10, etc.
