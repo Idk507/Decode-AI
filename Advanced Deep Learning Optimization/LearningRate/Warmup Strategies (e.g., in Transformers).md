@@ -25,6 +25,8 @@ Warmup is particularly important for **Transformers** (e.g., BERT, GPT) because:
 <img width="1065" height="694" alt="image" src="https://github.com/user-attachments/assets/704c363b-1e36-4c6f-844e-02eb1519ef38" />
 
 **Example (Linear Warmup)**:
+
+
 <img width="718" height="227" alt="image" src="https://github.com/user-attachments/assets/caee521e-b149-4f83-99bc-ef861ceae025" />
 
 ---
