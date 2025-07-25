@@ -29,11 +29,7 @@ The binomial distribution is defined by its **Probability Mass Function (PMF)**,
 
 #### Cumulative Distribution Function (CDF)
 The CDF gives the probability of observing at most \( k \) successes:
-$$
-\[
-P(X \leq k) = \sum_{i=0}^{k} \binom{n}{i} p^i (1-p)^{n-i}
-\]
-$$
+$\P(X \leq k) = \sum_{i=0}^{k} \binom{n}{i} p^i (1-p)^{n-i}\$
 This is computationally intensive for large \( n \), so software or approximations (e.g., normal approximation) are often used.
 
 <img width="1018" height="650" alt="image" src="https://github.com/user-attachments/assets/5559111a-73c0-47b9-a901-c221c63b2061" />
