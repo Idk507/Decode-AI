@@ -234,6 +234,6 @@ print(expon.var(scale=1/lambda_))   # ~0.111
 
 ### Conclusion
 
-The exponential distribution is a powerful tool for modeling the time between events in a Poisson process, with applications in survival analysis, queueing theory, and reliability engineering. Its memoryless property, simple PDF (\( \lambda e^{-\lambda x} \)), and relationship to the Poisson distribution make it a cornerstone of statistical modeling. Visualizations and software tools (e.g., Python, R) enable data scientists to compute probabilities, simulate scenarios, and optimize systems. By understanding its properties and limitations, practitioners can effectively apply the exponential distribution to analyze time-to-event data and inform decision-making.
+The exponential distribution is a powerful tool for modeling the time between events in a Poisson process, with applications in survival analysis, queueing theory, and reliability engineering. Its memoryless property, simple PDF $(\( \lambda e^{-\lambda x} \))$, and relationship to the Poisson distribution make it a cornerstone of statistical modeling. Visualizations and software tools (e.g., Python, R) enable data scientists to compute probabilities, simulate scenarios, and optimize systems. By understanding its properties and limitations, practitioners can effectively apply the exponential distribution to analyze time-to-event data and inform decision-making.
 
 If you’d like further details (e.g., coding examples, comparisons with Gamma/Weibull, or specific applications), let me know!
