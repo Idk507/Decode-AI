@@ -59,32 +59,27 @@ There are three main types of parallelism in distributed training:
 In distributed training, the goal is to optimize the model parameters using gradient descent across multiple devices. The math varies by parallelism type:
 
 1. **Data Parallelism**:
-   - Each device \( i \) processes a mini-batch \( B_i \) and computes local gradients \( \nabla L_i \).
-   - Synchronize gradients across \( N \) devices (e.g., average):
-     \[ \nabla L = \frac{1}{N} \sum_{i=1}^N \nabla L_i \]
-   - Update weights in FP32 (or mixed precision):
-     \[ w_{t+1} = w_t - \eta \cdot \nabla L \]
-   - **Key**: Synchronization ensures all devices have identical weights.
+ <img width="790" height="180" alt="image" src="https://github.com/user-attachments/assets/4d7140e4-be99-4212-a8f5-6811cce9ebfd" />
+
 
 2. **Model Parallelism**:
-   - Split model parameters \( w = [w_1, w_2, \dots, w_M] \) across devices.
-   - Each device computes gradients for its parameters: \( \nabla L(w_i) \).
-   - Forward/backward passes require communication (e.g., passing activations).
-   - Update: \( w_i^{t+1} = w_i^t - \eta \cdot \nabla L(w_i) \).
+  <img width="775" height="197" alt="image" src="https://github.com/user-attachments/assets/f56b8ba2-5482-4aa8-bd59-a0500f607d6a" />
 
 3. **Pipeline Parallelism**:
-   - Divide model into stages \( S_1, S_2, \dots, S_K \), each on a device.
+   - Divide model into stages $\( S_1, S_2, \dots, S_K \),$ each on a device.
    - Process mini-batches in a pipeline, passing activations between stages.
    - Gradients are computed per stage and synchronized for updates.
 
 **Loss Scaling in Mixed Precision**:
 - In mixed precision (from your previous question), gradients are computed in FP16 and scaled to avoid underflow:
-  \[ \nabla (L \cdot S) = S \cdot \nabla L \]
+ <img width="233" height="40" alt="image" src="https://github.com/user-attachments/assets/e91d27fe-e78b-4b9f-b201-3fea9b31f50c" />
+
 - After synchronization, unscale gradients for weight updates.
 
 **Learning Rate Adjustment**:
-- In data parallelism, the effective batch size is \( N \cdot B \) (where \( B \) is the per-device batch size). You may scale the learning rate:
-  \[ \eta_{\text{effective}} = \eta \cdot \sqrt{N} \text{ or } \eta \cdot N \]
+- In data parallelism, the effective batch size is $\( N \cdot B \) (where \( B \)$ is the per-device batch size). You may scale the learning rate:
+<img width="284" height="45" alt="image" src="https://github.com/user-attachments/assets/e700fc10-9fd0-45f3-adeb-03b8c8ba21ae" />
+
 - Combine with warmup and scheduling (e.g., Noam scheduler) for stability.
 
 ---
@@ -275,7 +270,7 @@ if __name__ == "__main__":
 3. **Combine with Other Techniques**:
    - Use mixed precision to reduce memory and speed up training.
    - Apply warmup and gradient clipping to stabilize distributed training.
-   - Adjust learning rate for larger effective batch sizes (e.g., \( \eta \cdot \sqrt{N} \)).
+   - Adjust learning rate for larger effective batch sizes (e.g., $\( \eta \cdot \sqrt{N} \)).$
 
 4. **Debugging**:
    - Monitor GPU memory usage and communication bottlenecks.
@@ -291,45 +286,8 @@ To visualize the benefits, you’d typically track:
 
 A hypothetical chart for training time vs. number of GPUs:
 
-```chartjs
-{
-  "type": "line",
-  "data": {
-    "labels": [1, 2, 4, 8],
-    "datasets": [
-      {
-        "label": "Training Time (hours)",
-        "data": [10, 5.2, 2.7, 1.5],
-        "borderColor": "#1f77b4",
-        "fill": false
-      }
-    ]
-  },
-  "options": {
-    "title": {
-      "display": true,
-      "text": "Training Time vs. Number of GPUs"
-    },
-    "scales": {
-      "x": {
-        "title": {
-          "display": true,
-          "text": "Number of GPUs"
-        }
-      },
-      "y": {
-        "title": {
-          "display": true,
-          "text": "Training Time (hours)"
-        },
-        "type": "linear",
-        "min": 0,
-        "max": 12
-      }
-    }
-  }
-}
-```
+<img width="1000" height="558" alt="image" src="https://github.com/user-attachments/assets/1d176daf-10fe-4349-8de9-cf0701f4ebc7" />
+
 
 **Chart Explanation**: Training time decreases as GPUs increase, but not perfectly linearly due to communication overhead.
 
