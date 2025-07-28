@@ -14,50 +14,38 @@ Meta-learning is commonly applied in:
 
 ### Mathematical Foundations
 
-Meta-learning operates on a distribution of tasks, \( p(\mathcal{T}) \), where each task \( \mathcal{T}_i \) consists of a dataset \( \mathcal{D}_i = \{(\mathbf{x}_j, \mathbf{y}_j)\}_{j=1}^{N_i} \) with inputs \( \mathbf{x}_j \) and labels \( \mathbf{y}_j \). The goal is to learn a model \( f_\theta \) parameterized by \( \theta \) that can adapt to a new task \( \mathcal{T}_j \) with minimal updates.
+Meta-learning operates on a distribution of tasks, $\( p(\mathcal{T}) \)$, where each task $\( \mathcal{T}_i \)$ consists of a dataset $\( \mathcal{D}_i = \{(\mathbf{x}_j, \mathbf{y}_j)\}_{j=1}^{N_i} \)$ with inputs $\( \mathbf{x}_j \)$ and labels $\( \mathbf{y}_j \).$ The goal is to learn a model $\( f_\theta \)$ parameterized by $\( \theta \)$ that can adapt to a new task $\( \mathcal{T}_j \)$ with minimal updates.
 
 #### Key Concepts
 1. **Task Distribution**:
-   - Tasks are sampled from a distribution \( \mathcal{T}_i \sim p(\mathcal{T}) \).
-   - Each task has a support set (training data) and a query set (test data). For example, in \( k \)-shot learning, the support set contains \( k \) examples per class.
+   - Tasks are sampled from a distribution $\( \mathcal{T}_i \sim p(\mathcal{T}) \).$
+   - Each task has a support set (training data) and a query set (test data). For example, in $\( k \)-shot learning$, the support set contains $\( k \)$ examples per class.
 
 2. **Inner Loop and Outer Loop**:
    - **Inner Loop**: The model adapts to a specific task using the support set, typically via gradient descent.
    - **Outer Loop**: The model optimizes its initialization or learning strategy across multiple tasks to improve adaptation performance.
 
 3. **Loss Functions**:
-   - For a task \( \mathcal{T}_i \), the model computes a task-specific loss \( \mathcal{L}_{\mathcal{T}_i}(f_\theta, \mathcal{D}_i) \), often the mean squared error or cross-entropy loss.
+   - For a task $\( \mathcal{T}_i \)$, the model computes a task-specific loss $\( \mathcal{L}_{\mathcal{T}_i}(f_\theta, \mathcal{D}_i) \),$
+     often the mean squared error or cross-entropy loss.
    - The meta-objective is to minimize the expected loss across tasks:
-     \[
-     \min_\theta \mathbb{E}_{\mathcal{T}_i \sim p(\mathcal{T})} \left[ \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}) \right],
-     \]
-     where \( \theta_i' \) is the adapted parameter for task \( \mathcal{T}_i \).
+     <img width="352" height="95" alt="image" src="https://github.com/user-attachments/assets/aae8bf5e-fa07-4b83-8713-375528f96e15" />
+
+     where $\( \theta_i' \)$ is the adapted parameter for task $\( \mathcal{T}_i \).$
 
 #### Optimization-Based Meta-Learning (e.g., MAML)
 Model-Agnostic Meta-Learning (MAML) is a popular optimization-based meta-learning algorithm. MAML seeks an initial set of parameters \( \theta \) such that a few gradient descent steps on a new task produce a model that performs well.
 
-- **Inner Loop Update**:
-  For a task \( \mathcal{T}_i \), compute task-specific parameters \( \theta_i' \) using the support set:
-  \[
-  \theta_i' = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(f_\theta, \mathcal{D}_i^{\text{support}}),
-  \]
-  where \( \alpha \) is the inner loop learning rate.
+<img width="1004" height="375" alt="image" src="https://github.com/user-attachments/assets/fadaf1a1-895b-4f21-943d-f4b7de21d1b9" />
 
-- **Outer Loop Update**:
-  Update the initial parameters \( \theta \) to minimize the loss on the query set across tasks:
-  \[
-  \theta \gets \theta - \beta \nabla_\theta \sum_{\mathcal{T}_i \sim p(\mathcal{T})} \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}),
-  \]
-  where \( \beta \) is the outer loop learning rate.
 
 This requires computing second-order gradients (gradients of gradients), which can be computationally expensive but ensures the initialization is optimized for fast adaptation.
 
 #### Metric-Based Meta-Learning
-Metric-based approaches, like Prototypical Networks, learn a feature embedding space where examples from the same class are close together. For a task \( \mathcal{T}_i \), the support set is used to compute class prototypes:
-\[
-\mathbf{c}_k = \frac{1}{|\mathcal{D}_k^{\text{support}}|} \sum_{(\mathbf{x}_j, \mathbf{y}_j) \in \mathcal{D}_k^{\text{support}}} f_\theta(\mathbf{x}_j),
-\]
-where \( \mathbf{c}_k \) is the prototype for class \( k \). The model classifies query examples based on their distance (e.g., Euclidean) to these prototypes.
+Metric-based approaches, like Prototypical Networks, learn a feature embedding space where examples from the same class are close together. For a task $\( \mathcal{T}_i \)$, the support set is used to compute class prototypes:
+<img width="424" height="141" alt="image" src="https://github.com/user-attachments/assets/2c18e367-b9e0-45c9-88d7-70a5cf2757a3" />
+
+where $\( \mathbf{c}_k \)$ is the prototype for class $\( k \).$ The model classifies query examples based on their distance (e.g., Euclidean) to these prototypes.
 
 #### Model-Based Meta-Learning
 Model-based approaches, like Memory-Augmented Neural Networks (MANNs), use architectures with memory components (e.g., LSTMs or external memory) to store task-specific information and retrieve it during adaptation.
@@ -279,9 +267,8 @@ if __name__ == "__main__":
 
 2. **Reptile**:
    - A simpler meta-learning algorithm that updates the model by moving the initialization towards task-specific parameters:
-     \[
-     \theta \gets \theta + \beta (\theta_i' - \theta).
-     \]
+     <img width="241" height="63" alt="image" src="https://github.com/user-attachments/assets/0481eaf9-d6d0-4de3-b196-e73dd5019829" />
+
 
 3. **Bayesian Meta-Learning**:
    - Incorporates uncertainty by modeling parameter distributions (e.g., using variational inference).
