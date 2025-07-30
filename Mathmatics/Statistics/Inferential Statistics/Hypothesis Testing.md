@@ -18,9 +18,9 @@ Hypothesis testing is a statistical process for evaluating claims about a popula
 - **Alternative Hypothesis $(\(H_1\) or \(H_a\))$**: The claim to be tested, stating an effect, difference, or relationship.
   - Example: $\(H_1: \mu \neq 50\)$ (the population mean is not 50).
 - Types of alternative hypotheses:
-  - **Two-tailed**: Tests for any difference (e.g., $\(H_1: \mu \neq 50\)$).
-  - **One-tailed (left-tailed)**: Tests for a decrease (e.g., $\(H_1: \mu < 50\)$).
-  - **One-tailed (right-tailed)**: Tests for an increase (e.g., $\(H_1: \mu > 50\)$).
+  - **Two-tailed**: Tests for any difference $(e.g., \(H_1: \mu \neq 50\)).$
+  - **One-tailed (left-tailed)**: Tests for a decrease $(e.g., \(H_1: \mu < 50\)).$
+  - **One-tailed (right-tailed)**: Tests for an increase $(e.g., \(H_1: \mu > 50\)).$
 
 #### **b. Significance Level $(\(\alpha\))$**
 - The probability of rejecting $\(H_0\)$ when it is true (Type I error rate).
