@@ -7,11 +7,11 @@ In hypothesis testing, **Type I** and **Type II errors** are the two primary typ
 #### **a. Type I Error (False Positive)**
 - A **Type I error** occurs when the null hypothesis $(\(H_0\))$ is **rejected** when it is actually **true**.
 - In other words, it’s concluding that there is an effect or difference when none exists in the population.
-- **Probability**: Denoted by #\(\alpha\)$, the **significance level**, which is the threshold for rejecting $\(H_0\) (e.g., \(\alpha = 0.05\)$means a 5% chance of a Type I error).
+- **Probability**: Denoted by $\(\alpha\), the **significance level**, which is the threshold for rejecting \(H_0\) (e.g., \(\alpha = 0.05\)$ means a 5% chance of a Type I error).
 - **Analogy**: Convicting an innocent person in a trial (saying they’re guilty when they’re not).
 - **Example**: 
   - $\(H_0\)$: A drug has no effect on blood pressure.
-  - Type I error: Concluding the drug lowers blood pressure (rejecting $\(H_0\)$) when it actually has no effect.
+  - Type I error: Concluding the drug lowers blood pressure $(rejecting \(H_0\))$ when it actually has no effect.
 
 #### **b. Type II Error (False Negative)**
 - A **Type II error** occurs when the null hypothesis $(\(H_0\))$ is **not rejected** when it is actually **false**.
