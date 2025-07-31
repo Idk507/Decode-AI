@@ -1,4 +1,4 @@
-In hypothesis testing, **Type I** and **Type II errors** are the two primary types of mistakes that can occur when making decisions about the null hypothesis (\(H_0\)) based on sample data. These errors represent the risks inherent in statistical testing, and understanding them is crucial for interpreting results and designing robust experiments. Below is a detailed explanation of Type I and Type II errors, including their definitions, probabilities, consequences, and strategies to manage them, along with examples and practical considerations.
+In hypothesis testing, **Type I** and **Type II errors** are the two primary types of mistakes that can occur when making decisions about the null hypothesis $(\(H_0\))$ based on sample data. These errors represent the risks inherent in statistical testing, and understanding them is crucial for interpreting results and designing robust experiments. Below is a detailed explanation of Type I and Type II errors, including their definitions, probabilities, consequences, and strategies to manage them, along with examples and practical considerations.
 
 ---
 
