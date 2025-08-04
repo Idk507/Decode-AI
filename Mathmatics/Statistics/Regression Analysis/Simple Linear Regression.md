@@ -171,68 +171,8 @@ Predicted score for 5.5 hours of study: 72.50
 ### Chart
 To visualize the relationship, here’s a scatter plot with the regression line (produced by the code above). For completeness, I’ll also provide a Chart.js configuration to represent the data as a scatter plot with the regression line.
 
-```chartjs
-{
-  "type": "scatter",
-  "data": {
-    "datasets": [
-      {
-        "label": "Data points",
-        "data": [
-          {"x": 1, "y": 50},
-          {"x": 2, "y": 55},
-          {"x": 3, "y": 60},
-          {"x": 4, "y": 65},
-          {"x": 5, "y": 70},
-          {"x": 6, "y": 75},
-          {"x": 7, "y": 80},
-          {"x": 8, "y": 85},
-          {"x": 9, "y": 90},
-          {"x": 10, "y": 95}
-        ],
-        "backgroundColor": "rgba(54, 162, 235, 0.8)",
-        "borderColor": "rgba(54, 162, 235, 1)",
-        "pointRadius": 5
-      },
-      {
-        "label": "Regression line",
-        "data": [
-          {"x": 1, "y": 50},
-          {"x": 10, "y": 95}
-        ],
-        "type": "line",
-        "borderColor": "rgba(255, 99, 132, 1)",
-        "fill": false
-      }
-    ]
-  },
-  "options": {
-    "scales": {
-      "x": {
-        "title": {
-          "display": true,
-          "text": "Hours Studied"
-        }
-      },
-      "y": {
-        "title": {
-          "display": true,
-          "text": "Exam Score"
-        }
-      }
-    },
-    "plugins": {
-      "legend": {
-        "display": true
-      },
-      "title": {
-        "display": true,
-        "text": "Simple Linear Regression: Hours Studied vs. Exam Score"
-      }
-    }
-  }
-}
-```
+<img width="1000" height="560" alt="image" src="https://github.com/user-attachments/assets/e27ab9ca-d65f-4bb4-ba4f-f92818ec3b46" />
+
 
 This chart shows the data points and the regression line, consistent with the Python visualization.
 
