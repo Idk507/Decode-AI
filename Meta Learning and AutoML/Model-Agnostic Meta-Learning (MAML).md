@@ -15,53 +15,42 @@ MAML consists of two nested optimization loops:
 
 ### Mathematical Foundations
 
-MAML operates on a distribution of tasks \( p(\mathcal{T}) \), where each task \( \mathcal{T}_i \) consists of a dataset \( \mathcal{D}_i = \{ \mathcal{D}_i^{\text{support}}, \mathcal{D}_i^{\text{query}} \} \). The support set is used for task-specific adaptation, and the query set evaluates the adapted model’s performance. The model, parameterized by \( \theta \), is typically a neural network \( f_\theta \).
+MAML operates on a distribution of tasks $\( p(\mathcal{T}) \)$, where each task $\( \mathcal{T}_i \)$ consists of a dataset $\( \mathcal{D}_i = \{ \mathcal{D}_i^{\text{support}}, \mathcal{D}_i^{\text{query}} \} \)$. The support set is used for task-specific adaptation, and the query set evaluates the adapted model’s performance. The model, parameterized by $\( \theta \)$, is typically a neural network $\( f_\theta \)$.
 
 #### Objective
 The goal is to find initial parameters \( \theta \) that minimize the expected loss across tasks after adaptation:
-\[
-\min_\theta \mathbb{E}_{\mathcal{T}_i \sim p(\mathcal{T})} \left[ \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}) \right],
-\]
-where \( \theta_i' \) are the task-specific parameters obtained after adapting \( \theta \) on task \( \mathcal{T}_i \), and \( \mathcal{L}_{\mathcal{T}_i} \) is the task-specific loss (e.g., cross-entropy for classification).
+<img width="948" height="148" alt="image" src="https://github.com/user-attachments/assets/39d573b3-4987-41f7-9dd1-944e5e39d34b" />
+
 
 #### Inner Loop (Task-Specific Adaptation)
-For a task \( \mathcal{T}_i \), MAML performs \( k \) gradient descent steps on the support set to compute adapted parameters \( \theta_i' \):
-\[
-\theta_i' = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(f_\theta, \mathcal{D}_i^{\text{support}}),
-\]
-where \( \alpha \) is the inner loop learning rate. For multiple steps:
-\[
-\theta_i^{(k)} = \theta_i^{(k-1)} - \alpha \nabla_{\theta_i^{(k-1)}} \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i^{(k-1)}}, \mathcal{D}_i^{\text{support}}).
-\]
+<img width="929" height="246" alt="image" src="https://github.com/user-attachments/assets/594262f4-c4a5-4bc5-86b9-2d929199cda8" />
+
 
 #### Outer Loop (Meta-Optimization)
-The outer loop updates the initial parameters \( \theta \) to minimize the query loss across tasks:
-\[
-\theta \gets \theta - \beta \nabla_\theta \sum_{\mathcal{T}_i \sim p(\mathcal{T})} \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}),
-\]
-where \( \beta \) is the outer loop learning rate. This requires computing second-order gradients (gradients of gradients), as the query loss depends on \( \theta_i' \), which itself depends on \( \theta \).
+The outer loop updates the initial parameters $\( \theta \)$ to minimize the query loss across tasks:
+<img width="421" height="106" alt="image" src="https://github.com/user-attachments/assets/3e9d09a0-1925-4366-94e2-0cda4d666a76" />
+
+where $\( \beta \)$ is the outer loop learning rate. This requires computing second-order gradients (gradients of gradients), as the query loss depends on $\( \theta_i' \)$, which itself depends on $\( \theta \)$.
 
 #### Second-Order Gradients
-The gradient of the query loss with respect to \( \theta \) involves the Hessian (second derivatives):
-\[
-\nabla_\theta \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}) = \nabla_{\theta_i'} \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}) \cdot \frac{\partial \theta_i'}{\partial \theta},
-\]
-where \( \frac{\partial \theta_i'}{\partial \theta} \) accounts for the inner loop updates. This makes MAML computationally expensive, as it requires backpropagating through the gradient descent steps.
+The gradient of the query loss with respect to $\( \theta \)$ involves the Hessian (second derivatives):
+<img width="519" height="80" alt="image" src="https://github.com/user-attachments/assets/6cd458ab-76dc-4494-a151-94e9279ccbd3" />
+
+where $\( \frac{\partial \theta_i'}{\partial \theta} \)$ accounts for the inner loop updates. This makes MAML computationally expensive, as it requires backpropagating through the gradient descent steps.
 
 #### First-Order Approximations
 To reduce computational cost, variants like First-Order MAML (FOMAML) and Reptile approximate the outer loop update:
-- **FOMAML**: Ignores second-order terms, using only the gradient of the query loss with respect to \( \theta_i' \).
-- **Reptile**: Updates \( \theta \) by moving it towards the adapted parameters:
-  \[
-  \theta \gets \theta + \beta (\theta_i' - \theta).
-  \]
+- **FOMAML**: Ignores second-order terms, using only the gradient of the query loss with respect to $\( \theta_i' \)$.
+- **Reptile**: Updates $\( \theta \)$ by moving it towards the adapted parameters:
+<img width="301" height="62" alt="image" src="https://github.com/user-attachments/assets/042edfd1-d000-4c16-a7e0-d4c6b8e8cee1" />
+
 
 ### Implementation Details
 
-MAML is typically implemented for few-shot learning tasks, such as \( N \)-way \( k \)-shot classification, where the model must classify \( N \) classes using \( k \) examples per class. Below are the key steps:
+MAML is typically implemented for few-shot learning tasks, such as $\( N \)-way \( k \)$-shot classification, where the model must classify $\( N \)$ classes using $\( k \)$ examples per class. Below are the key steps:
 
 1. **Task Sampling**:
-   - Sample tasks from \( p(\mathcal{T}) \), each with a support set (\( k \) examples per class) and a query set (additional examples for evaluation).
+   - Sample tasks from $\( p(\mathcal{T}) \)$, each with a support set $(\( k \)$ examples per class) and a query set (additional examples for evaluation).
    - Example datasets: Omniglot (character recognition), MiniImageNet (image classification).
 
 2. **Model Architecture**:
@@ -69,12 +58,12 @@ MAML is typically implemented for few-shot learning tasks, such as \( N \)-way \
    - The architecture must be flexible to handle different tasks.
 
 3. **Inner Loop**:
-   - Perform 1–5 gradient descent steps on the support set to compute \( \theta_i' \).
+   - Perform 1–5 gradient descent steps on the support set to compute $\( \theta_i' \)$.
    - Use a task-specific loss (e.g., cross-entropy for classification).
 
 4. **Outer Loop**:
-   - Compute the query loss using \( \theta_i' \).
-   - Backpropagate through the inner loop to update \( \theta \).
+   - Compute the query loss using $\( \theta_i' \)$.
+   - Backpropagate through the inner loop to update $\( \theta \)$.
 
 5. **Optimization**:
    - Use an optimizer like Adam for the outer loop.
@@ -273,24 +262,21 @@ if __name__ == "__main__":
 
 1. **First-Order MAML (FOMAML)**:
    - Ignores second-order gradients, using only the query loss gradient:
-     \[
-     \theta \gets \theta - \beta \sum_{\mathcal{T}_i} \nabla_{\theta_i'} \mathcal{L}_{\mathcal{T}_i}(f_{\theta_i'}, \mathcal{D}_i^{\text{query}}).
-     \]
+     <img width="404" height="81" alt="image" src="https://github.com/user-attachments/assets/69de27c4-a9cf-414f-944d-b36aacf98765" />
+
    - Faster but potentially less accurate.
 
 2. **Reptile**:
-   - A first-order method that updates \( \theta \) towards the adapted parameters:
-     \[
-     \theta \gets \theta + \beta (\theta_i' - \theta).
-     \]
+   - A first-order method that updates $\( \theta \)$ towards the adapted parameters:
+    <img width="228" height="66" alt="image" src="https://github.com/user-attachments/assets/17e7b3d5-5bf4-4774-8849-ecf135ad5301" />
+
    - Simpler and more scalable than MAML.
 
 3. **Meta-SGD**:
-   - Learns task-specific learning rates \( \alpha \) for each parameter, improving adaptation:
-     \[
-     \theta_i' = \theta - \alpha \odot \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(f_\theta, \mathcal{D}_i^{\text{support}}),
-     \]
-     where \( \odot \) is element-wise multiplication.
+   - Learns task-specific learning rates $\( \alpha \)$ for each parameter, improving adaptation:
+    <img width="383" height="52" alt="image" src="https://github.com/user-attachments/assets/62eb32a2-b6fd-46ec-a7ee-54c86532b24d" />
+
+     where $\( \odot \)$ is element-wise multiplication.
 
 4. **ANIL (Almost No Inner Loop)**:
    - Only adapts the final layer in the inner loop, reducing computation while maintaining performance.
