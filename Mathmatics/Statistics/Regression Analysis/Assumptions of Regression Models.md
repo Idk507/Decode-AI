@@ -10,7 +10,7 @@ The assumptions of regression models are critical to ensure the validity and rel
 - **Implication**: The model assumes that $\( Y \)$ can be expressed as a linear combination of the predictors: $\( Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \epsilon \)$. If the true relationship is non-linear, the model will have poor fit and predictive power.
 - **How to Test**:
   - **Scatter Plots**: Plot $\( Y \)$ against each $\( X_i \)$ to visually inspect for a linear pattern.
-  - **Residual Plots**: Plot residuals 4(\( Y_i - \hat{Y}_i \))$ against predicted values $(\( \hat{Y}_i \))$ or each predictor. A random scatter around zero suggests linearity; patterns (e.g., curves) indicate non-linearity.
+  - **Residual Plots**: Plot residuals $(\( Y_i - \hat{Y}_i \))$ against predicted values $(\( \hat{Y}_i \))$ or each predictor. A random scatter around zero suggests linearity; patterns (e.g., curves) indicate non-linearity.
   - **Component-Plus-Residual (CPR) Plots**: For multiple regression, plot each predictor against its partial residuals.
 - **If Violated**:
   - Apply transformations (e.g., log, square root, or polynomial terms) to $\( X \) or \( Y \)$.
