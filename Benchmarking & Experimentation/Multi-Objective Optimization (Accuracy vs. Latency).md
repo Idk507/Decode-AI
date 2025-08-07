@@ -16,9 +16,8 @@ The goal is to find a set of solutions, known as the **Pareto front**, where no 
 
 #### **2.1 Objectives**
 - **Accuracy**: Typically measured as the percentage of correct predictions on a test set:
-  \[
-  \text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Total Predictions}}
-  \]
+ <img width="485" height="74" alt="image" src="https://github.com/user-attachments/assets/0af49805-daf4-477e-af97-31f33a75bacd" />
+
 - **Latency**: Time taken for a model to process a single input (inference time), often measured in milliseconds. It depends on model complexity (e.g., number of parameters, layers) and hardware (e.g., CPU, GPU).
 
 #### **2.2 Pareto Optimality**
@@ -32,10 +31,9 @@ The goal is to find a set of solutions, known as the **Pareto front**, where no 
 #### **2.4 Optimization Techniques**
 1. **Scalarization**:
    - Combine objectives into a single function using weights:
-     \[
-     \text{Objective} = w_1 \cdot \text{Accuracy} - w_2 \cdot \text{Latency}
-     \]
-     where \( w_1, w_2 \) are weights reflecting the importance of each objective.
+     <img width="545" height="58" alt="image" src="https://github.com/user-attachments/assets/28e6a94c-6d50-4bc8-9a57-43a371b3f45c" />
+
+     where $\( w_1, w_2 \)$ are weights reflecting the importance of each objective.
    - Vary weights to explore the Pareto front.
 2. **Pareto-Based Methods**:
    - Use evolutionary algorithms (e.g., NSGA-II) or grid search to find Pareto optimal solutions.
@@ -60,37 +58,32 @@ The goal is to find a set of solutions, known as the **Pareto front**, where no 
 
 #### **3.1 Multi-Objective Optimization Problem**
 - Formally, the problem is:
-  \[
-  \text{maximize/minimize} \quad \mathbf{f}(\mathbf{x}) = [f_1(\mathbf{x}), f_2(\mathbf{x})]
-  \]
-  where \( f_1 \) is accuracy (to maximize), \( f_2 \) is latency (to minimize), and \( \mathbf{x} \) is the model configuration (e.g., architecture, hyperparameters).
-- Constraints: \( \mathbf{x} \in \mathcal{X} \), where \( \mathcal{X} \) is the feasible set (e.g., valid architectures).
+ <img width="458" height="58" alt="image" src="https://github.com/user-attachments/assets/e938c54b-eea7-46a5-96db-ff03ddcb56cc" />
+
+  where $\( f_1 \)$ is accuracy (to maximize), $\( f_2 \)$ is latency (to minimize), and \( \mathbf{x} \) is the model configuration (e.g., architecture, hyperparameters).
+- Constraints: $\( \mathbf{x} \in \mathcal{X} \), where \( \mathcal{X} \) is the feasible set (e.g., valid architectures).
 
 #### **3.2 Pareto Dominance**
-- A solution \( \mathbf{x}_1 \) dominates \( \mathbf{x}_2 \) if:
-  \[
-  f_1(\mathbf{x}_1) \geq f_1(\mathbf{x}_2) \quad \text{and} \quad f_2(\mathbf{x}_1) \leq f_2(\mathbf{x}_2)
-  \]
+- A solution $\( \mathbf{x}_1 \)$ dominates $\( \mathbf{x}_2 \)$ if:
+ <img width="471" height="60" alt="image" src="https://github.com/user-attachments/assets/c82eaea4-a52a-4932-979b-c1f6d2134173" />
+
   and at least one inequality is strict.
 - The Pareto front consists of non-dominated solutions.
 
 #### **3.3 Scalarization**
 - Weighted sum approach:
-  \[
-  \text{Objective} = w_1 \cdot \text{Accuracy} - w_2 \cdot \text{Latency}
-  \]
+ <img width="476" height="48" alt="image" src="https://github.com/user-attachments/assets/79e0bb2f-2104-4361-8b00-3647e96bae63" />
+
   - Normalize objectives to comparable scales (e.g., accuracy in [0,1], latency in milliseconds).
-  - Example: If accuracy = 0.9 (90%) and latency = 50ms, with \( w_1 = 0.6, w_2 = 0.4 \):
-    \[
-    \text{Score} = 0.6 \cdot 0.9 - 0.4 \cdot \frac{50}{1000} = 0.54 - 0.02 = 0.52
-    \]
+  - Example: If accuracy = 0.9 (90%) and latency = 50ms, with $\( w_1 = 0.6, w_2 = 0.4 \)$:
+   <img width="560" height="62" alt="image" src="https://github.com/user-attachments/assets/2f7d7fd2-b334-4342-9023-8480570f3bad" />
+
 
 #### **3.4 Statistical Significance**
 - Compare models using paired t-tests (as in A/B testing):
-  \[
-  t = \frac{\bar{d}}{\frac{s_d}{\sqrt{n}}}
-  \]
-  where \( \bar{d} \) is the mean difference in accuracy (or latency) across runs, \( s_d \) is the standard deviation, and \( n \) is the number of runs.
+  <img width="162" height="89" alt="image" src="https://github.com/user-attachments/assets/53483f7e-d757-4314-8181-b5a81ddc7257" />
+
+  where $\( \bar{d} \)$ is the mean difference in accuracy (or latency) across runs, $\( s_d \)$ is the standard deviation, and $\( n \)$ is the number of runs.
 
 ---
 
