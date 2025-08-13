@@ -1,0 +1,15 @@
+### **NLP**
+- BLEU
+- ROUGE (ROUGE-N, ROUGE-L, ROUGE-S, ROUGE-W)
+- METEOR
+- CIDEr
+- Perplexity
+- Word Error Rate (WER)
+- Character Error Rate (CER)
+- BERTScore
+- MoverScore
+- TER (Translation Edit Rate)
+- F1 (Token/Entity-level for NER)
+- Exact Match (EM)
+- Spearman Correlation
+- GLUE Score (Aggregate Metric)
