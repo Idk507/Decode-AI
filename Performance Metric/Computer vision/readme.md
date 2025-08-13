@@ -1,0 +1,15 @@
+### **Computer Vision**
+- Intersection over Union (IoU)
+- mAP (mean Average Precision)
+- Pixel Accuracy
+- Dice Coefficient (F1-Score for Segmentation)
+- Hausdorff Distance
+- PSNR (Peak Signal-to-Noise Ratio)
+- SSIM (Structural Similarity Index)
+- FID (Fréchet Inception Distance)
+- LPIPS (Learned Perceptual Image Patch Similarity)
+- Average Precision (AP)
+- Recall@k
+- Top-1/Top-5 Accuracy
+- Boundary F1 (BF1)
+- MOTA (Multi-Object Tracking Accuracy)
