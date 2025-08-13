@@ -1,0 +1,15 @@
+### **Regression**
+- Mean Absolute Error (MAE)
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- R² (R-Squared)
+- Adjusted R²
+- Mean Absolute Percentage Error (MAPE)
+- Median Absolute Error
+- Explained Variance Score
+- Mean Squared Logarithmic Error (MSLE)
+- Root Mean Squared Logarithmic Error (RMSLE)
+- Huber Loss
+- Quantile Loss
+- Tweedie Deviance
+- AIC/BIC
