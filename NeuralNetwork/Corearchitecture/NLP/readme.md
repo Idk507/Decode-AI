@@ -1,4 +1,4 @@
-Of course. Here is a concise, end-to-end list of NLP topics, structured from foundational to master level.
+
 
 ### **Foundational Concepts**
 1.  Text Preprocessing & Normalization
