@@ -1,4 +1,4 @@
-### Frequency Domain Processing: Fourier Transform for Analyzing Image Frequency Components
+### Frequency Domain Processing: Fourier Transform  for Analyzing Image Frequency Components
 
 **Frequency domain processing** involves analyzing and manipulating images based on their frequency components, which represent the rate of change in pixel intensities (e.g., edges, textures). The **Fourier Transform** is a key tool that converts an image from the spatial domain (pixel coordinates) to the frequency domain, enabling analysis and filtering of frequency components. This explanation covers the mathematical concepts, practical applications, and a detailed Python code implementation using OpenCV and NumPy to demonstrate the Fourier Transform for image analysis.
 
