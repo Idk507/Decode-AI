@@ -1,4 +1,4 @@
-Conditional Probability and Bayes’ Theorem
+Conditional Probability and Bayes’ Theorem 
  
 Conditional Probability: Understanding the probability of an event given that another event has occurred.
 
