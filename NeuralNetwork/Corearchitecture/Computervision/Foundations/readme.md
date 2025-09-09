@@ -1,4 +1,4 @@
-#### **Phase 1: Foundations**   
+#### **Phase 1: Foundations**      
  **Image Processing Basics:**  
    - Digital image fundamentals (pixels, color spaces: RGB, HSV).  
    - Operations: filtering, edge detection (Sobel, Canny), transformations.
