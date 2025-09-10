@@ -8,7 +8,7 @@
   - Image formats (JPEG, PNG, BMP) and their compression characteristics.
 
 - **Histogram Processing**:
-  - Histogram equalization for contrast enhancement.
+  - Histogram equalization for contrast enhancement.  
   - Histogram matching for adjusting image intensity distributions.
 
 - **Thresholding**:
