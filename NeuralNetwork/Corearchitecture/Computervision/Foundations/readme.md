@@ -55,11 +55,4 @@
   - Smoothing (e.g., Gaussian blur, median filtering).
   - Contrast stretching and gamma correction.
 
-- **Template Matching**:
-  - Cross-correlation for finding patterns or objects in images.
 
-- **Image Registration**:
-  - Aligning multiple images (e.g., for medical imaging or panorama stitching).
-
-   - **Tools:** OpenCV, Pillow.  
-   - *Project:* Build an image filter (e.g., blur, edge detection).
