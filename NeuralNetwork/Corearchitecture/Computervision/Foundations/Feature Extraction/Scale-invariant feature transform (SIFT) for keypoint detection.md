@@ -71,15 +71,8 @@ SIFT operates in a **scale-space** framework to detect keypoints and describe th
 
 #### Example
 Consider a 5x5 image with a blob:
-\[
-I = \begin{bmatrix}
-100 & 100 & 100 & 100 & 100 \\
-100 & 150 & 200 & 150 & 100 \\
-100 & 200 & 255 & 200 & 100 \\
-100 & 150 & 200 & 150 & 100 \\
-100 & 100 & 100 & 100 & 100
-\end{bmatrix}
-\]
+<img width="500" height="171" alt="image" src="https://github.com/user-attachments/assets/4e570f88-ea13-4fa5-af8e-5060b982078e" />
+
 - **DoG**: Compute $\( D(x, y, \sigma) = L(x, y, k\sigma) - L(x, y, \sigma) \)$, detect extremum at (2, 2, $\( \sigma \)$).
 - **Localization**: Refine position, check contrast and edge response.
 - **Orientation**: Compute gradients, assign dominant orientation (e.g., 45°).
@@ -122,7 +115,7 @@ Below is a Python code example using OpenCV to demonstrate SIFT keypoint detecti
 - Detects SIFT keypoints and computes descriptors.
 - Visualizes the original image and keypoints with scale and orientation.
 
-<xaiArtifact artifact_id="93961366-4b4a-460b-830b-7df5e04f1de6" artifact_version_id="61e796ab-0a70-42cd-80db-3bb80795a601" title="sift_keypoint_detection.py" contentType="text/python">
+```python
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
