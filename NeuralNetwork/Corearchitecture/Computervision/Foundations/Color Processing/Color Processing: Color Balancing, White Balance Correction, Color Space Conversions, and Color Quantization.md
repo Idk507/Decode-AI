@@ -13,6 +13,7 @@
   - **Gray World Assumption**: Assumes the average color of a scene is neutral (gray). Adjusts each channel so the average intensity across R, G, B is equal.
     - Compute mean intensities: $\( \mu_R, \mu_G, \mu_B \)$.
 <img width="785" height="75" alt="image" src="https://github.com/user-attachments/assets/9fce3d86-98ff-4a77-9d23-8072630b6c34" />
+
   - **Histogram Equalization per Channel**: Stretch the histogram of each channel to enhance contrast and balance colors.
 - **Applications**:
   - Correcting color casts in photography (e.g., yellowish tint from indoor lighting).
