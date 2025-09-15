@@ -96,8 +96,7 @@ Below is a Python code example using OpenCV and NumPy to demonstrate the Harris 
 - Detects corners using `cv2.cornerHarris`.
 - Applies thresholding and non-maxima suppression to refine corners.
 - Visualizes the original image, corner response map, and detected corners.
-
-<xaiArtifact artifact_id="03125bb5-5c70-4155-8028-c4af994437cf" artifact_version_id="7b4f3960-f2ef-4a0d-8f4a-0078360b2e27" title="harris_corner_detection.py" contentType="text/python">
+```python
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
