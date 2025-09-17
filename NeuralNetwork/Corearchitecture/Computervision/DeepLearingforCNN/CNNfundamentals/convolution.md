@@ -79,9 +79,9 @@ Compute each output element:
 - And so on... (This kernel detects horizontal changes; here it's constant -8 due to uniform gradients.)
 
 Full Output:
+<img width="235" height="149" alt="image" src="https://github.com/user-attachments/assets/fba98c20-c949-4403-9915-aefb82058d7e" />
 
 
-![Uploading image.png…]()
 
 
 For a more varied example, change the image to have edges.
