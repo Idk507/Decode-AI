@@ -57,7 +57,7 @@ This is discrete convolution, as pixel values are discrete. In signal processing
 - **Separable Convolution**: Decomposes into depthwise (per-channel) and pointwise (1x1) convolutions for efficiency (e.g., in MobileNet).
 - **Transpose Convolution (Deconvolution)**: Upsamples feature maps, used in segmentation or GANs. It's like reverse convolution.
 - **Receptive Field**: Grows with layers; calculated as
-  ![Uploading image.png…]()
+  <img width="235" height="149" alt="image" src="https://github.com/user-attachments/assets/5671da88-afef-4ea7-848f-5f1467f21995" />
 .
 - **Computational Complexity**: For one feature map, it's $\( O(H \cdot W \cdot F_h \cdot F_w \cdot C) \)$.
 - **Training**: Kernels are initialized randomly and learned via backpropagation, minimizing loss by adjusting weights to detect useful features.
@@ -68,17 +68,18 @@ In CNNs, convolution layers are stacked, followed by pooling, activation, etc.
 
 Let's use a simple 4x4 grayscale image and a 2x2 kernel for edge detection. No padding (valid), stride=1.
 
-![Uploading image.png…]()
+<img width="235" height="149" alt="image" src="https://github.com/user-attachments/assets/79cf7aa5-c916-4e6e-8672-4e75c61979ea" />
 
 Output size: \( (4-2)/1 + 1 = 3 \) for both height and width.
 
 Compute each output element:
 
-![Uploading image.png…]()
+<img width="235" height="149" alt="image" src="https://github.com/user-attachments/assets/80040d07-7387-4362-a824-457d9c5c4a16" />
 
 - And so on... (This kernel detects horizontal changes; here it's constant -8 due to uniform gradients.)
 
 Full Output:
+
 
 ![Uploading image.png…]()
 
