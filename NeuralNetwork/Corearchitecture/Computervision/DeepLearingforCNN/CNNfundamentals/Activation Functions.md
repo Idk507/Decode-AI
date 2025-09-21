@@ -1,4 +1,4 @@
-### Understanding Activation Functions in Convolutional Neural Networks (CNNs)
+### Understanding Activation Functions in Convolutional Neural Networks (CNNs) 
 
 **Activation functions** are essential components in Convolutional Neural Networks (CNNs) and other neural networks, introducing non-linearity to the model. This non-linearity allows CNNs to learn complex patterns and relationships in data, such as those found in images, audio, or text. Without activation functions, CNNs would behave like linear models, limiting their ability to solve non-linear problems like image classification or object detection. Below, I’ll explain activation functions in detail, covering their definition, purpose, common types, mathematical formulations, properties, and an example with code, particularly in the context of CNNs.
 
