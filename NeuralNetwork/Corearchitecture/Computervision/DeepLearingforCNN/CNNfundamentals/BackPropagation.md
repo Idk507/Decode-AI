@@ -49,7 +49,7 @@ Backpropagation operates in two main phases: the **forward pass** and the **back
 Given a loss function $\( L \)$, the goal is to compute the gradient $\( \nabla_\theta L \)$, where $\( \theta \)$ represents all parameters (weights $\( W \)$, biases $\( b \)$, etc.). Backpropagation uses the chain rule to compute these gradients layer by layer.
 
 #### General Process
-For a network with layers \( l = 1, 2, \ldots, L \)$, where each layer applies a function $\( z^{(l)} = f^{(l)}(z^{(l-1)}, \theta^{(l)}) \)$:
+For a network with layers $\( l = 1, 2, \ldots, L \)$, where each layer applies a function $\( z^{(l)} = f^{(l)}(z^{(l-1)}, \theta^{(l)}) \)$:
 - **Forward Pass**:
   - Input $\( x \)$ produces activations $\( z^{(1)}, z^{(2)}, \ldots, z^{(L)} \)$.
   - Compute loss $\( L(y, \hat{y}) \)$, where $\( \hat{y} = z^{(L)} \)$ is the predicted output, and $\( y \)$ is the true label.
