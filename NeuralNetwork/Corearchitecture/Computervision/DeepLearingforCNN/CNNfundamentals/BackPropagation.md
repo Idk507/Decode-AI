@@ -142,8 +142,8 @@ For a network with layers $\( l = 1, 2, \ldots, L \)$, where each layer applies 
 Let’s perform backpropagation for a simple CNN with one convolutional layer, ReLU activation, and a fully connected layer for a 3-class classification task.
 
 **Setup**:
-- **Input Image**: $\( 2 \times 2 \)$, single channel, $\( x = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \)$.
-- **Convolutional Layer**: One 2x2 filter $\( W^{(1)} = \begin{bmatrix} 0.1 & 0.2 \\ 0.3 & 0.4 \end{bmatrix} \)$, bias $\( b^{(1)} = 0.1 \)$, stride=1, no padding.
+- **Input Image**: $\( 2 \times 2 \), single channel, \( x = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \)$.
+- **Convolutional Layer**: One 2x2 filter $\( W^{(1)} = \begin{bmatrix} 0.1 & 0.2 \\ 0.3 & 0.4 \end{bmatrix} \), bias \( b^{(1)} = 0.1 \)$, stride=1, no padding.
 - **ReLU Activation**: Applied to the convolutional output.
 - **Flattening**: Convert the feature map to a vector.
 - **Fully Connected Layer**: 2 inputs (flattened feature map) to 3 outputs, weights $\( W^{(2)} = \begin{bmatrix} 0.1 & 0.2 \\ 0.3 & 0.4 \\ 0.5 & 0.6 \end{bmatrix} \), bias \( b^{(2)} = [0.1, 0.2, 0.3] \)$.
