@@ -3,7 +3,7 @@ YOLO Versions: Evolution and Innovations
 YOLOv1: Basic grid-based detection, limitations in small object detection.
 
 YOLOv2 (YOLO9000): Batch normalization (as discussed), anchor boxes, multi-scale training.
-
+  
 YOLOv3: Multi-scale predictions, Darknet-53 backbone, improved accuracy.
 
 YOLOv4: CSPDarknet53, advanced augmentation (Mosaic), PANet neck.
