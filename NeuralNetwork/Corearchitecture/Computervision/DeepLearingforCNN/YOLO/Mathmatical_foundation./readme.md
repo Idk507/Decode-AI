@@ -1,0 +1,12 @@
+**Mathematical Foundations**
+   - **Bounding Box Prediction**:
+     - Predicting box coordinates $(\( x, y, w, h \))$ relative to grid cells.
+     - Anchor box offsets: $\( t_x, t_y, t_w, t_h \)$.
+   - **Loss Function** (as discussed):
+     - Components: Localization loss (e.g., IoU-based), objectness loss, classification loss.
+     - Example: YOLOv3 uses binary cross-entropy for classification, squared error for localization.
+     - Advanced losses: CIoU, DIoU, GIoU (Complete, Distance, Generalized IoU).
+   - **Receptive Fields** (as discussed):
+     - Role of backbone and neck in achieving large receptive fields for multi-scale detection.
+   - **Backpropagation** (as discussed):
+     - Gradient computation for bounding box, objectness, and class predictions.
