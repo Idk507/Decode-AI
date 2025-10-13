@@ -1,0 +1,11 @@
+**Input Preprocessing for YOLO**
+   - **Image Resizing** (as discussed):
+     - Resize to fixed size (e.g., 416x416, 608x608) while preserving aspect ratio.
+     - Letterbox padding to avoid distortion.
+   - **Normalization**:
+     - Scale pixel values to [0, 1] or dataset-specific stats.
+   - **Data Augmentation** (as discussed):
+     - Techniques: Mosaic augmentation, random scaling, flipping, color jitter.
+     - Adjusting bounding boxes to match augmentations.
+   - **Multi-Scale Training**:
+     - Randomly resize inputs during training to improve robustness.
