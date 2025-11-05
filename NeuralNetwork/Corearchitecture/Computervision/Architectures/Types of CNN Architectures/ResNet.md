@@ -265,6 +265,168 @@ print("Testing...")
 test()
 ```
 
+
+---
+
+## 🧠 The Main Idea of ResNet
+
+> “Instead of learning the output directly, let’s make the network learn the *difference* between the input and the output.”
+
+That “difference” is called a **residual**.
+Hence the name — **Residual Network (ResNet).**
+
+---
+
+## ⚙️ The Problem Before ResNet
+
+When CNNs became deeper (like 20, 50, 100+ layers):
+
+* Training got **harder**
+* Gradients **vanished or exploded**
+* Deeper networks sometimes performed **worse** than shallow ones 😩
+
+This was weird — adding more layers should increase power, right?
+But deeper networks couldn’t easily learn identity mappings.
+
+---
+
+## 🪄 The Solution — Skip Connection
+
+ResNet introduced a simple trick:
+**“Skip” one or more layers by adding the input directly to the output.**
+
+### Diagram of a Residual Block
+
+```
+Input (x)
+   │
+[Conv → BN → ReLU → Conv → BN]
+   │
+ + └──────────────┐
+   ↓              ↓
+  Add ----------> Output
+   ↓
+  ReLU
+```
+
+### Mathematically:
+
+[
+y = F(x) + x
+]
+
+where
+
+* ( F(x) ): output of a few conv layers (the residual)
+* ( x ): the original input (shortcut connection)
+
+---
+
+## 🧮 Why Does This Help?
+
+If the optimal function is **identity** (i.e. do nothing, ( y = x )),
+normal networks must learn that through weights — hard!
+But with ResNet:
+[
+F(x) = 0 \implies y = x
+]
+so the network just sets residual to zero → super easy for gradients to flow! ✅
+
+This solves:
+
+* **Vanishing gradient** problem
+* **Degradation** (when deeper networks perform worse)
+
+---
+
+## 🏗️ A Simple Residual Block (ResNet-18 or 34)
+
+```python
+class BasicBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, stride=1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, 
+                               stride=stride, padding=1)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, 
+                               padding=1)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+
+        # If dimensions change, use a 1x1 conv to match shortcut shape
+        self.shortcut = nn.Sequential()
+        if stride != 1 or in_channels != out_channels:
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride),
+                nn.BatchNorm2d(out_channels)
+            )
+
+    def forward(self, x):
+        out = self.relu(self.bn1(self.conv1(x)))
+        out = self.bn2(self.conv2(out))
+        out += self.shortcut(x)  # Residual connection
+        out = self.relu(out)
+        return out
+```
+
+---
+
+## 🧩 Two Types of Blocks
+
+| Type                 | Used In             | Key Difference                   |
+| -------------------- | ------------------- | -------------------------------- |
+| **Basic Block**      | ResNet-18, 34       | Two 3×3 convs                    |
+| **Bottleneck Block** | ResNet-50, 101, 152 | 1×1 → 3×3 → 1×1 (for efficiency) |
+
+---
+
+## 🧮 Math Behind “Adding” in Residuals
+
+If both ( F(x) ) and ( x ) have shape `[B, C, H, W]`,
+the addition is **element-wise**:
+
+[
+Y_{b,c,h,w} = F_{b,c,h,w} + X_{b,c,h,w}
+]
+
+Each pixel and channel adds up directly — no extra learnable weights.
+
+If shapes differ (like channels change), a 1×1 conv “projects” ( x ) to match.
+
+---
+
+## 🔥 Why ResNet Was a Breakthrough
+
+| Benefit                  | What it Means                                                  |
+| ------------------------ | -------------------------------------------------------------- |
+| Easier optimization      | Gradients flow through skip path directly                      |
+| Deeper networks possible | ResNet trained 152+ layers successfully                        |
+| Reusability              | Idea reused in Transformers, UNet, GANs, etc.                  |
+| Simpler math             | Learning residuals (differences) instead of absolute functions |
+
+---
+
+## 🧠 Example Intuition
+
+Imagine you’re learning how to draw a face.
+You already have a sketch (the input).
+You don’t start over — you **refine** it by adding small improvements (residuals).
+That’s what ResNet does!
+
+---
+
+## ✅ Quick Summary
+
+| Concept             | Meaning                                      |
+| ------------------- | -------------------------------------------- |
+| **Residual Block**  | Two conv layers + skip connection            |
+| **Skip Connection** | Adds input to output, helps gradient flow    |
+| **Math**            | ( y = F(x) + x )                             |
+| **Why it works**    | Learns easier: refine input, not recreate it |
+| **Result**          | Super deep networks that still train easily  |
+
+---
+
 ---
 
 ## **6. Pretrained ResNet**
