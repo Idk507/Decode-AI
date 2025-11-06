@@ -574,22 +574,7 @@ So you can think of:
 
 ## **8. Parameter Efficiency (Chart.js)**
 
-```chartjs
-{
-  "type": "bar",
-  "data": {
-    "labels": ["Xception", "Inception-v3", "ResNet-50", "MobileNet"],
-    "datasets": [{
-      "label": "Parameters (M)",
-      "data": [22.9, 23.8, 25.6, 4.2],
-      "backgroundColor": ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
-    }]
-  },
-  "options": {
-    "plugins": { "title": { "display": true, "text": "Xception: Best Accuracy per Param" } }
-  }
-}
-```
+<img width="972" height="544" alt="image" src="https://github.com/user-attachments/assets/6684e99e-ae14-42eb-85d5-b3e4620d4fcb" />
 
 ---
 
