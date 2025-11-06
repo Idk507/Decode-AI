@@ -634,38 +634,7 @@ model = models.mobilenet_v3_small(pretrained=True)
 ---
 
 ## **7. Efficiency Chart (Chart.js)**
-
-```chartjs
-{
-  "type": "scatter",
-  "data": {
-    "datasets": [
-      {
-        "label": "MobileNet-v1",
-        "data": [{"x": 0.57, "y": 70.6}],
-        "backgroundColor": "#FF6384"
-      },
-      {
-        "label": "MobileNet-v2",
-        "data": [{"x": 0.30, "y": 72.0}],
-        "backgroundColor": "#36A2EB"
-      },
-      {
-        "label": "MobileNet-v3",
-        "data": [{"x": 0.22, "y": 75.2}],
-        "backgroundColor": "#FFCE56"
-      }
-    ]
-  },
-  "options": {
-    "scales": {
-      "x": { "title": { "display": true, "text": "FLOPs (B)" } },
-      "y": { "title": { "display": true, "text": "Top-1 Accuracy (%)" } }
-    },
-    "plugins": { "title": { "display": true, "text": "MobileNet: Accuracy vs Efficiency" } }
-  }
-}
-```
+<img width="1014" height="557" alt="image" src="https://github.com/user-attachments/assets/2a1156b8-7a9c-4b15-8df4-f06cecfdc5d0" />
 
 ---
 
