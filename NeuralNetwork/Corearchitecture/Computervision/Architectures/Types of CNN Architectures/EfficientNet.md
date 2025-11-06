@@ -326,25 +326,8 @@ model = models.efficientnet_b7(pretrained=True)
 
 ## **8. Scaling Chart (Chart.js)**
 
-```chartjs
-{
-  "type": "scatter",
-  "data": {
-    "datasets": [
-      {"label": "B0", "data": [{"x": 0.39, "y": 77.1}], "backgroundColor": "#FF6384"},
-      {"label": "B3", "data": [{"x": 1.8, "y": 81.6}], "backgroundColor": "#36A2EB"},
-      {"label": "B7", "data": [{"x": 37, "y": 84.3}], "backgroundColor": "#FFCE56"}
-    ]
-  },
-  "options": {
-    "scales": {
-      "x": {"title": {"display": true, "text": "FLOPs (B)"}},
-      "y": {"title": {"display": true, "text": "Top-1 (%)"}}
-    },
-    "plugins": {"title": {"display": true, "text": "EfficientNet: Pareto Frontier"}}
-  }
-}
-```
+<img width="999" height="563" alt="image" src="https://github.com/user-attachments/assets/c9f202b0-24c9-4542-9257-c66d2dda79ba" />
+
 
 ---
 
