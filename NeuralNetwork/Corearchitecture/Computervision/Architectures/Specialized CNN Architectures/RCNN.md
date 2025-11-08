@@ -1,9 +1,8 @@
 
 ---  
 
-# What is R-CNN (in plain English)
+# What is R-CNN 
 
-**Goal:** Find *what* objects are in an image **and** *where* they are (boxes).
 
 **Idea (2014):**
 
@@ -32,9 +31,8 @@ This was a big deal because running a CNN **only** on ~2k regions (not on every 
 ## 1) Intersection over Union (IoU)
 
 How much two boxes overlap:
-[
-\text{IoU}(A,B) = \frac{\text{area}(A \cap B)}{\text{area}(A \cup B)} \in [0,1]
-]
+<img width="383" height="80" alt="image" src="https://github.com/user-attachments/assets/1aa4aa2e-affa-4188-9775-450c67fe08bd" />
+
 
 * Used to decide positives/negatives when training, and by NMS.
 
@@ -42,48 +40,27 @@ How much two boxes overlap:
 
 Each box is represented by center ((x, y)), width (w), height (h).
 Given an **anchor/proposal** (B_a = (x_a, y_a, w_a, h_a)) and the **ground truth** (B^* = (x^*, y^*, w^*, h^*)), the regression targets are:
-[
-t_x^*=\frac{x^*-x_a}{w_a}, \quad
-t_y^*=\frac{y^*-y_a}{h_a}, \quad
-t_w^*=\log\frac{w^*}{w_a}, \quad
-t_h^*=\log\frac{h^*}{h_a}
-]
+<img width="680" height="90" alt="image" src="https://github.com/user-attachments/assets/bca70e97-b961-47f6-bec8-7328be774649" />
+
 A regressor predicts (t=(t_x,t_y,t_w,t_h)). We convert back:
-[
-\hat{x} = t_x w_a + x_a,\quad
-\hat{y} = t_y h_a + y_a,\quad
-\hat{w} = e^{t_w} w_a,\quad
-\hat{h} = e^{t_h} h_a
-]
+<img width="627" height="49" alt="image" src="https://github.com/user-attachments/assets/5230aac4-b3e6-42e5-af60-446316a33373" />
+
 
 **Loss (Smooth L1 / Huber):**
-[
-\text{smoothL1}(z)=
-\begin{cases}
-0.5 z^2 & |z|<1\
-|z|-0.5 & \text{otherwise}
-\end{cases}
-]
-[
-\mathcal{L}*{\text{bbox}}=\sum*{u\in{x,y,w,h}} \text{smoothL1}(t_u - t_u^*)
-]
+<img width="502" height="176" alt="image" src="https://github.com/user-attachments/assets/c7baa1f5-1e5e-4697-9f09-87bda4a45234" />
+
 
 ## 3) Classification (softmax + cross-entropy)
 
 Given ROI features (\mathbf{f}), your classifier outputs logits (s_c) for classes (c\in{1..K}) plus background.
-[
-p(c)=\frac{e^{s_c}}{\sum_j e^{s_j}},\quad
-\mathcal{L}_{\text{cls}} = -\log p(c^*)
-]
+<img width="396" height="95" alt="image" src="https://github.com/user-attachments/assets/c1fc6a22-13da-498e-b322-0a812999333c" />
+
 
 ## 4) Total detection loss (per ROI)
 
 For class (c^*) and regression only when it’s a positive ROI:
-[
-\mathcal{L} = \mathcal{L}_{\text{cls}}
+<img width="318" height="73" alt="image" src="https://github.com/user-attachments/assets/5595df23-24f5-4ee8-aaed-91a6f344c25f" />
 
-* \lambda \cdot \mathbf{1}*{[c^*\neq \text{bg}]}\cdot \mathcal{L}*{\text{bbox}}
-  ]
 
 ## 5) Non-Maximum Suppression (NMS)
 
