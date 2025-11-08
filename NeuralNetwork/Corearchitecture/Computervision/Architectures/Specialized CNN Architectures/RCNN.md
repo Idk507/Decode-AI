@@ -5,7 +5,7 @@
 
 
 **Idea (2014):**
-
+  
 1. **Propose** a small set of *promising regions* (likely to contain objects).
 2. **Crop** each region, **run a CNN** to get features,
 3. **Classify** each region (cat/dog/car/background) and **refine** the box.
