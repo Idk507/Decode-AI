@@ -79,7 +79,26 @@ It **contracts** (like a normal CNN) → then **expands** (to get back full size
 | 1     | 128 + 64 = 192       | 64     |
 
 > **Restores spatial details**
+# Architecture (intuitive + core operations)
 
+* **Encoder (contracting)**
+
+  * Repeated blocks: two 3×3 convolutions + ReLU (or LeakyReLU) → then a 2×2 max-pool to downsample by 2.
+  * Each downsample doubles channels (e.g., 64→128→256→512).
+* **Bottleneck**
+
+  * Bottom conv block with highest channels.
+* **Decoder (expanding)**
+
+  * Upsample (transpose conv or bilinear upsample + conv) to double spatial size.
+  * **Concatenate** the corresponding encoder feature map (skip connection).
+  * Two 3×3 conv + ReLU.
+* **Output**
+
+  * Final 1×1 conv to map to number of output channels (1 for binary, C for classes).
+  * Activation: **sigmoid** for binary, **softmax** (channelwise) for multi-class.
+
+Key idea: encoder learns "what" features; skip connections provide "where" information for precise boundaries.
 ---
 
 ### **4. Final Layer**  
