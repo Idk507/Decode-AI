@@ -1,4 +1,4 @@
-Great — let’s unpack **Mask R-CNN** in a clear, beginner-friendly way: what it is, why it works, the math, the full pipeline (train + inference), and runnable code (both using `torchvision` and a minimal educational head). I’ll keep things simple but complete.
+
 
 # What is Mask R-CNN (plain English)
 
@@ -184,6 +184,9 @@ For each instance:
 * Self-driving (segmenting cars/pedestrians),
 * Medical imaging (segmenting organs/tumors),
 * Any task requiring per-instance shapes (segmentation + detection).
+
+  <img width="929" height="537" alt="image" src="https://github.com/user-attachments/assets/606c5dad-1bc7-4822-98e9-2606b2b65dc8" />
+
 
 # Summary (TL;DR)
 
