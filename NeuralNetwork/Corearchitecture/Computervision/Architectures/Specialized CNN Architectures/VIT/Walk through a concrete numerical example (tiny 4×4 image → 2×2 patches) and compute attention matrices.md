@@ -19,7 +19,7 @@
   [
   A = \operatorname{softmax}(S) \in \mathbb{R}^{N\times N},
   ]
-  where each row $(A_{i,:} = \operatorname{softmax}(S_{i,:}))$ sums to 1.
+  where each row (A_{i,:} = \operatorname{softmax}(S_{i,:})) sums to 1.
 * Attention output:
   [
   O = A,V \in \mathbb{R}^{N\times d}.
