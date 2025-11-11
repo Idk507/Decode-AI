@@ -177,7 +177,7 @@ Q2 = K2 = V2 =
 
 For a head with (Q) (5×2), (K) (5×2), (V) (5×2):
 
-1. Compute raw scores matrix (S = Q K^\top) (shape 5×5).
+1. Compute raw scores matrix $(S = Q K^\top)$ (shape 5×5).
 2. Scale by $(\sqrt{d_k})$ with (d_k=2) so divide by $(\sqrt{2}\approx1.41421356)$.
 3. Row-wise softmax to get attention weights (A) (5×5).
 4. Output for the head is (A V) (5×2).
