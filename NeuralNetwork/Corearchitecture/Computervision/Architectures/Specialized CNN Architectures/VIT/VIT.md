@@ -12,37 +12,32 @@ A Vision Transformer treats an image as a sequence of flattened patches (like to
 
 1. Choose patch size (P) (common: 16). Assume (H, W) divisible by (P).
 
-2. Number of patches: (N = \frac{H}{P}\cdot\frac{W}{P}).
+2. Number of patches: $(N = \frac{H}{P}\cdot\frac{W}{P})$.
 
 3. Partition image into non-overlapping patches. Index patches (i=1\ldots N). Each patch is a small image patch:
-   [
-   x_i^\text{patch} \in \mathbb{R}^{P\times P \times C}.
-   ]
+ <img width="210" height="79" alt="image" src="https://github.com/user-attachments/assets/e7c35fd2-1eb0-45f1-b099-dd934091f3d8" />
+
 
 4. Flatten each patch to a vector:
-   [
-   x_i = \operatorname{vec}(x_i^\text{patch}) \in \mathbb{R}^{P^2 C}.
-   ]
+   <img width="294" height="59" alt="image" src="https://github.com/user-attachments/assets/0e3d2fa1-b1ad-400e-8061-419a0f5fc293" />
+
 
 5. Linear projection (patch embedding): map flattened patch to (D)-dim embedding via a learnable matrix (E):
-   [
-   z_i^{(0)} = E, x_i + b_E \in \mathbb{R}^D,
-   ]
-   where (E\in\mathbb{R}^{D\times P^2 C}). This is equivalent to a convolution with kernel size (P) and stride (P) followed by flattening.
+   <img width="273" height="78" alt="image" src="https://github.com/user-attachments/assets/7af0fa73-f655-412c-9e95-bb06a8c74da0" />
 
-6. Add a special **classification token** (z_\text{cls}^{(0)} = \ell \in \mathbb{R}^D) (learnable). The transformer input sequence becomes:
-   [
-   Z^{(0)} = \big[ z_\text{cls}^{(0)}; z_1^{(0)}; z_2^{(0)}; \dots; z_N^{(0)} \big] \in \mathbb{R}^{(N+1)\times D}.
-   ]
+   where $(E\in\mathbb{R}^{D\times P^2 C})$. This is equivalent to a convolution with kernel size (P) and stride (P) followed by flattening.
+
+6. Add a special **classification token** $(z_\text{cls}^{(0)} = \ell \in \mathbb{R}^D)$ (learnable). The transformer input sequence becomes:
+ <img width="483" height="61" alt="image" src="https://github.com/user-attachments/assets/821a5429-3622-4e15-b35f-123db2b80862" />
+
 
 7. Positional encoding: add position information to each patch embedding so the model knows spatial arrangement. Two common choices:
 
-   * **Learned positional embeddings** (P\in\mathbb{R}^{(N+1)\times D}): add (P_j) to token (j).
+   * **Learned positional embeddings** $(P\in\mathbb{R}^{(N+1)\times D})$ : add (P_j) to token (j).
    * **Sinusoidal** (fixed) positional encodings (rare in ViT).
      Final input:
-     [
-     Z^{(0)} \leftarrow Z^{(0)} + P.
-     ]
+ <img width="227" height="82" alt="image" src="https://github.com/user-attachments/assets/ef7244b5-4e65-40d9-885a-435fd22885a5" />
+
 
 ---
 <img width="600" height="252" alt="image" src="https://github.com/user-attachments/assets/c1dcc1fa-b52e-45c0-af0f-2053837b8742" />
@@ -50,20 +45,17 @@ A Vision Transformer treats an image as a sequence of flattened patches (like to
 
 # 3 — Transformer encoder block (single layer)
 
-A Vision Transformer stacks (L) identical encoder layers (often 12–24). Each layer (l) maps (Z^{(l-1)}\to Z^{(l)}) by:
+A Vision Transformer stacks (L) identical encoder layers (often 12–24). Each layer (l) maps $(Z^{(l-1)}\to Z^{(l)})$ by:
 
 1. **Multi-Head Self-Attention (MSA)** with residual:
-   [
-   \widetilde{Z}^{(l)} = Z^{(l-1)} + \operatorname{MSA}(\operatorname{LN}(Z^{(l-1)}))
-   ]
+  <img width="402" height="56" alt="image" src="https://github.com/user-attachments/assets/afd8530b-87c5-4564-b407-c9df215b0133" />
+
    (many implementations use pre-norm: LayerNorm before each sub-layer — we’ll use pre-norm which is common in ViT variants).
 
 2. **MLP (feed-forward network)** with residual:
-   [
-   Z^{(l)} = \widetilde{Z}^{(l)} + \operatorname{MLP}(\operatorname{LN}(\widetilde{Z}^{(l)}))
-   ]
+<img width="343" height="57" alt="image" src="https://github.com/user-attachments/assets/145749b4-1ccc-406e-accd-70d03af13428" />
 
-Where (\operatorname{LN}(\cdot)) is Layer Normalization applied token-wise.
+Where $(\operatorname{LN}(\cdot))$ is Layer Normalization applied token-wise.
 
 We'll now expand MSA and MLP mathematically.
 
@@ -72,87 +64,66 @@ We'll now expand MSA and MLP mathematically.
 ## 3.1 — LayerNorm
 
 For a token vector (u\in\mathbb{R}^D):
-[
-\operatorname{LN}(u) = \frac{u - \mu(u)}{\sqrt{\sigma^2(u) + \epsilon}} \odot \gamma + \beta,
-]
-where (\mu(u)) and (\sigma^2(u)) are the mean and variance over the (D) dimensions, and (\gamma,\beta\in\mathbb{R}^D) are learnable.
+<img width="409" height="106" alt="image" src="https://github.com/user-attachments/assets/2e3045d1-3177-4f2a-930e-fefdc2cf79f9" />
+
+where $(\mu(u)) and (\sigma^2(u))$ are the mean and variance over the (D) dimensions, and (\gamma,\beta\in\mathbb{R}^D) are learnable.
 
 ---
 
 ## 3.2 — Multi-Head Self-Attention (MSA)
 
-Given token sequence (U\in\mathbb{R}^{(N+1)\times D}) (LN applied), define (h) heads and per-head dimension (d_k = D/h).
+Given token sequence $(U\in\mathbb{R}^{(N+1)\times D})$ (LN applied), define (h) heads and per-head dimension (d_k = D/h).
 
 For each head (t=1\ldots h), we have learned projection matrices:
-[
-W_Q^{(t)},W_K^{(t)},W_V^{(t)} \in \mathbb{R}^{D\times d_k}.
-]
+<img width="311" height="74" alt="image" src="https://github.com/user-attachments/assets/808e0810-170b-4d74-9f9e-99bbdfae798b" />
+
 Compute queries/keys/values:
-[
-Q^{(t)} = U W_Q^{(t)} \in\mathbb{R}^{(N+1)\times d_k},\quad
-K^{(t)} = U W_K^{(t)},\quad
-V^{(t)} = U W_V^{(t)}.
-]
+<img width="668" height="65" alt="image" src="https://github.com/user-attachments/assets/54b4e68a-c30d-49f2-89a6-8ac33bf5f03c" />
 
 Scaled dot-product attention for head (t):
-[
-A^{(t)} = \operatorname{softmax}!\Big(\frac{Q^{(t)} (K^{(t)})^\top}{\sqrt{d_k}} \Big) V^{(t)}.
-]
+<img width="421" height="70" alt="image" src="https://github.com/user-attachments/assets/304a33ad-7d5f-486d-8a48-91240fa38c2f" />
 
-* Here (\frac{QK^\top}{\sqrt{d_k}}) is an ((N+1)\times(N+1)) matrix of raw attention scores.
+
+* Here $(\frac{QK^\top}{\sqrt{d_k}}) is an ((N+1)\times(N+1))$  matrix of raw attention scores.
 * Softmax is applied row-wise (softmax over keys for each query token).
 
 Concatenate heads:
-[
-A = \operatorname{concat}\big(A^{(1)},\dots,A^{(h)}\big)\in\mathbb{R}^{(N+1)\times D}.
-]
-Final linear projection:
-[
-\operatorname{MSA}(U) = A W_O,\quad W_O\in\mathbb{R}^{D\times D}.
-]
+<img width="443" height="50" alt="image" src="https://github.com/user-attachments/assets/596663ee-690f-4d5b-b22a-d91a95222b99" />
 
-**Computational note:** computing (QK^\top) costs (\mathcal{O}((N+1)^2 D)) — quadratic in the sequence length (i.e., in number of patches).
+Final linear projection:
+<img width="403" height="57" alt="image" src="https://github.com/user-attachments/assets/2ba42987-8390-4b2b-a90c-31d81ea2460f" />
+
+**Computational note:** computing $(QK^\top)$ costs $(\mathcal{O}((N+1)^2 D))$ — quadratic in the sequence length (i.e., in number of patches).
 
 ---
 
 ## 3.3 — Feed-forward MLP
 
 Per token independently, the MLP is:
-[
-\operatorname{MLP}(x) = W_2, \sigma(W_1 x + b_1) + b_2,
-]
-where (W_1\in\mathbb{R}^{D_\text{ff}\times D}), (W_2\in\mathbb{R}^{D\times D_\text{ff}}), (D_\text{ff}) is the hidden dimension (commonly (4D)), and (\sigma) is a nonlinearity (GELU used in ViT).
+<img width="392" height="56" alt="image" src="https://github.com/user-attachments/assets/f5f9c05f-85d0-45bf-af24-fb07a0d5a423" />
+
+where $(W_1\in\mathbb{R}^{D_\text{ff}\times D})$, $(W_2\in\mathbb{R}^{D\times D_\text{ff}})$, $(D_\text{ff})$ is the hidden dimension (commonly (4D)), and $(\sigma)$ is a nonlinearity (GELU used in ViT).
 
 **GELU** (Gaussian Error Linear Unit):
-[
-\operatorname{GELU}(x) = x\cdot \Phi(x) \approx 0.5 x\big(1 + \tanh(\sqrt{2/\pi}(x + 0.044715 x^3))\big).
-]
+<img width="750" height="70" alt="image" src="https://github.com/user-attachments/assets/3c6c98ba-b5f9-4557-9f73-97891c79da8e" />
 
 ---
 
 # 4 — Full forward pass summary
 
-Start with (Z^{(0)}) (patch embeddings + cls + position). For (l=1\ldots L):
+<img width="783" height="184" alt="image" src="https://github.com/user-attachments/assets/0ae84c72-cdf2-48b0-a52f-938969043aad" />
 
-1. (U = \operatorname{LN}(Z^{(l-1)})).
-2. (Z' = Z^{(l-1)} + \operatorname{MSA}(U)).
-3. (V = \operatorname{LN}(Z')).
-4. (Z^{(l)} = Z' + \operatorname{MLP}(V)).
 
-After (L) layers you have (Z^{(L)}\in\mathbb{R}^{(N+1)\times D}). Extract the first vector (classification token):
-[
-z_\text{cls} = Z^{(L)}[0] \in\mathbb{R}^D.
-]
+After (L) layers you have $(Z^{(L)}\in\mathbb{R}^{(N+1)\times D})$. Extract the first vector (classification token):
+<img width="278" height="63" alt="image" src="https://github.com/user-attachments/assets/29a4850d-f3f4-46a2-881b-acaf162b940a" />
 
-Classification head: linear layer (W_c\in\mathbb{R}^{K\times D}) (for (K) classes):
-[
-\hat{y} = \operatorname{softmax}(W_c z_\text{cls} + b_c).
-]
 
-Loss (for supervised classification): cross-entropy between (\hat{y}) and ground-truth label (y):
-[
-\mathcal{L} = -\log \hat{y}_{y}.
-]
+Classification head: linear layer $(W_c\in\mathbb{R}^{K\times D})$ (for (K) classes):
+<img width="335" height="72" alt="image" src="https://github.com/user-attachments/assets/131353d6-612b-4d98-ba7d-c7583c5742c3" />
+
+
+Loss (for supervised classification): cross-entropy between $(\hat{y})$ and ground-truth label (y):
+<img width="216" height="81" alt="image" src="https://github.com/user-attachments/assets/eca170ff-d95f-42fc-ab30-df4720e6ad2a" />
 
 ---
 
@@ -183,37 +154,29 @@ ViT models are data-hungry; to make them work well you need specific optimizers,
 ### 7.1 Optimizer & weight decay
 
 * Use **AdamW** (Adam with decoupled weight decay). The update for parameter (\theta) at step (t):
-  [
-  m_t = \beta_1 m_{t-1} + (1-\beta_1) g_t, \quad
-  v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t^2,
-  ]
-  then bias-correct and update with weight decay (\lambda):
-  [
-  \theta_{t+1} = \theta_t - \eta \left( \frac{\hat m_t}{\sqrt{\hat v_t} + \epsilon} + \lambda \theta_t \right).
-  ]
+ <img width="609" height="68" alt="image" src="https://github.com/user-attachments/assets/9582571e-8083-4183-afe3-af80f4eee473" />
+
+  then bias-correct and update with weight decay $(\lambda)$:
+ <img width="422" height="70" alt="image" src="https://github.com/user-attachments/assets/da54f5ab-0a0e-457b-b59f-62f21c8a97f7" />
 
 ### 7.2 Learning rate schedule
 
 * Use **linear warmup** for first (w) steps then **cosine decay**:
-  [
-  \eta_t = \eta_\text{init} \cdot \begin{cases}
-  t/w & t\le w\
-  \frac{1}{2}\big(1 + \cos(\pi \frac{t-w}{T-w})\big) & t>w
-  \end{cases}
-  ]
+<img width="530" height="131" alt="image" src="https://github.com/user-attachments/assets/57c82392-c0d2-42c3-b718-0de9505590d5" />
+
 
 ### 7.3 Regularization used in ViT papers
 
 * **Dropout** in MLP/attention (probability (p)).
 * **Attention dropout** on softmax outputs.
 * **Stochastic depth (DropPath)**: randomly drop entire residual branches during training — equivalent to scaling residual output by Bernoulli mask. Helps very deep transformers.
-* **Label smoothing** in cross-entropy: replace one-hot labels by ((1-\epsilon, \epsilon/(K-1))) to regularize.
+* **Label smoothing** in cross-entropy: replace one-hot labels by $((1-\epsilon, \epsilon/(K-1)))$ to regularize.
 * **Data augmentations** — crucial (see next).
 
 ### 7.4 Data augmentations & mix strategies
 
 * **RandAugment / AutoAugment**: strong image transformations.
-* **MixUp**: convex combination of images and labels: (\tilde x = \lambda x_i + (1-\lambda)x_j), (\tilde y = \lambda y_i + (1-\lambda) y_j).
+* **MixUp**: convex combination of images and labels: $(\tilde x = \lambda x_i + (1-\lambda)x_j)$, $(\tilde y = \lambda y_i + (1-\lambda) y_j)$.
 * **CutMix**, **RandomResizedCrop**, **RandErasing**, etc.
   Strong augmentation is essential because ViT has less built-in translation/scale invariance than CNNs.
 
@@ -227,7 +190,7 @@ I’ll summarize the main directions and their math intuitions (no code):
 
 * **Patch-based masked modeling (BEiT, MAE):** pretrain by masking a subset of patches and reconstructing them (masked image modeling). Example: randomly mask 75% patches; encoder processes visible patches; decoder reconstructs pixel or tokenized patches. Loss is reconstruction loss (e.g., L2 on pixels, or cross-entropy on discrete token ids). This significantly reduces data needs.
 
-* **Hierarchical / windowed self-attention** (Swin Transformer): compute attention in local windows (linear complexity per window), use shifted windows to enable cross-window communication. This reduces computational complexity from (\mathcal{O}(N^2)) to (\mathcal{O}(N\cdot M)) where (M) is window size.
+* **Hierarchical / windowed self-attention** (Swin Transformer): compute attention in local windows (linear complexity per window), use shifted windows to enable cross-window communication. This reduces computational complexity from $(\mathcal{O}(N^2))$ to $(\mathcal{O}(N\cdot M))$ where (M) is window size.
 
 * **Locality bias:** add depthwise convolutional stem (ConvNet-like embedding) or relative positional bias in attention to inject locality.
 
@@ -235,8 +198,8 @@ I’ll summarize the main directions and their math intuitions (no code):
 
 # 9 — Complexity & scaling
 
-* **Time / Memory complexity:** per MSA layer, cost is dominated by (QK^\top): (\mathcal{O}((N+1)^2 D)). So doubling image size or halving patch size dramatically increases cost.
-* **Parameter count:** about (\mathcal{O}(L D^2)) (dominant parameters in MLP/projection matrices).
+* **Time / Memory complexity:** per MSA layer, cost is dominated by $(QK^\top)$ : $(\mathcal{O}((N+1)^2 D))$. So doubling image size or halving patch size dramatically increases cost.
+* **Parameter count:** about $(\mathcal{O}(L D^2))$ (dominant parameters in MLP/projection matrices).
 * **Compute tradeoffs:** increase (D), (L), or reduce (P) — increases accuracy but also compute/memory.
 
 ---
@@ -261,10 +224,9 @@ I’ll summarize the main directions and their math intuitions (no code):
 You can interpret attention matrices to see where each token attends:
 
 For a given head (t) at layer (l), attention scores:
-[
-S^{(t)} = \operatorname{softmax}!\Big(\frac{Q^{(t)} (K^{(t)})^\top}{\sqrt{d_k}}\Big) \in\mathbb{R}^{(N+1)\times(N+1)}.
-]
-Row (i) of (S^{(t)}) is a distribution over tokens that token (i) attends to. The **cls token's** row often highlights semantically important patches; averaging or combining heads across layers can produce class-relevant saliency maps.
+<img width="542" height="70" alt="image" src="https://github.com/user-attachments/assets/9d74a135-be0d-44a5-bb0e-7b70d1f42a9f" />
+
+Row (i) of $(S^{(t)})$ is a distribution over tokens that token (i) attends to. The **cls token's** row often highlights semantically important patches; averaging or combining heads across layers can produce class-relevant saliency maps.
 
 ---
 
@@ -272,7 +234,7 @@ Row (i) of (S^{(t)}) is a distribution over tokens that token (i) attends to. Th
 
 When fine-tuning a pretrained ViT on target dataset:
 
-* Initialize weights from pretraining (encoder weights (E, W_Q, W_K, W_V, W_O,\dots)).
+* Initialize weights from pretraining (encoder weights $(E, W_Q, W_K, W_V, W_O,\dots))$.
 * Often replace/fine-tune the classification head (W_c) and possibly positional embeddings (if resolution changes).
 * If input resolution differs: either interpolate learned positional embeddings to new grid (bi-linear interpolation of (P) embeddings) or use relative positional encodings.
 * Fine-tune with smaller learning rate for pretrained params, larger for head.
@@ -283,15 +245,15 @@ When fine-tuning a pretrained ViT on target dataset:
 
 If you were to implement/train ViT from scratch (math checklist):
 
-1. Patchify image → flattened patch vectors (x_i).
-2. Learnable linear projection (E) to get patch embeddings (z_i^{(0)}).
+1. Patchify image → flattened patch vectors $(x_i)$.
+2. Learnable linear projection (E) to get patch embeddings $(z_i^{(0)})$.
 3. Prepend learnable cls token and add positional embeddings (P).
 4. Stack (L) Transformer encoder layers with:
 
    * LayerNorm
    * MSA: compute (Q,K,V), scaled dot-product, softmax, combine heads, projection (W_O).
    * Residual + MLP with GELU.
-5. Take cls token output (z_\text{cls}), project to classes with linear head.
+5. Take cls token output $(z_\text{cls})$, project to classes with linear head.
 6. Train with cross-entropy, use AdamW, warmup + cosine LR, heavy augmentations (MixUp, RandAugment), dropout, label smoothing, stochastic depth.
 7. If data is limited, pretrain with masked patch modeling (reconstruction) or distillation (teacher networks).
 
