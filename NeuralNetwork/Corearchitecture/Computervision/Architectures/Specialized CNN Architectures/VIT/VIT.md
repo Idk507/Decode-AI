@@ -2,12 +2,13 @@
 # 1 — High level idea (one sentence)
 
 A Vision Transformer treats an image as a sequence of flattened patches (like tokens in language), maps them to embeddings, and runs standard Transformer encoder blocks (multi-head self-attention + MLP) over that sequence; a special **classification token** summarizes the image for supervision.
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/4b84f9b1-acc2-4528-ad46-8d6065cee1ba" />
 
 ---
 
 # 2 — From image to sequence: patch embedding
 
-**Input:** image (X \in \mathbb{R}^{H\times W \times C}) (height (H), width (W), channels (C), e.g., RGB (C=3)).
+**Input:** image $(X \in \mathbb{R}^{H\times W \times C})$ (height (H), width (W), channels (C), e.g., RGB (C=3)).
 
 1. Choose patch size (P) (common: 16). Assume (H, W) divisible by (P).
 
@@ -44,6 +45,8 @@ A Vision Transformer treats an image as a sequence of flattened patches (like to
      ]
 
 ---
+<img width="600" height="252" alt="image" src="https://github.com/user-attachments/assets/c1dcc1fa-b52e-45c0-af0f-2053837b8742" />
+
 
 # 3 — Transformer encoder block (single layer)
 
