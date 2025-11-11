@@ -136,7 +136,8 @@ For multi-head attention with (h) heads, you typically:
 2. For each head (t) compute head outputs $(O^{(t)} = A^{(t)} V^{(t)})$ and get gradients $(G_{O^{(t)}})$. Apply the per-head derivations above producing $(G_{Q^{(t)}},G_{K^{(t)}},G_{V^{(t)}})$.
 3. Concatenate head gradients and map back through the big $(W_Q,W_K,W_V)$ linear layers (same formulas as step 3 but with concatenated shapes).
 
-If there is a final linear projection (W_O) applied after concatenation: $(O_\text{final} = \operatorname{concat}(O^{(1)},\dots,O^{(h)}) W_O)$, then:
+If there is a final linear projection (W_O) applied after concatenation: <img width="385" height="45" alt="image" src="https://github.com/user-attachments/assets/63d6193c-e503-4591-a19c-19e882399587" />
+, then:
 
 * Gradient w.r.t $(W_O): (G_{W_O} = O_\text{concat}^\top,G_{O_\text{final}})$.
 * Gradient back to concatenated heads: $(G_{O_\text{concat}} = G_{O_\text{final}}W_O^\top)$. Then split into per-head (G_{O^{(t)}}) and continue.
