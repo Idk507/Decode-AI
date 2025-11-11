@@ -50,7 +50,8 @@ So far:
 
 ## Step 1 — Backprop through softmax (row-wise)
 
-Recall each row $(a_i = A_{i,:} = \operatorname{softmax}(s_i))$ where (s_i) is row (i) of (S). For a single row (i), with upstream gradient<img width="161" height="53" alt="image" src="https://github.com/user-attachments/assets/4323df14-e328-43a6-8219-7801f85cac62" />
+Recall each row <img width="153" height="46" alt="image" src="https://github.com/user-attachments/assets/55cc84f4-36c9-4bc7-8229-52f195c0a124" />
+where (s_i) is row (i) of (S). For a single row (i), with upstream gradient<img width="161" height="53" alt="image" src="https://github.com/user-attachments/assets/4323df14-e328-43a6-8219-7801f85cac62" />
  (row vector length (N)), the derivative w.r.t. (s_i) is:
 
 <img width="289" height="89" alt="image" src="https://github.com/user-attachments/assets/dc4d13d5-5115-4315-ac9a-aea81b37e9b8" />
@@ -102,13 +103,8 @@ Proof sketch: elementwise,
 So $(\partial L/\partial Q_{i,r} = \sum_j (\partial L/\partial S_{i,j}) \cdot \frac{1}{\sqrt{d}} K_{j,r})$, which in matrix form is above.
 
 So summarizing the chain:
+<img width="448" height="247" alt="image" src="https://github.com/user-attachments/assets/7a43861b-b842-48c6-8696-9e2a3ec42906" />
 
-1. $(G_O)$ given.
-2. $(G_A = G_O V^\top)$.
-3. $(G_V = A^\top G_O)$.
-4. $(G_S = \text{softmax_backprop}(S,A,G_A))$.
-5. $(G_Q = \frac{1}{\sqrt{d}} G_S K)$.
-6. $(G_K = \frac{1}{\sqrt{d}} G_S^\top Q)$.
 
 ---
 
@@ -135,7 +131,8 @@ And gradient to the input (X) accumulates contributions from all three projectio
 
 For multi-head attention with (h) heads, you typically:
 
-1. Compute big projections $(Q = X W_Q, K = X W_K, V = X W_V)$ where $(W_Q\in\mathbb{R}^{D_{in}\times (h d)})$ etc., then reshape to $((N,h,d))$.
+1. Compute big projections <img width="593" height="59" alt="image" src="https://github.com/user-attachments/assets/745d9c89-e9f2-43cc-83c9-e75b0f089222" />
+ etc., then reshape to $((N,h,d))$.
 2. For each head (t) compute head outputs $(O^{(t)} = A^{(t)} V^{(t)})$ and get gradients $(G_{O^{(t)}})$. Apply the per-head derivations above producing $(G_{Q^{(t)}},G_{K^{(t)}},G_{V^{(t)}})$.
 3. Concatenate head gradients and map back through the big $(W_Q,W_K,W_V)$ linear layers (same formulas as step 3 but with concatenated shapes).
 
