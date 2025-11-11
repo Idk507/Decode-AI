@@ -56,7 +56,8 @@ A Vision Transformer stacks (L) identical encoder layers (often 12–24). Each l
    
 <img width="343" height="57" alt="image" src="https://github.com/user-attachments/assets/145749b4-1ccc-406e-accd-70d03af13428" />
 
-Where $(\operatorname{LN}(\cdot))$ is Layer Normalization applied token-wise.
+Where <img width="274" height="40" alt="image" src="https://github.com/user-attachments/assets/0eea7734-1585-47b9-95be-1ad3b78817aa" />
+ is Layer Normalization applied token-wise.
 
 
 ---
