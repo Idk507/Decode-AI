@@ -53,11 +53,11 @@ A Vision Transformer stacks (L) identical encoder layers (often 12–24). Each l
    (many implementations use pre-norm: LayerNorm before each sub-layer — we’ll use pre-norm which is common in ViT variants).
 
 2. **MLP (feed-forward network)** with residual:
+   
 <img width="343" height="57" alt="image" src="https://github.com/user-attachments/assets/145749b4-1ccc-406e-accd-70d03af13428" />
 
 Where $(\operatorname{LN}(\cdot))$ is Layer Normalization applied token-wise.
 
-We'll now expand MSA and MLP mathematically.
 
 ---
 
@@ -75,6 +75,7 @@ where $(\mu(u)) and (\sigma^2(u))$ are the mean and variance over the (D) dimens
 Given token sequence $(U\in\mathbb{R}^{(N+1)\times D})$ (LN applied), define (h) heads and per-head dimension (d_k = D/h).
 
 For each head (t=1\ldots h), we have learned projection matrices:
+
 <img width="311" height="74" alt="image" src="https://github.com/user-attachments/assets/808e0810-170b-4d74-9f9e-99bbdfae798b" />
 
 Compute queries/keys/values:
@@ -270,4 +271,4 @@ If you were to implement/train ViT from scratch (math checklist):
 
 
 
-Which follow-up would you like?
+
