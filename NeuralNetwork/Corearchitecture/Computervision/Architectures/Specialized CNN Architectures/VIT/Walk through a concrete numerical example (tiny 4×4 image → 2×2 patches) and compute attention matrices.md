@@ -7,34 +7,25 @@
 * Input embedding dimension: (D).
 * Per-head dimension: (d) (so queries/keys/values are (d)-dim).
 * Query, Key, Value matrices (after linear projections):
-  [
-  Q,;K,;V \in \mathbb{R}^{N\times d}.
-  ]
+ <img width="230" height="51" alt="image" src="https://github.com/user-attachments/assets/cd3eaca8-3a06-40df-9a2e-2319bdaa68db" />
+
 * Scaled score matrix:
-  [
-  S = \frac{QK^\top}{\sqrt{d}} \in \mathbb{R}^{N\times N}.
-  ]
+ <img width="243" height="105" alt="image" src="https://github.com/user-attachments/assets/704a89f5-1b73-4a54-be64-9d6c65673bd6" />
+
   (we use row (i) as query (i), columns index keys)
 * Attention weights (row-wise softmax):
-  [
-  A = \operatorname{softmax}(S) \in \mathbb{R}^{N\times N},
-  ]
-  where each row (A_{i,:} = \operatorname{softmax}(S_{i,:})) sums to 1.
+<img width="397" height="53" alt="image" src="https://github.com/user-attachments/assets/8f565627-3d0e-41f9-b813-a07a1beea2df" />
+
+  where each row <img width="204" height="30" alt="image" src="https://github.com/user-attachments/assets/3dc6696b-eff7-4fa1-8f1f-3ab4c68ef421" />
+sums to 1.
 * Attention output:
-  [
-  O = A,V \in \mathbb{R}^{N\times d}.
-  ]
+<img width="247" height="76" alt="image" src="https://github.com/user-attachments/assets/955c7343-aefe-4d30-9aee-4b04c97a6148" />
+
 * A scalar loss (L) depends (via later network layers) on (O). We assume we have $(\frac{\partial L}{\partial O})$, denote it $(G_O \in \mathbb{R}^{N\times d})$.
 
 Goal: compute
-[
-\frac{\partial L}{\partial A},\quad
-\frac{\partial L}{\partial S},\quad
-\frac{\partial L}{\partial Q},\quad
-\frac{\partial L}{\partial K},\quad
-\frac{\partial L}{\partial V}.
-]
-(And then optionally $(\partial L/\partial W_Q,\partial L/\partial W_K,\partial L/\partial W_V)$ if $(Q=XW_Q), etc.)$
+<img width="742" height="142" alt="image" src="https://github.com/user-attachments/assets/0f3eacf1-df17-43ac-b2a0-e5566df8070b" />
+
 
 ---
 
@@ -43,61 +34,48 @@ Goal: compute
 Because (O = A V), treat (A) and (V) as inputs to this matrix product.
 
 1. Gradient w.r.t. (A):
-   [
-   G_A \equiv \frac{\partial L}{\partial A} = G_O,V^\top \in \mathbb{R}^{N\times N}.
-   ]
-   (Reason: elementwise, $(O_{i,:} = \sum_{j} A_{i,j} V_{j,:})$, so $(\partial L/\partial A_{i,j} = \sum_{k} (\partial L/\partial O_{i,k}) V_{j,k})$.)
+ <img width="766" height="118" alt="image" src="https://github.com/user-attachments/assets/6c9537a1-6d73-46ef-af2f-90d968b1a353" />
+
 
 2. Gradient w.r.t. (V):
-   [
-   G_V \equiv \frac{\partial L}{\partial V} = A^\top,G_O \in \mathbb{R}^{N\times d}.
-   ]
+<img width="310" height="87" alt="image" src="https://github.com/user-attachments/assets/8b29d8e6-ebed-4e2d-a002-3afd9b785557" />
+
    (Because (O = A V), gradient flows back to V by multiplying left by $(A^\top)$.)
 
 So far:
-[
-G_A = G_O V^\top,\qquad G_V = A^\top G_O.
-]
+<img width="407" height="93" alt="image" src="https://github.com/user-attachments/assets/b6c1d9a2-7229-4a0d-b17d-1ea4bcd927c3" />
+
 
 ---
 
 ## Step 1 — Backprop through softmax (row-wise)
 
-Recall each row $(a_i = A_{i,:} = \operatorname{softmax}(s_i))$ where (s_i) is row (i) of (S). For a single row (i), with upstream gradient $(g^{(a)}_i = G_A[i,:])$ (row vector length (N)), the derivative w.r.t. (s_i) is:
+Recall each row $(a_i = A_{i,:} = \operatorname{softmax}(s_i))$ where (s_i) is row (i) of (S). For a single row (i), with upstream gradient<img width="161" height="53" alt="image" src="https://github.com/user-attachments/assets/4323df14-e328-43a6-8219-7801f85cac62" />
+ (row vector length (N)), the derivative w.r.t. (s_i) is:
 
-[
-\frac{\partial L}{\partial s_i}
-= J_{softmax}(s_i)^\top , g^{(a)}*i,
-]
+<img width="289" height="89" alt="image" src="https://github.com/user-attachments/assets/dc4d13d5-5115-4315-ac9a-aea81b37e9b8" />
+
 where
-[
-J*{softmax}(s_i) = \operatorname{diag}(a_i) - a_i a_i^\top.
-]
+<img width="378" height="55" alt="image" src="https://github.com/user-attachments/assets/dfd3b0f5-299b-4f6e-905b-d1e452e283ab" />
 
 This yields the compact and numerically stable formula (elementwise form):
 
 For each row (i) and column (j):
-[
-\big(G_S\big)*{i,j}
-\equiv \frac{\partial L}{\partial S*{i,j}}
-= a_{i,j}\Big( g^{(a)}*{i,j} - \sum*{k=1}^N g^{(a)}*{i,k},a*{i,k} \Big).
-]
+<img width="511" height="98" alt="image" src="https://github.com/user-attachments/assets/e3406d44-e65c-4ad5-aa93-423a3450a979" />
+
 
 Vector form for row (i):
-[
-G_{S}[i,:] = a_i \odot \Big( g^{(a)}_i - \big(a_i \cdot g^{(a)}*i{}^\top\big) \mathbf{1} \Big),
-]
+<img width="437" height="51" alt="image" src="https://github.com/user-attachments/assets/055d5cce-6366-4081-80ae-850b4428b6cd" />
+
 where (\odot) is elementwise multiply, and $(\mathbf{1})$ is a length-(N) vector of ones. More simply:
-[
-G*{S}[i,:] = \big(\operatorname{diag}(a_i) - a_i a_i^\top\big),g^{(a)}_i^\top .
-]
+<img width="393" height="60" alt="image" src="https://github.com/user-attachments/assets/08f8987e-1602-456c-95f4-157fa1deb409" />
+
 
 Stack across all rows: compute $(G_S\in\mathbb{R}^{N\times N})$ rowwise by the above.
 
 So:
-[
-G_S = \operatorname{softmax_jacobian_mul}(A,,G_A).
-]
+<img width="455" height="79" alt="image" src="https://github.com/user-attachments/assets/61428ed4-f821-4c57-849f-ef73c05d0513" />
+
 
 (Implementation tip: compute rowwise scalar $(c_i = a_i^\top g^{(a)}_i)$ then $(G_S[i,:]=a_i\odot (g^{(a)}_i - c_i))$.)
 
@@ -106,38 +84,31 @@ G_S = \operatorname{softmax_jacobian_mul}(A,,G_A).
 ## Step 2 — Backprop through scaled dot-product $(S = \frac{QK^\top}{\sqrt{d}})$
 
 We have
-[
-S = \frac{1}{\sqrt{d}} Q K^\top.
-]
+<img width="292" height="120" alt="image" src="https://github.com/user-attachments/assets/9151e1de-eb69-4f88-b7a1-3811e37d140d" />
+
 Differentiate:
 
 * Gradient w.r.t. (Q):
-  [
-  G_Q \equiv \frac{\partial L}{\partial Q}
-  = \frac{1}{\sqrt{d}},G_S,K \quad \in\mathbb{R}^{N\times d}.
-  ]
-  (Because (\partial \operatorname{tr}(G_S^\top Q K^\top)/\partial Q = G_S K).)
+<img width="717" height="126" alt="image" src="https://github.com/user-attachments/assets/031e6e47-fa72-4735-8d34-f57173dd7484" />
+
 
 * Gradient w.r.t. (K):
-  [
-  G_K \equiv \frac{\partial L}{\partial K}
-  = \frac{1}{\sqrt{d}},G_S^\top,Q \quad \in\mathbb{R}^{N\times d}.
-  ]
+<img width="444" height="91" alt="image" src="https://github.com/user-attachments/assets/78192464-4388-483b-a38d-8fecb6eb00b7" />
+
 
 Proof sketch: elementwise,
-[
-S_{i,j} = \frac{1}{\sqrt{d}} \sum_{r=1}^{d} Q_{i,r}K_{j,r}.
-]
+<img width="291" height="95" alt="image" src="https://github.com/user-attachments/assets/a67bff65-6736-4db8-b37c-d1d1f2b97091" />
+
 So $(\partial L/\partial Q_{i,r} = \sum_j (\partial L/\partial S_{i,j}) \cdot \frac{1}{\sqrt{d}} K_{j,r})$, which in matrix form is above.
 
 So summarizing the chain:
 
-1. (G_O) given.
-2. (G_A = G_O V^\top).
-3. (G_V = A^\top G_O).
-4. (G_S = \text{softmax_backprop}(S,A,G_A)).
-5. (G_Q = \frac{1}{\sqrt{d}} G_S K).
-6. (G_K = \frac{1}{\sqrt{d}} G_S^\top Q).
+1. $(G_O)$ given.
+2. $(G_A = G_O V^\top)$.
+3. $(G_V = A^\top G_O)$.
+4. $(G_S = \text{softmax_backprop}(S,A,G_A))$.
+5. $(G_Q = \frac{1}{\sqrt{d}} G_S K)$.
+6. $(G_K = \frac{1}{\sqrt{d}} G_S^\top Q)$.
 
 ---
 
@@ -153,9 +124,8 @@ Then gradients w.r.t. the learnable weight matrices are:
 
 And gradient to the input (X) accumulates contributions from all three projections:
 
-[
-\frac{\partial L}{\partial X} = G_Q W_Q^\top + G_K W_K^\top + G_V W_V^\top \in\mathbb{R}^{N\times D_{in}}.
-]
+<img width="559" height="76" alt="image" src="https://github.com/user-attachments/assets/af921182-f598-4cf4-8ac1-382abed6a620" />
+
 
 (If the projections are separate per head or implemented as one big projection (XW) that is reshaped, the same matrix calculus applies with appropriate reshapes.)
 
@@ -204,14 +174,9 @@ If $(Q,K,V=XW_*)$:
 
 ## Optional: derivative of loss w.r.t. an individual attention score entry
 
-If you want an elementwise view: Suppose $(s_{i,j})$ is a single scalar entry of (S). Its effect flows to (O) via the attention weight (a_{i,:}) row. The scalar gradient is:
+If you want an elementwise view: Suppose $(s_{i,j})$ is a single scalar entry of (S). Its effect flows to (O) via the attention weight $(a_{i,:})$ row. The scalar gradient is:
+<img width="743" height="88" alt="image" src="https://github.com/user-attachments/assets/5c3ea651-e85d-4fa6-9c5b-ee7a9ef82717" />
 
-[
-\frac{\partial L}{\partial s_{i,j}}
-= \sum_{k=1}^N \left( \frac{\partial L}{\partial a_{i,k}}\right)
-\left( \delta_{k,j} a_{i,k} - a_{i,k}a_{i,j} \right)
-= a_{i,j} \Big( \frac{\partial L}{\partial a_{i,j}} - \sum_{k} \frac{\partial L}{\partial a_{i,k}} a_{i,k} \Big).
-]
 
 This matches the row-vector softmax Jacobian formula shown earlier.
 
