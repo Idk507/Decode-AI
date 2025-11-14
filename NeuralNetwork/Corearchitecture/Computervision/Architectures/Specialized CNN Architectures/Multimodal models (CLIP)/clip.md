@@ -254,7 +254,8 @@ To classify image (I) into one of (C) classes using only natural language class 
 Training forward pass for one minibatch:
 
 1. Tokenize texts $({t_i})$ and preprocess images $({\mathbf{I}_i})$.
-2. Compute $(y_i = f_\phi(\mathbf{I}*i))$, $(u_i = g*\theta(t_i))$.
+2. Compute <img width="248" height="37" alt="image" src="https://github.com/user-attachments/assets/4fcf3b44-3067-4b4a-bd95-4fab5658aeec" />
+.
 3. Project: $(\tilde z_i^{\text{img}} = W_{\text{img}} y_i), (\tilde z_i^{\text{text}} = W_{\text{text}} u_i)$.
 4. Normalize: $(z_i^{\text{img}} = \tilde z_i^{\text{img}} / |\tilde z_i^{\text{img}}|)$, likewise for text.
 5. Compute similarity matrix $(S = Z^{\text{img}}(Z^{\text{text}})^\top)$.
