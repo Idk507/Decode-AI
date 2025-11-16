@@ -8,7 +8,8 @@ There are two closely related families of DALL·E systems:
 1. **DALL·E (v1) — discrete-token autoregressive approach**
 
    * Convert image → discrete tokens via a learned codebook (VQ/dVAE).
-   * Train a big autoregressive transformer to model $(p(\text{img_tokens} \mid \text{text}))$.
+   * Train a big autoregressive transformer to model <img width="203" height="34" alt="image" src="https://github.com/user-attachments/assets/1c1e7496-b34a-4457-9811-89edf1e4d62f" />
+
    * Sample tokens autoregressively, then decode tokens → pixels with the VQ decoder.
 
 2. **DALL·E-2 style — embedding + diffusion approach**
