@@ -69,7 +69,8 @@ After training, (x) ↔ sequence of code indices (k^*(u,v)). Flatten latents spa
 
 With image tokens (y_{1:M}) and text tokens (w_{1:L}), DALL·E trains a single large autoregressive transformer to model the joint sequence with text first:
 
-Concatenate tokens: ([w_1,\dots,w_L,, y_1,\dots,y_M]). Model next-token probabilities autoregressively:
+Concatenate tokens:![Uploading image.png…]()
+. Model next-token probabilities autoregressively:
 <img width="387" height="96" alt="image" src="https://github.com/user-attachments/assets/e3534370-9ba0-4e0d-8ba4-4100b60be643" />
 
 where (s_t) indexes either a text token or an image token.
