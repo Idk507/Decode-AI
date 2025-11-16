@@ -263,7 +263,8 @@ Observed (y_1 = 2) (index 2). Cross-entropy loss:
 <img width="458" height="37" alt="image" src="https://github.com/user-attachments/assets/1216f6f2-f855-40c7-b557-1871f29baad9" />
 
 
-Gradient wrt logits (a) for cross-entropy is $(g = p - \text{one_hot}(y))$. So
+Gradient wrt logits (a) for cross-entropy is <img width="172" height="24" alt="image" src="https://github.com/user-attachments/assets/a91fab71-b494-42ce-b018-44c1a72fdf4b" />
+. So
 
 <img width="651" height="48" alt="image" src="https://github.com/user-attachments/assets/470d461b-54c8-4e8a-b18a-1ba03efe2b24" />
 
