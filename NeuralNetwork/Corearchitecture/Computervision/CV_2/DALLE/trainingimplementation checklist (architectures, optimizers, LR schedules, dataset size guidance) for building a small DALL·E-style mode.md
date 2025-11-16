@@ -1,7 +1,3 @@
-Below are two deliverables in one reply:
-
-1. A **detailed training & implementation checklist** for building a *small* DALL·E-style system (practical architecture choices, optimizers, schedules, dataset guidance, tooling, debugging tips, and recommended hyperparameters).
-2. A **complete, self-contained PyTorch reference implementation** you can run locally to experiment: a tiny **VQ-VAE** (discrete image tokenizer) → **autoregressive Transformer** (text→image tokens) pipeline. The code is simplified so it runs quickly on small toy datasets but follows the real pipeline structure (train VQ-VAE first, then train transformer on image tokens conditioned on text, and sample images).
 
 ---
 
