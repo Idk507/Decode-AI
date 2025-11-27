@@ -1,6 +1,6 @@
 # DALL·E embeddings 
 ---
-
+   
 # 1 — Big picture (two paradigms)   
 
 There are two closely related families of DALL·E systems:
