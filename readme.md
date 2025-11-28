@@ -2,7 +2,7 @@
 
 ---
 
-### **1. Optimization in Machine Learning & Deep Learning**
+### **1. Optimization in Machine Learning & Deep Learning**   
    - **Gradient Descent Variants**:
      - Batch Gradient Descent  
      - Stochastic Gradient Descent (SGD)  
