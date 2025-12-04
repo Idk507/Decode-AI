@@ -5,7 +5,6 @@
 This document provides a **comprehensive taxonomy** of Transformer architectures, categorized by **attention mechanism**, **model architecture**, **efficiency technique**, and **domain specialization**.  
 It covers both **classical** and **emerging** variants of Transformers in NLP, Vision, Speech, and Multi-Modal AI.
 
----
 
 ## I. Based on Attention Mechanism
 
@@ -24,7 +23,6 @@ Transformers differ mainly in **how attention is computed** — the core operati
 | **9. Memory-Augmented Attention** | Adds external memory vectors attended over time. | $ [K; M], [V; M_V] $ | Transformer-XL, Compressive Transformer |
 | **10. State Space / Hybrid Attention** | Combines recurrent or convolutional updates with attention. | Continuous or discrete state equations | Mamba, Hyena, RWKV |
 
----
 
 ## II. Based on Model Architecture (Encoder/Decoder Structure)
 
