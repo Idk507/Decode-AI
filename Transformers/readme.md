@@ -13,15 +13,15 @@ Transformers differ mainly in **how attention is computed** — the core operati
 
 | **Category** | **Type** | **Description / Formula Notes** | **Examples** |
 |---------------|-----------|----------------------------------|---------------|
-| **1. Self-Attention Transformers** | Encoder-only or full models where every token attends to every other token in the same sequence. | \\( \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V \\) | BERT, ViT, GPT |
-| **2. Cross-Attention Transformers** | Decoder attends to encoder output, not to itself. Used in seq2seq models. | \\( Q_{\text{dec}} K_{\text{enc}}^T \\) cross-attention | T5, BART |
+| **1. Self-Attention Transformers** | Encoder-only or full models where every token attends to every other token in the same sequence. | $ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V $ | BERT, ViT, GPT |
+| **2. Cross-Attention Transformers** | Decoder attends to encoder output, not to itself. Used in seq2seq models. | $ Q_{\text{dec}} K_{\text{enc}}^T $ (cross-attention) | T5, BART |
 | **3. Causal / Masked Self-Attention** | Masked to prevent tokens from attending to future tokens (used in autoregressive models). | Mask upper triangle of attention matrix | GPT, LLaMA, Falcon |
-| **4. Multi-Head Attention (MHA)** | Multiple attention heads capture different subspace relations. | \\( \text{Concat}(head_1, ..., head_h)W^O \\) | Almost all Transformers |
-| **5. Sparse / Local Attention** | Only attends to nearby tokens or structured subsets to reduce complexity. | Reduces \\( O(n^2) \\) to \\( O(n \log n) \\) or \\( O(n) \\) | Longformer, BigBird, Sparse Transformer |
-| **6. Linearized / Low-Rank Attention** | Uses kernel tricks or low-rank projection to approximate attention efficiently. | Linear attention via \\( \Phi(Q)\Phi(K)^T \\) | Performer, Linformer, Nyströmformer |
+| **4. Multi-Head Attention (MHA)** | Multiple attention heads capture different subspace relations. | $ \text{Concat}(head_1, ..., head_h)W^O $ | Almost all Transformers |
+| **5. Sparse / Local Attention** | Only attends to nearby tokens or structured subsets to reduce complexity. | Reduces $ O(n^2) $ to $ O(n \log n) $ or $ O(n) $ | Longformer, BigBird, Sparse Transformer |
+| **6. Linearized / Low-Rank Attention** | Uses kernel tricks or low-rank projection to approximate attention efficiently. | Linear attention via $ \Phi(Q)\Phi(K)^T $ | Performer, Linformer, Nyströmformer |
 | **7. Rotary / Relative Positional Attention** | Adds position through rotation or relative encoding instead of absolute embedding. | Uses RoPE or relative bias | LLaMA, Transformer-XL, DeBERTa |
 | **8. Mixture-of-Experts Attention** | Routes tokens to expert attention heads dynamically. | Dynamic routing per token | GLaM, Switch Transformer |
-| **9. Memory-Augmented Attention** | Adds external memory vectors attended over time. | \\( [K; M], [V; M_V] \\) | Transformer-XL, Compressive Transformer |
+| **9. Memory-Augmented Attention** | Adds external memory vectors attended over time. | $ [K; M], [V; M_V] $ | Transformer-XL, Compressive Transformer |
 | **10. State Space / Hybrid Attention** | Combines recurrent or convolutional updates with attention. | Continuous or discrete state equations | Mamba, Hyena, RWKV |
 
 ---
