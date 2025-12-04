@@ -1,8 +1,5 @@
-Here is the entire content formatted cleanly and professionally for a **GitHub `README.md`** — including proper Markdown formatting for math (LaTeX) so it renders correctly on GitHub or Jupyter/Colab viewers.
 
----
 
-```markdown
 # 🧠 Types of Transformers — Complete Overview
 
 This document provides a **comprehensive taxonomy** of Transformer architectures, categorized by **attention mechanism**, **model architecture**, **efficiency technique**, and **domain specialization**.  
