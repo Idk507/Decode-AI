@@ -1,3 +1,8 @@
+Here is the entire content formatted cleanly and professionally for a **GitHub `README.md`** — including proper Markdown formatting for math (LaTeX) so it renders correctly on GitHub or Jupyter/Colab viewers.
+
+---
+
+```markdown
 # 🧠 Types of Transformers — Complete Overview
 
 This document provides a **comprehensive taxonomy** of Transformer architectures, categorized by **attention mechanism**, **model architecture**, **efficiency technique**, and **domain specialization**.  
@@ -80,4 +85,79 @@ Transformers differ mainly in **how attention is computed** — the core operati
 ---
 
 ## VI. Summary Hierarchy
+
+```
+
+Transformers
+│
+├── Based on Attention
+│   ├── Self-Attention
+│   ├── Cross-Attention
+│   ├── Causal / Masked
+│   ├── Sparse / Linear / Rotary / MoE / Memory
+│
+├── Based on Architecture
+│   ├── Encoder-only
+│   ├── Decoder-only
+│   ├── Encoder–Decoder
+│   ├── Dual / Multimodal / Vision / Audio
+│
+├── Based on Efficiency
+│   ├── Sparse / Low-Rank / Retrieval / Memory
+│
+├── Based on Domain
+│   ├── NLP / Vision / Audio / Multimodal / Graph / RL / Code
+│
+└── Emerging Variants
+├── MoE / RAG / Continuous-Time / Hybrid
+
+```
+
+---
+
+## VII. Key Formulas
+
+### 1. Standard Scaled Dot-Product Attention
+\\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\\]
+
+### 2. Multi-Head Attention
+\\[
+\text{MHA}(Q, K, V) = \text{Concat}(head_1, ..., head_h)W^O
+\\]
+
+### 3. Linear Attention (Performer)
+\\[
+\text{Attention}(Q, K, V) = \Phi(Q)\left(\Phi(K)^T V\right)
+\\]
+
+### 4. Relative Positional Attention (Transformer-XL)
+\\[
+A_{i,j} = \frac{(Q_i (K_j + R_{i-j})^T)}{\sqrt{d_k}}
+\\]
+
+---
+
+## VIII. References
+
+- [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
+- [BERT: Pre-training of Deep Bidirectional Transformers (Devlin et al., 2018)](https://arxiv.org/abs/1810.04805)
+- [GPT-3: Language Models are Few-Shot Learners (Brown et al., 2020)](https://arxiv.org/abs/2005.14165)
+- [T5: Exploring the Limits of Transfer Learning (Raffel et al., 2020)](https://arxiv.org/abs/1910.10683)
+- [Vision Transformer (Dosovitskiy et al., 2020)](https://arxiv.org/abs/2010.11929)
+- [Performer (Choromanski et al., 2020)](https://arxiv.org/abs/2009.14794)
+- [Switch Transformer (Fedus et al., 2021)](https://arxiv.org/abs/2101.03961)
+
+---
+
+**Author:** Compiled by Beyhadh (Data Scientist)  
+**Maintained by:** AI Knowledge Research Collection  
+**License:** MIT
+
+---
+
+```
+
+---
 
