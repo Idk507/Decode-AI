@@ -148,13 +148,6 @@ A_{i,j} = \frac{(Q_i (K_j + R_{i-j})^T)}{\sqrt{d_k}}
 
 ---
 
-**Author:** Compiled by Beyhadh (Data Scientist)  
-**Maintained by:** AI Knowledge Research Collection  
-**License:** MIT
-
----
-
-```
 
 ---
 
