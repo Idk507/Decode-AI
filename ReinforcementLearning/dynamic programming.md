@@ -26,31 +26,19 @@ This leads directly to the **Bellman equations**.
 # 2. MDP Formal Definition (Foundation)
 
 An MDP is defined as:
-[
-\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, R, \gamma)
-]
-
-* ( \mathcal{S} ): states
-* ( \mathcal{A} ): actions
-* ( P(s'|s,a) ): transition probability
-* ( R(s,a) ): expected reward
-* ( \gamma \in [0,1) ): discount factor
+<img width="682" height="247" alt="image" src="https://github.com/user-attachments/assets/303e8a45-03a5-40cb-8e08-6c8d86694d06" />
 
 ---
 
 # 3. Value Functions (What DP Computes)
 
 ### State-Value Function
+<img width="365" height="123" alt="image" src="https://github.com/user-attachments/assets/9486e2d3-342a-4c9c-bebe-d45f838ba04e" />
 
-[
-V^\pi(s) = \mathbb{E}*\pi \left[ \sum*{t=0}^{\infty} \gamma^t r_t \mid s_0 = s \right]
-]
 
 ### Action-Value Function
 
-[
-Q^\pi(s,a) = \mathbb{E}*\pi \left[ \sum*{t=0}^{\infty} \gamma^t r_t \mid s_0=s, a_0=a \right]
-]
+<img width="463" height="111" alt="image" src="https://github.com/user-attachments/assets/0531650d-5824-466a-815f-4608104a1ca2" />
 
 DP computes these **exactly**, given the model.
 
@@ -67,11 +55,8 @@ The value of a state =
 
 ### Bellman Expectation Equation (State Value)
 
-[
-V^\pi(s) = \sum_{a} \pi(a|s)
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V^\pi(s') \right]
-]
+<img width="596" height="101" alt="image" src="https://github.com/user-attachments/assets/182d2fd4-1aad-4ab0-9d8d-9e6d27db8a58" />
+
 
 🔹 This is a **system of linear equations**
 🔹 One equation per state
@@ -80,11 +65,8 @@ V^\pi(s) = \sum_{a} \pi(a|s)
 
 ### Bellman Expectation Equation (Action Value)
 
-[
-Q^\pi(s,a) =
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma \sum_{a'} \pi(a'|s') Q^\pi(s',a') \right]
-]
+<img width="674" height="93" alt="image" src="https://github.com/user-attachments/assets/e9f24b32-2ec1-49c1-9587-8c908732268f" />
+
 
 ---
 
@@ -96,18 +78,13 @@ Now we want the **optimal policy** ( \pi^* ).
 
 ### Optimal State-Value Function
 
-[
-V^*(s) = \max_\pi V^\pi(s)
-]
+<img width="273" height="88" alt="image" src="https://github.com/user-attachments/assets/4a7e3119-4ce8-4d8b-8a5f-1ae0e10f5f4e" />
+
 
 ### Bellman Optimality Equation
 
-[
-V^*(s) =
-\max_{a}
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V^*(s') \right]
-]
+<img width="541" height="77" alt="image" src="https://github.com/user-attachments/assets/1768fda5-85a2-4462-8a22-322a304a32c7" />
+
 
 This replaces **expectation over policy** with **max over actions**.
 
@@ -115,11 +92,8 @@ This replaces **expectation over policy** with **max over actions**.
 
 ### Optimal Action-Value Equation
 
-[
-Q^*(s,a) =
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma \max_{a'} Q^*(s',a') \right]
-]
+<img width="581" height="88" alt="image" src="https://github.com/user-attachments/assets/fa160847-f0c1-482b-8ed3-5f3b5fc1ec93" />
+
 
 ➡️ This is the **foundation of Q-learning**.
 
@@ -134,11 +108,10 @@ Bellman equations:
 * Turn RL into **fixed-point problems**
 
 Mathematically:
-[
-V = \mathcal{T} V
-]
+<img width="156" height="66" alt="image" src="https://github.com/user-attachments/assets/cac3a90c-dd03-4a91-a9ff-a364f838fa33" />
 
-Where ( \mathcal{T} ) is the **Bellman operator**.
+
+Where $( \mathcal{T} )$ is the **Bellman operator**.
 
 ---
 
@@ -146,18 +119,12 @@ Where ( \mathcal{T} ) is the **Bellman operator**.
 
 ### Bellman Optimality Operator
 
-[
-(\mathcal{T}V)(s) =
-\max_a \sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V(s') \right]
-]
+<img width="567" height="55" alt="image" src="https://github.com/user-attachments/assets/4dc25e38-c645-4dd1-b7dd-b3dc4d6144eb" />
 
 ### Contraction Property
 
-[
-|\mathcal{T}V_1 - \mathcal{T}V_2|*\infty
-\le \gamma |V_1 - V_2|*\infty
-]
+<img width="378" height="69" alt="image" src="https://github.com/user-attachments/assets/fa08f9af-23cb-453c-945a-be9eb6421a80" />
+
 
 ✅ Guarantees **unique fixed point**
 ✅ Guarantees **convergence**
@@ -172,17 +139,13 @@ Compute ( V^\pi ) for a fixed policy.
 
 ### Iterative Update
 
-[
-V_{k+1}(s) =
-\sum_a \pi(a|s)
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V_k(s') \right]
-]
+<img width="613" height="67" alt="image" src="https://github.com/user-attachments/assets/d243d196-c6fb-4281-a2a3-66d990613152" />
+
 
 Stop when:
 [
-\max_s |V_{k+1}(s) - V_k(s)| < \epsilon
-]
+
+<img width="216" height="56" alt="image" src="https://github.com/user-attachments/assets/4bbb912a-3251-47fe-809d-af8c66217a97" />
 
 ---
 
@@ -190,18 +153,12 @@ Stop when:
 
 Make policy greedy w.r.t value function:
 
-[
-\pi'(s) =
-\arg\max_a
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V^\pi(s') \right]
-]
+<img width="544" height="77" alt="image" src="https://github.com/user-attachments/assets/5b942583-763b-4acd-b910-02272fc44e65" />
+
 
 ### Policy Improvement Theorem
 
-[
-V^{\pi'}(s) \ge V^\pi(s)
-]
+<img width="194" height="50" alt="image" src="https://github.com/user-attachments/assets/7ed3c7b1-52b0-472a-950b-0bd2aee110d7" />
 
 ---
 
@@ -224,25 +181,7 @@ Converges to ( \pi^* ) in **finite steps** (for finite MDPs).
 
 Combine evaluation + improvement.
 
-### Update Rule
-
-[
-V_{k+1}(s) =
-\max_a
-\sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V_k(s') \right]
-]
-
-Stop when:
-[
-\max_s |V_{k+1}(s) - V_k(s)| < \epsilon
-]
-
-Then extract policy:
-[
-\pi^*(s) = \arg\max_a \sum_{s'} P(s'|s,a)
-\left[ R(s,a) + \gamma V(s') \right]
-]
+<img width="782" height="384" alt="image" src="https://github.com/user-attachments/assets/d6054953-0d31-48b0-b9ea-1854d14e83cd" />
 
 ---
 
@@ -266,9 +205,8 @@ If:
 * ( \gamma = 0.9 )
 
 Then:
-[
-V(s) = 1 + 0.9 \times 10 = 10
-]
+<img width="370" height="65" alt="image" src="https://github.com/user-attachments/assets/cd271b58-3788-4e31-8cc5-12a3232b4fab" />
+
 
 DP repeatedly applies this logic **until self-consistent**.
 
