@@ -28,9 +28,8 @@ In RL, Beam Search is typically used for:
 
 ### Classical RL Loop
 
-[
-(s_t, a_t, r_t, s_{t+1})
-]
+<img width="175" height="63" alt="image" src="https://github.com/user-attachments/assets/2e3dc871-f661-4743-8219-0d4b898c61fd" />
+
 
 Normally, RL chooses actions via:
 
@@ -52,24 +51,18 @@ This is closer to **model-based RL** or **planning-augmented RL**.
 
 ### Markov Decision Process (MDP)
 
-[
-\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, R, \gamma)
-]
+<img width="253" height="61" alt="image" src="https://github.com/user-attachments/assets/49396d4b-acc6-4a4b-9ba6-edc93f35f5d8" />
+
 
 Where:
-
-* ( \mathcal{S} ): states
-* ( \mathcal{A} ): actions
-* ( P(s'|s,a) ): transition model
-* ( R(s,a) ): reward
-* ( \gamma \in [0,1] ): discount factor
+<img width="316" height="184" alt="image" src="https://github.com/user-attachments/assets/942bf522-1606-49af-a309-db71c646cc99" />
 
 ### Objective
 
 Maximize expected return:
-[
-G_t = \sum_{k=0}^{T} \gamma^k r_{t+k}
-]
+
+<img width="227" height="121" alt="image" src="https://github.com/user-attachments/assets/e89513fc-1049-478d-9324-7c572d1294d7" />
+
 
 ---
 
@@ -91,20 +84,18 @@ This is **receding horizon planning**.
 # 5. Mathematical Scoring of a Beam
 
 Each beam represents a **partial trajectory**:
-[
-\tau = (s_t, a_t, s_{t+1}, a_{t+1}, ..., s_{t+h})
-]
+
+<img width="339" height="44" alt="image" src="https://github.com/user-attachments/assets/9d4317c6-4df7-4325-a19b-ce3eb6737392" />
+
 
 ### Trajectory Score
 
-[
-J(\tau) = \sum_{k=0}^{h-1} \gamma^k R(s_{t+k}, a_{t+k})
-]
+<img width="348" height="100" alt="image" src="https://github.com/user-attachments/assets/4f4cee1b-497e-4816-9b53-d33853cc102d" />
+
 
 If using a **value function** to approximate the tail:
-[
-J(\tau) = \sum_{k=0}^{h-1} \gamma^k R(s_{t+k}, a_{t+k}) + \gamma^h V(s_{t+h})
-]
+<img width="476" height="112" alt="image" src="https://github.com/user-attachments/assets/0f1c1609-98a3-4690-9002-6463792ea2cd" />
+
 
 This makes Beam Search **scalable**.
 
@@ -116,67 +107,44 @@ This makes Beam Search **scalable**.
 
 * Beam width ( k )
 * Planning horizon ( H )
-* Policy ( \pi(a|s) ) or action generator
+* Policy $( \pi(a|s) )$ or action generator
 * Transition model ( P ) (learned or known)
 
 ---
 
 ### Initialization
 
-[
-\mathcal{B}_0 = { (s_t, J=0) }
-]
+<img width="273" height="78" alt="image" src="https://github.com/user-attachments/assets/bb1c64a5-13b7-4d93-af48-584ae162979f" />
+
 
 ---
 
 ### Iterative Expansion (for depth ( h = 1 \dots H ))
 
-For each beam ( b \in \mathcal{B}_{h-1} ):
+<img width="669" height="530" alt="image" src="https://github.com/user-attachments/assets/4db3327d-289b-4cbc-9b0e-2ccc9185820c" />
 
-1. Generate candidate actions:
-   [
-   a \sim \pi(a|s)
-   ]
-2. Predict next state:
-   [
-   s' \sim P(s'|s,a)
-   ]
-3. Compute incremental reward:
-   [
-   r = R(s,a)
-   ]
-4. Update score:
-   [
-   J' = J + \gamma^{h-1} r
-   ]
 
 Collect all candidates:
-[
-\mathcal{C}*h = \bigcup*{b \in \mathcal{B}_{h-1}} \text{Expand}(b)
-]
+<img width="271" height="92" alt="image" src="https://github.com/user-attachments/assets/1dd7aa33-596f-4024-bcfc-084b761f3d6b" />
 
 ---
 
 ### Pruning Step (Key Idea)
 
 Keep top-k beams:
-[
-\mathcal{B}*h = \text{Top-k}*{J}(\mathcal{C}_h)
-]
+<img width="262" height="59" alt="image" src="https://github.com/user-attachments/assets/42a604f0-7027-4e4b-841a-d4d77ac8cf4d" />
+
 
 ---
 
 ### Action Selection
 
 Choose best beam:
-[
-\tau^* = \arg\max_{\tau \in \mathcal{B}_H} J(\tau)
-]
+<img width="117" height="82" alt="image" src="https://github.com/user-attachments/assets/0a9f20c3-e371-4e8a-9c07-0b9999d32c43" />
 
 Execute:
-[
-a_t = \tau^*_0
-]
+
+<img width="351" height="68" alt="image" src="https://github.com/user-attachments/assets/3bfe2ffc-b499-4a0a-9761-4ce62caae7df" />
 
 ---
 
@@ -197,14 +165,12 @@ Beam Search **explicitly reasons about future** instead of relying purely on lea
 # 8. Relation to Q-Learning (Mathematical Link)
 
 Q-learning:
-[
-Q(s,a) = \mathbb{E}[r + \gamma \max_{a'} Q(s',a')]
-]
+<img width="202" height="139" alt="image" src="https://github.com/user-attachments/assets/974403b5-c956-4b40-9634-83b744e853db" />
+
 
 Beam Search:
-[
-\max_{a_{0:H}} \sum_{t=0}^{H} \gamma^t r_t
-]
+<img width="306" height="112" alt="image" src="https://github.com/user-attachments/assets/18fc9652-f133-4925-ae40-d2cb7be3181a" />
+
 
 ➡️ Beam Search approximates the **argmax over action sequences**, whereas Q-learning approximates the **argmax over actions recursively**.
 
@@ -215,14 +181,12 @@ Beam Search:
 Common in sequence models (e.g., RLHF, language models):
 
 Score:
-[
-J(\tau) = \sum_{t=0}^{H} \log \pi(a_t|s_t)
-]
+<img width="423" height="111" alt="image" src="https://github.com/user-attachments/assets/33e4fa9e-d913-40a2-8d14-71baaa356cd0" />
+
 
 Or reward-augmented:
-[
-J(\tau) = \sum_{t=0}^{H} \left( \log \pi(a_t|s_t) + \lambda R(s_t,a_t) \right)
-]
+<img width="196" height="75" alt="image" src="https://github.com/user-attachments/assets/f331bf79-eb9e-48b8-b57c-425d93bfb77c" />
+
 
 This blends **RL + probabilistic inference**.
 
@@ -232,26 +196,23 @@ This blends **RL + probabilistic inference**.
 
 Let:
 
-* ( A = |\mathcal{A}| )
+* $( A = |\mathcal{A}| )$
 * ( H ) = horizon
 * ( k ) = beam width
 
 ### Time Complexity
 
-[
-O(H \cdot k \cdot A)
-]
+<img width="130" height="67" alt="image" src="https://github.com/user-attachments/assets/8ccd73d5-bb51-4ee7-9ff2-523d75a27165" />
+
 
 ### Space Complexity
 
-[
-O(k \cdot H)
-]
+<img width="100" height="48" alt="image" src="https://github.com/user-attachments/assets/c3ee4ad1-387d-43d9-af4c-5b9bcff7213b" />
+
 
 Compare to exhaustive search:
-[
-O(A^H)
-]
+![Uploading image.png…]()
+
 
 Beam Search is **tractable but approximate**.
 
