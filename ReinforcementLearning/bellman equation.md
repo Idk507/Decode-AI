@@ -160,14 +160,41 @@ This is the **simplest Bellman equation**.
 
 ## 5.3 What Each Term Means (Plain English)
 
-Term,Full Form,Meaning (Plain English)
-Vπ(s),State-Value Function,"The ""score"" of your current state; the total reward you expect to get from here until the end."
-π(a∣s),Policy,Your strategy. The probability that you will choose action a when you are in state s.
-"P(s′∣s,a)",Transition Probability,"The environmental ""luck"" factor. The probability of landing in state s′ after taking action a."
-"R(s,a)",Immediate Reward,The instant gratification. The points or reward you get immediately for your move.
-γ,Discount Factor,"The ""patience"" level (usually between 0 and 1). It makes future rewards worth less than immediate ones."
-Vπ(s′),Successor State Value,"The ""score"" of the state you land in next."
+# Reinforcement Learning Terms Reference
+
+## State-Value Function
+**Symbol:** `Vπ(s)`  
+**Meaning:** The "score" of your current state; the total reward you expect to get from here until the end.
+
 ---
+
+## Policy
+**Symbol:** `π(a∣s)`  
+**Meaning:** Your strategy. The probability that you will choose action `a` when you are in state `s`.
+
+---
+
+## Transition Probability
+**Symbol:** `P(s′∣s,a)`  
+**Meaning:** The environmental "luck" factor. The probability of landing in state `s′` after taking action `a`.
+
+---
+
+## Immediate Reward
+**Symbol:** `R(s,a)`  
+**Meaning:** The instant gratification. The points or reward you get immediately for your move.
+
+---
+
+## Discount Factor
+**Symbol:** `γ`  
+**Meaning:** The "patience" level (usually between 0 and 1). It makes future rewards worth less than immediate ones.
+
+---
+
+## Successor State Value
+**Symbol:** `Vπ(s′)`  
+**Meaning:** The "score" of the state you land in next.
 
 # 6. Bellman Equation for Q-Values
 
