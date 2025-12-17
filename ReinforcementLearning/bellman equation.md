@@ -1,6 +1,4 @@
 
----
-
 # 1. What Is the Bellman Equation? (Very Simple)
 
 **The Bellman equation says one simple thing:**
@@ -48,9 +46,9 @@ Examples:
 * Current traffic light color
 
 Notation:
-[
-s \in \mathcal{S}
-]
+
+<img width="130" height="74" alt="image" src="https://github.com/user-attachments/assets/564d0324-9b6a-480e-854a-65dca4d66554" />
+
 
 ---
 
@@ -65,9 +63,8 @@ Examples:
 * Accelerate / brake
 
 Notation:
-[
-a \in \mathcal{A}
-]
+
+<img width="128" height="50" alt="image" src="https://github.com/user-attachments/assets/99d3cadf-0a79-42f3-8f73-96c2ab72b5a3" />
 
 ---
 
@@ -84,9 +81,9 @@ Examples:
 * 0 for neutral step
 
 Notation:
-[
-r = R(s,a)
-]
+
+<img width="169" height="62" alt="image" src="https://github.com/user-attachments/assets/e830550c-bb0f-43f1-b53f-90c2d082f6a9" />
+
 
 ---
 
@@ -94,9 +91,8 @@ r = R(s,a)
 
 The **discount factor** decides how much we care about the future.
 
-[
-\gamma \in [0,1]
-]
+<img width="132" height="39" alt="image" src="https://github.com/user-attachments/assets/54856e83-e198-4eb0-8eee-38e2c1a00e04" />
+
 
 * γ = 0 → only care about now
 * γ ≈ 1 → care about long-term rewards
@@ -107,9 +103,8 @@ The **discount factor** decides how much we care about the future.
 
 A **policy** tells the agent **what action to take**.
 
-[
-\pi(a|s) = \text{probability of action } a \text{ in state } s
-]
+<img width="459" height="43" alt="image" src="https://github.com/user-attachments/assets/a9a5f64c-7116-4fcf-9b0e-91b755b94218" />
+
 
 Think of it as the agent’s **behavior rule**.
 
@@ -119,26 +114,22 @@ Think of it as the agent’s **behavior rule**.
 
 ## 4.1 State Value Function
 
-[
-V^\pi(s)
-]
+<img width="95" height="40" alt="image" src="https://github.com/user-attachments/assets/42458e59-166d-422e-858f-ddd538c4aa4a" />
 
 Means:
 
 > “How good is it to be in state s if I follow policy π?”
 
 Formally:
-[
-V^\pi(s) = \mathbb{E}\left[\sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s\right]
-]
+<img width="393" height="136" alt="image" src="https://github.com/user-attachments/assets/f0d4c32c-950a-4264-bdd3-f0d1afaa2ac1" />
+
 
 ---
 
 ## 4.2 Action Value Function (Q-Value)
 
-[
-Q^\pi(s,a)
-]
+<img width="97" height="51" alt="image" src="https://github.com/user-attachments/assets/410aba7c-2b55-4da5-a2bb-20a6bec0fccf" />
+
 
 Means:
 
@@ -163,43 +154,24 @@ This is the **simplest Bellman equation**.
 
 ## 5.2 Bellman Equation for State Value
 
-[
-V^\pi(s)
-========
-
-\sum_a \pi(a|s)
-\sum_{s'} P(s'|s,a)
-\left[
-R(s,a) + \gamma V^\pi(s')
-\right]
-]
+<img width="591" height="99" alt="image" src="https://github.com/user-attachments/assets/7e303226-321c-428e-a79f-00dcbb8bd3a7" />
 
 ---
 
 ## 5.3 What Each Term Means (Plain English)
 
-| Term          | Meaning             |                                  |
-| ------------- | ------------------- | -------------------------------- |
-| ( \pi(a       | s) )                | Probability of choosing action a |
-| ( P(s'        | s,a) )              | Chance of reaching next state    |
-| ( R(s,a) )    | Reward right now    |                                  |
-| ( \gamma )    | Future importance   |                                  |
-| ( V^\pi(s') ) | Value of next state |                                  |
-
+Term,Full Form,Meaning (Plain English)
+Vπ(s),State-Value Function,"The ""score"" of your current state; the total reward you expect to get from here until the end."
+π(a∣s),Policy,Your strategy. The probability that you will choose action a when you are in state s.
+"P(s′∣s,a)",Transition Probability,"The environmental ""luck"" factor. The probability of landing in state s′ after taking action a."
+"R(s,a)",Immediate Reward,The instant gratification. The points or reward you get immediately for your move.
+γ,Discount Factor,"The ""patience"" level (usually between 0 and 1). It makes future rewards worth less than immediate ones."
+Vπ(s′),Successor State Value,"The ""score"" of the state you land in next."
 ---
 
 # 6. Bellman Equation for Q-Values
 
-[
-Q^\pi(s,a)
-==========
-
-\sum_{s'} P(s'|s,a)
-\left[
-R(s,a) + \gamma
-\sum_{a'} \pi(a'|s') Q^\pi(s',a')
-\right]
-]
+<img width="652" height="98" alt="image" src="https://github.com/user-attachments/assets/558c2198-d0d8-4efa-baa9-813aef6dbada" />
 
 Meaning:
 
@@ -217,25 +189,15 @@ Now we remove the policy and ask:
 
 ## 7.1 Optimal State Value
 
-[
-V^*(s) = \max_a
-\sum_{s'} P(s'|s,a)
-\left[
-R(s,a) + \gamma V^*(s')
-\right]
-]
+<img width="545" height="85" alt="image" src="https://github.com/user-attachments/assets/12afa87c-eeb3-457f-bc16-60d97f80275b" />
+
 
 ---
 
 ## 7.2 Optimal Action Value
 
-[
-Q^*(s,a) =
-\sum_{s'} P(s'|s,a)
-\left[
-R(s,a) + \gamma \max_{a'} Q^*(s',a')
-\right]
-]
+<img width="561" height="58" alt="image" src="https://github.com/user-attachments/assets/3d7a8912-82c4-43dd-bdcb-dab079439583" />
+
 
 This is the **heart of Q-learning**.
 
@@ -253,24 +215,8 @@ This allows the value to be written **recursively**.
 
 # 9. Bellman Operator View (Advanced but Important)
 
-Define Bellman operator ( \mathcal{T} ):
+<img width="766" height="232" alt="image" src="https://github.com/user-attachments/assets/73e5b5dc-6e3d-4701-aec2-150d82a90a2d" />
 
-[
-(\mathcal{T}V)(s)
-=================
-
-\max_a
-\sum_{s'} P(s'|s,a)
-\left[
-R(s,a) + \gamma V(s')
-\right]
-]
-
-The Bellman equation becomes:
-
-[
-V = \mathcal{T}V
-]
 
 ➡️ Finding the value function = finding a **fixed point**.
 
@@ -280,9 +226,8 @@ V = \mathcal{T}V
 
 Bellman operator is a **contraction**:
 
-[
-|\mathcal{T}V_1 - \mathcal{T}V_2| \le \gamma |V_1 - V_2|
-]
+<img width="342" height="65" alt="image" src="https://github.com/user-attachments/assets/2a8c9ff7-607f-47b3-b5ee-3329b10aebb3" />
+
 
 So:
 
@@ -312,9 +257,8 @@ If:
 * γ = 0.9
 
 Then:
-[
-V(s) = 2 + 0.9 \times 10 = 11
-]
+
+<img width="382" height="84" alt="image" src="https://github.com/user-attachments/assets/c10d6cff-91f1-40a7-87db-0bea74eaf563" />
 
 ---
 
@@ -343,4 +287,4 @@ V(s) = 2 + 0.9 \times 10 = 11
 
 ---
 
-I�
+
