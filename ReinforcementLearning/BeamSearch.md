@@ -1,6 +1,3 @@
-Below is a **from-scratch, end-to-end explanation of Beam Search in the context of Reinforcement Learning (RL)**, including the **mathematical foundations**, **algorithmic steps**, and **how it differs from classical RL action selection**.
-
-I’ll structure this so you can build intuition first, then formal understanding.
 
 ---
 
