@@ -32,17 +32,16 @@ Future rewards matter less than immediate rewards, because rewards far away in t
 
 ### 3. Discount factor (γ) – why future rewards shrink
 
-The discount factor is written as ( \gamma ) (gamma), and it is a number between 0 and 1.
+The discount factor is written as 𝛾 (gamma), and it is a number between 0 and 1.
 
-* ( \gamma = 0 ): only care about the immediate reward.
-* ( \gamma = 0.9 ): care a lot about the future, but not infinitely.
-* ( \gamma = 1 ): care equally about now and the far future (rare in practice).
+* ( 𝛾 = 0 ): only care about the immediate reward.
+* ( 𝛾 = 0.9 ): care a lot about the future, but not infinitely.
+* ( 𝛾 = 1 ): care equally about now and the far future (rare in practice).
 
 So if you expect a reward of 10 in the future, its value *now* is:
 
-[
-\text{discounted reward} = \gamma \times 10
-]
+<img width="345" height="48" alt="image" src="https://github.com/user-attachments/assets/ee42b45c-8e3a-4f70-bfc1-25a48e3f512f" />
+
 
 This matches how humans think: getting candy **now** feels better than getting the same candy next year.
 
@@ -53,7 +52,7 @@ This matches how humans think: getting candy **now** feels better than getting t
 In theory, the value of a state is:
 
 [
-V(s) = \mathbb{E}[r_1 + \gamma r_2 + \gamma^2 r_3 + \gamma^3 r_4 + \dots]
+<img width="486" height="76" alt="image" src="https://github.com/user-attachments/assets/039071c6-1f50-4c9f-a42a-e45bc53f3dcc" />
 ]
 
 This just means:
@@ -113,15 +112,8 @@ Suppose:
 * You move to state ( s' )
 * You receive reward ( r )
 
-Your **old belief** is:
-[
-V(s)
-]
+<img width="617" height="219" alt="image" src="https://github.com/user-attachments/assets/f0afc125-70bb-4b10-8c37-f930cbd53384" />
 
-Your **new estimate**, based on what just happened, is:
-[
-r + \gamma V(s')
-]
 
 This is called the **TD target**.
 
@@ -129,25 +121,21 @@ Why this makes sense:
 
 * You got reward ( r ) immediately.
 * From the next state ( s' ), you expect ( V(s') ) more reward.
-* But that future reward is discounted by ( \gamma ).
+* But that future reward is discounted by ( γ ).
 
 ---
 
 ### 8. Temporal Difference error (the heart of TD learning)
 
-The **TD error**, written as ( \delta ), is:
+The **TD error**, written as ( δ), is:
 
-[
-\delta = r + \gamma V(s') - V(s)
-]
+<img width="259" height="33" alt="image" src="https://github.com/user-attachments/assets/c0e9fa15-b913-4eeb-8878-f295a3110576" />
 
 Read it in plain language:
 
 > “What I observed minus what I expected.”
 
-* If ( \delta > 0 ): things were better than expected.
-* If ( \delta < 0 ): things were worse than expected.
-* If ( \delta = 0 ): your prediction was perfect.
+<img width="490" height="113" alt="image" src="https://github.com/user-attachments/assets/9ac28d81-912a-4ef2-a9b1-445e92551826" />
 
 This single number tells you **how wrong you were**.
 
@@ -157,20 +145,15 @@ This single number tells you **how wrong you were**.
 
 You do not fully replace your old belief. You **move it slightly** in the right direction.
 
-[
-V(s) \leftarrow V(s) + \alpha \delta
-]
+<img width="233" height="43" alt="image" src="https://github.com/user-attachments/assets/2bcf25c7-c10f-464d-86f4-ff6774b42d61" />
 
-Here, ( \alpha ) (alpha) is the **learning rate**, a number between 0 and 1.
 
-* Small ( \alpha ): learn slowly, but stably.
-* Large ( \alpha ): learn fast, but may be unstable.
+Here, α (alpha) is the **learning rate**, a number between 0 and 1.
 
-Substitute ( \delta ):
+* Small α: learn slowly, but stably.
+* Largeα: learn fast, but may be unstable.
 
-[
-V(s) \leftarrow V(s) + \alpha \left( r + \gamma V(s') - V(s) \right)
-]
+<img width="715" height="106" alt="image" src="https://github.com/user-attachments/assets/e8717cd1-fa4c-4be1-a966-327afd661622" />
 
 This is the **core TD learning equation**.
 
@@ -204,7 +187,7 @@ TD(0) means:
 Algorithm in words:
 
 1. Start with random values for all states.
-2. Observe a transition ( s \rightarrow s' ) with reward ( r ).
+2. Observe a transition ( s --> s' ) with reward ( r ).
 3. Compute TD error.
 4. Update ( V(s) ).
 5. Repeat forever.
@@ -236,15 +219,12 @@ So far we talked about **state values** ( V(s) ).
 
 In practice, we often want **action values**:
 
-[
-Q(s, a) = \text{how good it is to take action } a \text{ in state } s
-]
+<img width="593" height="54" alt="image" src="https://github.com/user-attachments/assets/f4b0bb47-5850-4563-81e4-0ba2382a946e" />
 
 Q-learning uses the same TD idea:
 
-[
-\delta = r + \gamma \max_a Q(s', a) - Q(s, a)
-]
+<img width="370" height="71" alt="image" src="https://github.com/user-attachments/assets/d44ad701-93a9-4cfc-bc42-596ef2c80878" />
+
 
 This is still Temporal Difference learning — just applied to actions.
 
