@@ -1,4 +1,4 @@
-Here is a detailed, structured explanation of **Reinforcement Learning (RL) fundamentals**, building from the most basic ideas to the mathematical core (heavily based on the standard treatment in Sutton & Barto 2nd edition + modern consensus in 2025).
+
 
 ### 1. Three paradigms of machine learning
 
@@ -171,12 +171,3 @@ Modern workhorse algorithms (2025):
 9. Actor-Critic + Advantage function
 10. Entropy regularization + distributional RL + PPO/SAC → current SOTA
 
-Would you like to go deeper into any one piece?
-
-- Derivation of the policy gradient theorem step-by-step
-- Why PPO clip works (with math)
-- Temporal-difference vs Monte-Carlo bias-variance tradeoff
-- How modern algorithms handle continuous actions (SAC / TD3)
-- Exploration strategies in 2025 (curiosity, RND, Go-Explore style, …)
-
-Just tell me which direction you'd like to zoom in.
