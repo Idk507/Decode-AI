@@ -6,9 +6,8 @@ Function Approximation is the **bridge between small, toy Reinforcement Learning
 
 In early Reinforcement Learning, we assume we can store a value for every state or every state-action pair in a **table**:
 
-[
-V(s) \quad \text{or} \quad Q(s, a)
-]
+<img width="242" height="71" alt="image" src="https://github.com/user-attachments/assets/89bac24d-6a39-4412-aa9f-e0b6b511ffec" />
+
 
 This only works if:
 
@@ -38,18 +37,17 @@ We say:
 > “I will learn a formula that can *predict* the value of any situation, even one I’ve never seen before.”
 
 That formula is:
-[
-\hat{V}(s; \theta) \quad \text{or} \quad \hat{Q}(s, a; \theta)
-]
+<img width="272" height="72" alt="image" src="https://github.com/user-attachments/assets/dadfefd5-2fc6-445d-a13c-ee1ebe46e191" />
+
 
 Here:
 
 * The hat means “approximation”
-* ( \theta ) are the **parameters** of the function (numbers that control its shape)
+* 𝜃 are the **parameters** of the function (numbers that control its shape)
 
 Learning in RL becomes:
 
-> Adjust ( \theta ) so that this function gives better and better predictions of long-term reward.
+> Adjust 𝜃 so that this function gives better and better predictions of long-term reward.
 
 ---
 
@@ -71,19 +69,13 @@ In modern systems, it is usually a **deep neural network**, but the math works t
 
 Let’s start with the general form:
 
-[
-\hat{V}(s; \theta) = f(s, \theta)
-]
-or
-[
-\hat{Q}(s, a; \theta) = f(s, a, \theta)
-]
+<img width="627" height="173" alt="image" src="https://github.com/user-attachments/assets/43c68d39-ce94-4b7d-9826-b2942596667b" />
 
 This means:
 
-> The predicted value is a function of the input and some parameters ( \theta ).
+> The predicted value is a function of the input and some parameters 𝜃.
 
-Our goal is to **find the best ( \theta )**.
+Our goal is to **find the best 𝜃 **.
 
 ---
 
@@ -91,15 +83,8 @@ Our goal is to **find the best ( \theta )**.
 
 We often do not feed the raw state directly. Instead, we transform it into a **feature vector**:
 
-[
-\phi(s) =
-\begin{bmatrix}
-\phi_1(s) \
-\phi_2(s) \
-\vdots \
-\phi_n(s)
-\end{bmatrix}
-]
+<img width="194" height="167" alt="image" src="https://github.com/user-attachments/assets/5173dfd1-ed52-407a-be88-44398756a70c" />
+
 
 These features represent meaningful aspects of the state:
 
@@ -111,9 +96,8 @@ These features represent meaningful aspects of the state:
 
 Then the function becomes:
 
-[
-\hat{V}(s; \theta) = \theta^T \phi(s)
-]
+<img width="201" height="72" alt="image" src="https://github.com/user-attachments/assets/a810c911-4f50-42ac-9415-93c149cf5fb4" />
+
 
 This is a **linear function approximator**.
 
@@ -123,13 +107,12 @@ This is a **linear function approximator**.
 
 Here:
 
-* ( \theta ) is a vector of weights
-* ( \phi(s) ) is a vector of features
+* θ is a vector of weights
+* ϕ(s)  is a vector of features
 
 So:
-[
-\hat{V}(s; \theta) = \sum_{i=1}^n \theta_i \phi_i(s)
-]
+<img width="250" height="107" alt="image" src="https://github.com/user-attachments/assets/20782b72-aeee-4749-b9ec-8b7dfdc1f008" />
+
 
 This is just a weighted sum.
 
@@ -140,22 +123,19 @@ Even though this looks simple, it can approximate very complex functions if the 
 ## 7. The learning problem
 
 We want:
-[
-\hat{V}(s; \theta) \approx V^\pi(s)
-]
+<img width="183" height="60" alt="image" src="https://github.com/user-attachments/assets/582627ad-c422-47b8-8a81-3cb79ae0e771" />
 
 But we do not know the true value function.
 So instead, we use the **Bellman equation** as a target.
 
 For TD learning, the target is:
-[
-y = r + \gamma \hat{V}(s'; \theta)
-]
+<img width="212" height="67" alt="image" src="https://github.com/user-attachments/assets/45789df4-77fc-4bfb-bd36-3d3735c2bac2" />
 
-We want to adjust ( \theta ) so that:
-[
-\hat{V}(s; \theta) \approx y
-]
+
+We want to adjust 𝜃 so that:
+
+<img width="179" height="90" alt="image" src="https://github.com/user-attachments/assets/66dc48d7-d8ea-40da-8e64-77cece04f594" />
+
 
 This becomes a **regression problem**.
 
@@ -165,39 +145,34 @@ This becomes a **regression problem**.
 
 We measure error using **squared error**:
 
-[
-L(\theta) = \frac{1}{2} \left( y - \hat{V}(s; \theta) \right)^2
-]
+<img width="443" height="77" alt="image" src="https://github.com/user-attachments/assets/6002781c-e217-4755-bcfd-524d68b4bcd4" />
 
-The factor ( \frac{1}{2} ) is just for mathematical convenience.
+
+The factor 1/2 is just for mathematical convenience.
 
 ---
 
 ## 9. Gradient descent (how learning actually happens)
 
-To reduce the error, we move ( \theta ) in the direction that makes the loss smaller.
+To reduce the error, we move 𝜃 in the direction that makes the loss smaller.
 
 This is done by computing the **gradient**:
 
-[
-\nabla_\theta L(\theta)
-]
+<img width="101" height="50" alt="image" src="https://github.com/user-attachments/assets/45a14147-40dd-4ac2-9929-442b54370cc5" />
+
 
 Using the chain rule:
 
-[
-\nabla_\theta L(\theta) = - \left( y - \hat{V}(s; \theta) \right) \nabla_\theta \hat{V}(s; \theta)
-]
+<img width="411" height="55" alt="image" src="https://github.com/user-attachments/assets/cf2fb886-8e22-4e4a-ac55-d9bb9beed294" />
+
 
 Define the **TD error**:
-[
-\delta = y - \hat{V}(s; \theta)
-]
+<img width="190" height="57" alt="image" src="https://github.com/user-attachments/assets/3418e463-97db-4a43-86c4-92a4d9b705e7" />
 
 Then:
-[
-\nabla_\theta L(\theta) = -\delta \nabla_\theta \hat{V}(s; \theta)
-]
+
+<img width="282" height="72" alt="image" src="https://github.com/user-attachments/assets/ce62d0cf-42ee-4ce8-ad96-eefd0945a994" />
+
 
 ---
 
@@ -205,15 +180,13 @@ Then:
 
 Gradient descent update:
 
-[
-\theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)
-]
+<img width="252" height="53" alt="image" src="https://github.com/user-attachments/assets/0c52abbf-f265-4e21-b0ac-2f17dfc11398" />
+
 
 Substitute:
 
-[
-\theta \leftarrow \theta + \alpha \delta \nabla_\theta \hat{V}(s; \theta)
-]
+<img width="256" height="70" alt="image" src="https://github.com/user-attachments/assets/08931c36-6715-492a-a5a8-156924a37c4c" />
+
 
 This is the **general function approximation update rule in TD learning**.
 
@@ -221,21 +194,7 @@ This is the **general function approximation update rule in TD learning**.
 
 ## 11. Special case: linear function
 
-If:
-[
-\hat{V}(s; \theta) = \theta^T \phi(s)
-]
-
-Then:
-[
-\nabla_\theta \hat{V}(s; \theta) = \phi(s)
-]
-
-So the update becomes:
-
-[
-\theta \leftarrow \theta + \alpha \delta \phi(s)
-]
+<img width="638" height="308" alt="image" src="https://github.com/user-attachments/assets/ec7a0b6c-44a9-4516-83a8-59f3f3dbcaa5" />
 
 This is beautifully simple:
 
@@ -246,29 +205,8 @@ This is beautifully simple:
 ## 12. Extending to action-values (Q-function)
 
 Now we approximate:
-[
-\hat{Q}(s, a; \theta)
-]
+<img width="706" height="513" alt="image" src="https://github.com/user-attachments/assets/3acb96d5-78cc-49fc-9d33-03ce056df210" />
 
-TD target for Q-learning:
-[
-y = r + \gamma \max_{a'} \hat{Q}(s', a'; \theta)
-]
-
-Loss:
-[
-L(\theta) = \frac{1}{2} \left( y - \hat{Q}(s, a; \theta) \right)^2
-]
-
-Update:
-[
-\theta \leftarrow \theta + \alpha \delta \nabla_\theta \hat{Q}(s, a; \theta)
-]
-
-Where:
-[
-\delta = y - \hat{Q}(s, a; \theta)
-]
 
 This is the **mathematical heart of Deep Q-Learning**.
 
@@ -277,14 +215,13 @@ This is the **mathematical heart of Deep Q-Learning**.
 ## 13. Why neural networks fit naturally here
 
 A neural network is just a **very flexible function**:
-[
-\hat{Q}(s, a; \theta) = f_{\text{NN}}(s, a; \theta)
-]
+<img width="269" height="63" alt="image" src="https://github.com/user-attachments/assets/043d0137-ff57-418a-a3f1-10449daf1071" />
+
 
 The gradient:
-[
-\nabla_\theta \hat{Q}(s, a; \theta)
-]
+
+<img width="161" height="65" alt="image" src="https://github.com/user-attachments/assets/a81b1aac-1094-4f2f-99c5-d8f75d561a16" />
+
 is computed using **backpropagation**.
 
 Everything else stays the same.
