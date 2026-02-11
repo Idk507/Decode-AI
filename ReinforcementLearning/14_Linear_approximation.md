@@ -26,15 +26,7 @@ That formula is what we call **linear approximation**.
 
 In Reinforcement Learning we want to know:
 
-[
-V(s) = \text{How good is state } s ?
-]
-
-or
-
-[
-Q(s,a) = \text{How good is taking action } a \text{ in state } s ?
-]
+<img width="779" height="163" alt="image" src="https://github.com/user-attachments/assets/55410f2d-6ec6-418b-b6e9-cf949e04ae3a" />
 
 If the number of states is huge (for example, positions of a robot, images, sensor readings), storing values in a table is impossible. So we approximate the value using a function.
 
@@ -49,16 +41,8 @@ A feature is just a number describing some property of the state.
 
 We write the feature vector as:
 
-[
-\phi(s) =
-\begin{bmatrix}
-\phi_1(s) \
-\phi_2(s) \
-\phi_3(s) \
-\vdots \
-\phi_n(s)
-\end{bmatrix}
-]
+<img width="236" height="213" alt="image" src="https://github.com/user-attachments/assets/020d1d38-1aff-452a-b1fa-7aa614147c3e" />
+
 
 Each feature could represent:
 
@@ -76,21 +60,18 @@ Think of features as **important clues about the situation**.
 
 We estimate the value using a weighted sum of features:
 
-[
-\hat{V}(s) = \theta_1 \phi_1(s) + \theta_2 \phi_2(s) + \dots + \theta_n \phi_n(s)
-]
+<img width="458" height="67" alt="image" src="https://github.com/user-attachments/assets/924a2355-ee32-43fc-bd35-8e08d8e2463b" />
+
 
 In compact vector form:
 
-[
-\hat{V}(s) = \theta^T \phi(s)
-]
+<img width="179" height="72" alt="image" src="https://github.com/user-attachments/assets/3b7a3568-17ea-4f1b-94d0-a00713405f8a" />
+
 
 Here:
 
-* ( \theta ) = weights (numbers we learn)
-* ( \phi(s) ) = feature vector
-* ( \theta^T \phi(s) ) = dot product (weighted sum)
+<img width="365" height="126" alt="image" src="https://github.com/user-attachments/assets/3ed8471b-da30-4279-b1ab-8d5783bc3648" />
+
 
 So the predicted value is just a **straight-line combination of features**, which is why it is called *linear*.
 
@@ -105,11 +86,10 @@ reward received ( r )
 
 we create a **better guess** of what the value should be:
 
-[
-\text{Target} = r + \gamma \hat{V}(s')
-]
+<img width="263" height="45" alt="image" src="https://github.com/user-attachments/assets/ab1bd559-bd35-4fcf-aa97-1bf7ec079d13" />
 
-where ( \gamma ) is the discount factor that reduces the importance of far-future rewards.
+
+where γ is the discount factor that reduces the importance of far-future rewards.
 
 ---
 
@@ -117,11 +97,10 @@ where ( \gamma ) is the discount factor that reduces the importance of far-futur
 
 We compare the target with our current prediction:
 
-[
-\delta = r + \gamma \hat{V}(s') - \hat{V}(s)
-]
+<img width="249" height="52" alt="image" src="https://github.com/user-attachments/assets/37fada67-e28b-486c-8da8-6a97c3091473" />
 
-This number ( \delta ) is called the **Temporal Difference (TD) error**.
+
+This number θ is called the **Temporal Difference (TD) error**.
 
 * Positive → situation was better than expected
 * Negative → situation was worse than expected
@@ -132,15 +111,12 @@ This number ( \delta ) is called the **Temporal Difference (TD) error**.
 
 To improve predictions, we slightly adjust the weights:
 
-[
-\theta \leftarrow \theta + \alpha \delta \phi(s)
-]
+<img width="179" height="43" alt="image" src="https://github.com/user-attachments/assets/2814fecf-9c96-43df-972c-0f44b1c48a2e" />
+
 
 Here:
 
-* ( \alpha ) = learning rate (how fast we learn)
-* ( \delta ) = error signal
-* ( \phi(s) ) = features responsible for prediction
+<img width="427" height="104" alt="image" src="https://github.com/user-attachments/assets/51a8a698-4f63-41e5-a48f-ba27dadd4e58" />
 
 This rule means:
 
@@ -152,55 +128,10 @@ Over time, this makes predictions more accurate.
 
 ## 8. Step-by-step numerical example
 
-Suppose:
+<img width="735" height="565" alt="image" src="https://github.com/user-attachments/assets/c39bb18f-023c-4762-9906-bf40c5875c21" />
 
-Feature vector:
-[
-\phi(s) = [1,\ 2]
-]
+<img width="710" height="374" alt="image" src="https://github.com/user-attachments/assets/0439ae45-dbdd-4625-8dd3-df6525e56005" />
 
-Weights:
-[
-\theta = [0.5,\ 1.0]
-]
-
-Predicted value:
-
-[
-\hat{V}(s) = 0.5(1) + 1.0(2) = 2.5
-]
-
-Reward = 2
-Next state predicted value = 4
-Discount ( \gamma = 0.9 )
-
-Target:
-
-[
-2 + 0.9 \times 4 = 5.6
-]
-
-TD error:
-
-[
-\delta = 5.6 - 2.5 = 3.1
-]
-
-Learning rate ( \alpha = 0.1 )
-
-Weight update:
-
-[
-\theta = \theta + 0.1 \times 3.1 \times [1,2]
-]
-
-[
-\theta = [0.5,1.0] + [0.31,0.62]
-]
-
-[
-\theta = [0.81, 1.62]
-]
 
 Now the model predicts a higher value next time.
 
@@ -210,9 +141,7 @@ Now the model predicts a higher value next time.
 
 For action values:
 
-[
-\hat{Q}(s,a) = \theta^T \phi(s,a)
-]
+<img width="264" height="77" alt="image" src="https://github.com/user-attachments/assets/95d12943-8670-44e2-a920-1c0c46e00f2e" />
 
 Features now depend on both state and action.
 Learning uses the same TD update but with Q-learning or SARSA targets.
