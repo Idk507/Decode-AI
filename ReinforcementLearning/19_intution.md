@@ -1,4 +1,4 @@
-```md
+
 # Intuition in Reinforcement Learning  
 *A Deep, Simple, End-to-End Explanation*
 
@@ -469,4 +469,4 @@ At its heart, Reinforcement Learning is about answering one question:
 > "Which actions today will lead to the greatest reward in the future?"
 
 By continuously experimenting and learning from feedback, the agent gradually discovers the best strategy.
-```
+
