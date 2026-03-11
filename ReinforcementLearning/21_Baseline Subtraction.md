@@ -16,26 +16,21 @@ High variance = noisy gradient estimates → the policy parameters θ update in 
 ### 2. Quick Recap: The Basic Policy Gradient (REINFORCE)
 The vanilla gradient estimator (Monte-Carlo version) is:
 
-\[
-\nabla_\theta J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \left( \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t^i \mid s_t^i) \cdot G_t^i \right)
-\]
+<img width="535" height="147" alt="image" src="https://github.com/user-attachments/assets/111e72d7-c5a5-4acf-9b40-b85e4c52a57c" />
+
 
 Where:
-- \(N\) = number of trajectories (episodes)
-- \(G_t^i\) = **return** starting from time t in trajectory i  
-  (sum of discounted future rewards: \(G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \dots\))
-- \(\nabla_\theta \log \pi_\theta(a_t \mid s_t)\) = how much the log-probability of the taken action changes when we tweak θ
+<img width="929" height="180" alt="image" src="https://github.com/user-attachments/assets/b04fef17-b381-4c89-9c27-b31065f22473" />
 
 This estimator is **unbiased** (on average it points in the correct direction), but **high variance** because \(G_t\) can be huge positive or negative depending on random future rewards.
 
 ### 3. The Magic Trick: Subtract a Baseline
-Instead of multiplying by raw \(G_t\), we multiply by **(G_t − b)**, where **b** is a number we subtract.
+Instead of multiplying by raw $\(G_t\)$ , we multiply by **(G_t − b)**, where **b** is a number we subtract.
 
 New estimator:
 
-\[
-\nabla_\theta J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \left( \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t^i \mid s_t^i) \cdot (G_t^i - b(s_t^i)) \right)
-\]
+<img width="654" height="132" alt="image" src="https://github.com/user-attachments/assets/ccb1e57f-cf01-4330-84db-d08cd7640a54" />
+
 
 **b(s_t)** is called the **baseline**.  
 It can be:
@@ -49,29 +44,21 @@ We need to prove that subtracting b does **not** change the expected gradient.
 
 Take expectation of the new estimator:
 
-\[
-\mathbb{E}\left[ \nabla_\theta \log \pi(a \mid s) \cdot (G - b(s)) \right]
-\]
+<img width="379" height="81" alt="image" src="https://github.com/user-attachments/assets/88bc5f29-926f-48a2-a736-df7e2ee0cb54" />
+
 
 Split it:
 
-\[
-= \mathbb{E}\left[ \nabla_\theta \log \pi(a \mid s) \cdot G \right] - \mathbb{E}\left[ \nabla_\theta \log \pi(a \mid s) \cdot b(s) \right]
-\]
+<img width="541" height="64" alt="image" src="https://github.com/user-attachments/assets/a3f37e08-871c-4f10-9da0-bc9e260e87e9" />
+
 
 First term = original (correct) gradient.  
 Now look at the second term:
 
-\[
-\mathbb{E}_{a \sim \pi} \left[ \nabla_\theta \log \pi(a \mid s) \cdot b(s) \right] = b(s) \cdot \mathbb{E}_{a \sim \pi} \left[ \nabla_\theta \log \pi(a \mid s) \right]
-\]
+<img width="628" height="76" alt="image" src="https://github.com/user-attachments/assets/e4652250-68f0-4e84-8079-146153130b24" />
 
-What is \(\mathbb{E}_{a \sim \pi} [\nabla_\theta \log \pi(a \mid s)]\)?  
-By definition of probability:
+<img width="902" height="220" alt="image" src="https://github.com/user-attachments/assets/7eb6b89a-055e-4987-86a7-f844ad7399e5" />
 
-\[
-\sum_a \pi(a \mid s) \cdot \nabla_\theta \log \pi(a \mid s) = \nabla_\theta \sum_a \pi(a \mid s) = \nabla_\theta 1 = 0
-\]
 
 So the second term is **exactly zero**!  
 Therefore the whole expectation remains the original gradient → **still unbiased**.
@@ -80,22 +67,18 @@ This is the core mathematical reason baseline subtraction works.
 
 ### 5. Why Does It Actually Reduce Variance? (Intuition + Math)
 Intuition (super simple):
-- Raw \(G_t\) can be +100 or −50.
+- Raw $\(G_t\)$ can be +100 or −50.
 - If you subtract the **average return for that state** (say +30), now the number becomes +70 or −80 → but more importantly, the **average** of these numbers is zero.
 - Multiplying the log-gradient by numbers whose average is zero reduces how wildly the product jumps.
 
 Mathematically:
-Let \(X = \nabla_\theta \log \pi(a \mid s)\) (random because of action)  
-Let \(Y = G - b(s)\) (the “centered” return)
-
-Variance of the product is roughly \(\text{Var}(X \cdot Y) = \mathbb{E}[X^2] \cdot \text{Var}(Y)\) (when \(\mathbb{E}[Y]=0\)).
+<img width="837" height="118" alt="image" src="https://github.com/user-attachments/assets/9683f0db-56b4-4158-9427-404eb570e084" />
 
 By choosing b close to the expected return for that state, we make \(\text{Var}(Y)\) much smaller → total variance of gradient drops a lot.
 
 **Optimal baseline** (the one that minimizes variance the most) is:
-\[
-b^*(s) = \frac{\mathbb{E}[ \|\nabla_\theta \log \pi\|^2 \cdot G \mid s ]}{\mathbb{E}[ \|\nabla_\theta \log \pi\|^2 \mid s ]}
-\]
+<img width="354" height="112" alt="image" src="https://github.com/user-attachments/assets/2c740b5a-3300-46bd-8bcf-c771dd1c98b6" />
+
 But in practice we don’t compute this — we use a simple approximation.
 
 ### 6. Most Common Baselines (from worst to best)
