@@ -21,7 +21,7 @@ PPO approximates the same idea with **clipping inside the objective** — no sec
 
 We want to **maximize** this (so in code we usually minimize the negative):
 
-L^{CLIP}(θ) = \mathbb{E}_t \left[ \min\left( r_t(\theta) \hat{A}_t, \;\; \clip(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right]
+<img width="805" height="257" alt="image" src="https://github.com/user-attachments/assets/0ec0e5ae-78ab-4e81-bc97-b6a11d322d8c" />
 
 Where:
 - r_t(θ) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\text{old}}(a_t \mid s_t)}   ← probability ratio
