@@ -123,9 +123,8 @@ Disadvantages:
 
 $$J_{\text{GRPO}}(\theta) = \mathbb{E}_{q,\{o_i\}} \frac{1}{G} \sum_{i=1}^G \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \Bigg[ \min \Big( r_{i,t}(\theta) \hat{A}_{i,t},\ \text{clip}\big(r_{i,t}(\theta), 1-\epsilon, 1+\epsilon\big) \hat{A}_{i,t} \Big) - \beta \, D_{\text{KL}}[\pi_\theta(\cdot | q, o_i^{<t}) || \pi_{\text{ref}}] \Bigg]$$
 
-Variable Definitions
+<img width="806" height="530" alt="image" src="https://github.com/user-attachments/assets/cf862d36-7cc0-4968-a697-2fdee5f5aafd" />
 
-VariableDescription$\theta$The parameters of the policy being optimized.$G$The group size (number of outputs generated per prompt).$r_{i,t}(\theta)$The probability ratio between the current policy and the old policy.$\hat{A}_{i,t}$The Group Relative Advantage, calculated by normalizing rewards within the group.$\epsilon$The clipping hyperparameter (standard in PPO-style objectives).$\beta$The coefficient controlling the KL divergence penalty.$\pi_{\text{ref}}$The reference model (usually the SFT model) used to prevent catastrophic forgetting.Why use GRPO?
 
 Unlike traditional Reinforcement Learning from Human Feedback (RLHF) which requires a separate Critic (Value) model to estimate a baseline, GRPO uses the mean reward of the group $\{o_1, o_2, ..., o_G\}$ as the baseline. This significantly reduces VRAM usage and computational overhead during training.
 
