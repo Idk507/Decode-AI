@@ -6,25 +6,24 @@
 
 **Reinforcement Learning (RL)** is like training a dog:  
 - The **agent** (your dog) interacts with the **environment** (the world).  
-- At every time step \( t \), the agent sees a **state** \( s_t \) (e.g., “I’m on the couch”).  
-- The agent picks an **action** \( a_t \) (e.g., “jump down”).  
-- The environment gives a **reward** \( r_t \) (positive for treat, negative for scolding) and moves to a new state \( s_{t+1} \).  
+- At every time step $ \( t \)$ , the agent sees a **state** $  s_t  $  (e.g., “I’m on the couch”).  
+- The agent picks an **action** $  a_t  $ (e.g., “jump down”).  
+- The environment gives a **reward** $  r_t  $  (positive for treat, negative for scolding) and moves to a new state $  s_{t+1}  $  
 
 A full play-through is called an **episode** or **trajectory** — a sequence of (state, action, reward, next-state).
 
-The **policy** \( \pi \) is the brain of the agent. It is usually a neural network that takes a state and outputs which action to take (or probabilities of actions). We write it as \( \pi_\theta(a|s) \), where \( \theta \) are the numbers (weights) inside the neural net that we can change.
+The **policy** $ \( \pi \)$ is the brain of the agent. It is usually a neural network that takes a state and outputs which action to take (or probabilities of actions). We write it as $  \pi_\theta(a|s)  $, where  $  \theta  $ are the numbers (weights) inside the neural net that we can change.
 
-**Goal**: Find the best \( \theta \) so the agent maximizes the **expected return** (total future reward). We usually discount future rewards with \( \gamma \) (0.99) so the agent prefers rewards now over rewards later:
+**Goal**: Find the best  $  \theta  $ so the agent maximizes the **expected return** (total future reward). We usually discount future rewards with $  \gamma  $ (0.99) so the agent prefers rewards now over rewards later:
 
-\[
-G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \dots
-\]
+<img width="367" height="69" alt="image" src="https://github.com/user-attachments/assets/43a0707c-c366-4779-9c19-00974406ce4d" />
 
-**Value function** \( V^\pi(s) \): “How good is this state on average if I follow policy \( \pi \)?”  
-**Advantage** \( \hat{A}_t \): “How much better was this action than the average action in this state?” (Positive = good action, negative = bad action).  
+
+**Value function** $  V^\pi(s)  $: “How good is this state on average if I follow policy \$  \pi  $ ?”  
+**Advantage** $  \hat{A}_t  $: : “How much better was this action than the average action in this state?” (Positive = good action, negative = bad action).  
 We estimate advantages using **Generalized Advantage Estimation (GAE)** — a smart way to reduce noise in the estimates (explained later).
 
-**Policy gradient methods** try to directly adjust \( \theta \) to make good actions more probable.
+**Policy gradient methods** try to directly adjust  $  \theta  $ to make good actions more probable.
 
 ---
 
@@ -47,22 +46,19 @@ Both use the same **surrogate objective** (a temporary score we try to maximize)
 ## 3. The Core Idea Shared by Both PPO Variants
 
 ### The Probability Ratio (The Most Important Term)
-When we collect data using the **old policy** \( \pi_{\theta_{\text{old}}} \), we later want to try a **new policy** \( \pi_\theta \).
+When we collect data using the **old policy** $  \pi_{\theta_{\text{old}}}  $, we later want to try a **new policy** $  \pi_\theta  $.
 
 The **probability ratio** tells us how much more (or less) likely the new policy is to take the same action:
 
-\[
-r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}
-\]
+<img width="219" height="91" alt="image" src="https://github.com/user-attachments/assets/0c862a36-ebf4-474e-b448-1a164d802ba1" />
 
-- \( r_t > 1 \): New policy likes this action **more**.
-- \( r_t < 1 \): New policy likes this action **less**.
+
+- $  r_t > 1  $ : New policy likes this action **more**.
+- $  r_t < 1  $ : New policy likes this action **less**.
 
 If we just did normal policy gradient, the objective would be:
 
-\[
-L(\theta) = \hat{\mathbb{E}}_t \left[ r_t(\theta) \hat{A}_t \right]
-\]
+<img width="229" height="57" alt="image" src="https://github.com/user-attachments/assets/f057baef-e855-431a-8157-622e16a0b594" />
 
 This is called the **surrogate objective**. We want to **maximize** it (higher = better policy).
 
@@ -79,70 +75,60 @@ Instead of a hard constraint like TRPO, we **penalize** the new policy whenever 
 
 The full objective we **maximize** is:
 
-\[
-L^{\text{KLPEN}}(\theta) = \hat{\mathbb{E}}_t \left[ r_t(\theta) \hat{A}_t \right] - \beta \, \text{KL}\Big( \pi_{\theta_{\text{old}}} \big( \cdot \mid s_t \big) \Big\| \pi_\theta \big( \cdot \mid s_t \big) \Big)
-\]
+<img width="615" height="85" alt="image" src="https://github.com/user-attachments/assets/33bd8784-8534-4b82-8445-8379283d7fe3" />
 
 - First term: reward we get from taking the actions (same as before).
 - Second term: **KL penalty**. KL is calculated **per state** and then averaged over the batch.
 
-\( \beta \) is a **coefficient** that decides how strong the penalty is.
+$  \beta  $ is a **coefficient** that decides how strong the penalty is.
 
-### How \( \beta \) is Adapted (Automatic Tuning)
+### How $  \beta  $ is Adapted (Automatic Tuning)
 After every batch of updates:
 - Compute the **average KL** across the batch.
 - Target KL is usually ~0.01 (we want small changes).
-- If average KL > target × 1.5 → increase \( \beta \) (stronger penalty).
-- If average KL < target / 1.5 → decrease \( \beta \) (we can be braver).
+- If average KL > target × 1.5 → increase $  \beta  $ (stronger penalty).
+- If average KL < target / 1.5 → decrease $  \beta  $ (we can be braver).
 
-This adaptive \( \beta \) keeps the policy updates “proximal” automatically.
+This adaptive $  \beta  $ keeps the policy updates “proximal” automatically.
 
 ### Why It Works (Intuition)
-- When the new policy tries to make a huge change, KL blows up → penalty term becomes huge negative → optimizer is forced to pull \( \theta \) back.
+- When the new policy tries to make a huge change, KL blows up → penalty term becomes huge negative → optimizer is forced to pull  $  \theta  $ back.
 - No need for complicated second-order math like TRPO.
 
-**Downside**: Tuning \( \beta \) can be tricky, and sometimes the penalty is too strong or too weak.
+**Downside**: Tuning $  \beta  $ can be tricky, and sometimes the penalty is too strong or too weak.
 
 ---
 
 ## 5. PPO-Clip Variant (The Popular One)
 
 ### Idea in Simple Terms
-Instead of adding a penalty, we **clip** the probability ratio \( r_t \) so it can never go outside the safe zone [1−ε, 1+ε].  
+Instead of adding a penalty, we **clip** the probability ratio $  r_t  $ so it can never go outside the safe zone [1−ε, 1+ε].  
 This automatically stops the policy from changing too much.
 
 ### Math Breakdown (Step by Step)
 
 The surrogate objective we **maximize** is:
 
-\[
-L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \min\left( r_t(\theta) \hat{A}_t, \, \clip\left(r_t(\theta), 1-\epsilon, 1+\epsilon\right) \hat{A}_t \right) \right]
-\]
+<img width="590" height="85" alt="image" src="https://github.com/user-attachments/assets/5858ff4c-b13f-4daa-b86a-e64033b9f2f2" />
+
 
 Let’s break the **min** and **clip** into plain English:
 
-1. \( \clip(r_t, 1-\epsilon, 1+\epsilon) \) means:
-   - If \( r_t < 1-\epsilon \), force it to \( 1-\epsilon \).
-   - If \( r_t > 1+\epsilon \), force it to \( 1+\epsilon \).
-   - Otherwise keep \( r_t \) as is.
-
-2. Now take the **minimum** of two things:
-   - The original “gain” \( r_t(\theta) \hat{A}_t \)
-   - The clipped version \( \clip(r_t) \hat{A}_t \)
+<img width="403" height="310" alt="image" src="https://github.com/user-attachments/assets/71ab0562-0858-4ee7-830b-7c4fe3a8c4d5" />
 
 ### Why the Min? (Critical Intuition — Watch This Part!)
 
-It depends on the sign of the advantage \( \hat{A}_t \):
+It depends on the sign of the advantage $  \hat{A}_t  $:
 
-**Case 1: Advantage is positive** (\( \hat{A}_t > 0 \)) → we want to **increase** probability of this action.
-- If \( r_t > 1+\epsilon \), the clipped version stops giving extra credit.
+**Case 1: Advantage is positive**  ($  \hat{A}_t > 0  $)  → we want to **increase** probability of this action.
+- If  $  r_t > 1+\epsilon  $ , the clipped version stops giving extra credit.
 - So the min chooses the smaller (clipped) value → we never get “too much” reward for huge policy changes.
 
-**Case 2: Advantage is negative** (\( \hat{A}_t < 0 \)) → we want to **decrease** probability of this action.
-- If \( r_t < 1-\epsilon \), the clipped version limits how much we are punished.
+**Case 2: Advantage is negative** ($  \hat{A}_t < 0  $) → we want to **decrease** probability of this action.
+- If $  r_t < 1-\epsilon  $, the clipped version limits how much we are punished.
 - Again, the min chooses the smaller (clipped) value → we never get “too much” punishment.
 
-**Result**: The policy is forced to stay inside a trust region of width \( 2\epsilon \) (usually \( \epsilon = 0.2 \)). No huge jumps!
+**Result**: The policy is forced to stay inside a trust region of width $  2\epsilon  $ (usually $  \epsilon = 0.2  $). No huge jumps!
 
 ### Visual Intuition
 - Unclipped surrogate can go to infinity → unstable.
@@ -182,11 +168,7 @@ for iteration = 1, 2, ..., N:
 ```
 
 **Key hyperparameters**:
-- \( \epsilon = 0.2 \) (clip range)
-- \( \gamma = 0.99 \), \( \lambda = 0.95 \) (GAE)
-- 10–15 epochs of optimization per data batch
-- Minibatch size ~64–256
-- \( \beta \) adapted automatically in penalty version
+<img width="428" height="213" alt="image" src="https://github.com/user-attachments/assets/0cfd6b0f-3213-496f-858c-856f43bb50bb" />
 
 ---
 
@@ -206,8 +188,8 @@ PPO-Clip is the default in libraries like Stable-Baselines3, CleanRL, etc.
 
 ## 8. Extra Bits That Make PPO Complete
 
-- **Actor-Critic**: PPO almost always uses a **critic** (value network) to estimate \( V(s) \) and compute advantages. The actor is the policy network.
-- **Entropy bonus**: Small term \( -c_2 \times \) entropy keeps the policy from becoming too deterministic too early (encourages exploration).
+- **Actor-Critic**: PPO almost always uses a **critic** (value network) to estimate  $  V(s)  $ and compute advantages. The actor is the policy network.
+- **Entropy bonus**: Small term  $  -c_2 \times  $ entropy keeps the policy from becoming too deterministic too early (encourages exploration).
 - **Multiple epochs**: We reuse the same batch of data 10+ times — this is what makes PPO sample-efficient.
 - **Generalized Advantage Estimation (GAE)**: The formula I showed earlier reduces variance while keeping bias low.
 
